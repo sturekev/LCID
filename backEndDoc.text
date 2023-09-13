@@ -1,0 +1,10 @@
+
+Setup Environment:
+    python3 -m venv venv
+
+install requirements:
+    pip install -r BackEndRequirements.txt
+
+run local for fastapi:
+    cd Backend
+    uvicorn main:app --reload

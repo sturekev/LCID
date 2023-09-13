@@ -1,15 +1,19 @@
-from typing import Union
-
 from fastapi import FastAPI
+
+#jsonFormat where keep all Put methods for imput Json from API
+from Assets.jsonFormat import signinInput
+#Authenticate for signin
+from Authenticate.signin import signin
 
 app = FastAPI()
 
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+#get jsonData = inputJson.username
+@app.put("/signin")
+def signInAPi(inputJson: signinInput):
+    verify,data =  signinAuth(inputJson.username, inputJson.password):
+    if verify:
+        return {
+                    "message": "Login Successfully!",
+                    "data": data
+                    }
+    return {"message": "Item created successfully!"}

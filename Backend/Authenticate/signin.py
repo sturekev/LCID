@@ -8,5 +8,5 @@ def signinAuth (username:str, password: str) -> dict:
 
 # connect to db and verified it
 # return bool and userToken as str
-def signDb (username: str, password: str) -> bool, str:
+def signDb (username: str, password: str):
     pass

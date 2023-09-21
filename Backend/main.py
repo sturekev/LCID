@@ -33,6 +33,6 @@ def verifyHallAccess (request, inputJson: HallTokenVerify):
 def requestDinningService():
     pass
 
-@app.put ("/DinningService/verify/{reques}")
+@app.put ("/DinningService/verify/{request}")
 def verifyDinningService():
     pass

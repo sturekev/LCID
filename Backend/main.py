@@ -36,3 +36,7 @@ def requestDinningService():
 @app.put ("/DinningService/verify/{request}")
 def verifyDinningService():
     pass
+
+@app.put ("test/{link}")
+def test(link, inputJson: signinInput):
+    return {"link": link, "jsonInput": inputJson}

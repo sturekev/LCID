@@ -5,7 +5,7 @@ from db_config import get_db_info
 
 filename='db_info.ini'
 section='postgres-sample-db'
-db_info = get_db_info(filename,section)
+db_info = get_db_info(filename, section)
 
 db_connection = None
 try:

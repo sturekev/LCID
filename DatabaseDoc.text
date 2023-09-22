@@ -1,0 +1,7 @@
+Installation Process:
+    python -m pip install --upgrade pip 
+    pip install psycopg2
+
+    Go to Postgresql and install Postgresql in the downloads folder for the corresponding operating system
+    Download latest
+

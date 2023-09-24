@@ -4,4 +4,7 @@ Installation Process:
 
     Go to Postgresql and install Postgresql in the downloads folder for the corresponding operating system
     Download latest
-
+    Tutorial: https://www.youtube.com/watch?v=0n41UTkOBb0
+        - Follow the steps 
+        - Input the username and password as what is on the db_info.ini file
+        - Port keep at 5432, by default    

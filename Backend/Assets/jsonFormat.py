@@ -1,5 +1,10 @@
 from pydantic import BaseModel
 
+# {
+#     'username': 'data',
+#     'passowrd': 'data',
+#     ..
+# }
 class signinInput(BaseModel):
     username: str
     password: str

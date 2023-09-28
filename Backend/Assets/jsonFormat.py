@@ -18,3 +18,7 @@ class HallTokenVerify (BaseModel):
     userToken: str
     HashAccessToken: str
     timestamp: str
+
+class UserInfoVerify (BaseModel):
+    userToken: str
+    timestamp: str

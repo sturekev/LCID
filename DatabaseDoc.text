@@ -1,6 +1,7 @@
 Installation Process:
     python -m pip install --upgrade pip 
     pip install psycopg2
+    *This psycopg2 version is 2.9.3
 
     Go to Postgresql and install Postgresql in the downloads folder for the corresponding operating system
     Download latest
@@ -8,3 +9,6 @@ Installation Process:
         - Follow the steps 
         - Input the username and password as what is on the db_info.ini file
         - Port keep at 5432, by default    
+
+Running:
+    Must run in the Database folder.

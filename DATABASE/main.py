@@ -1,6 +1,7 @@
 import psycopg2
 from psycopg2 import OperationalError
 from db_config import get_db_info
+from datetime import datetime, timezone
 
 
 filename='db_info.ini'
@@ -23,6 +24,14 @@ try:
                         token_expiration DATE NOT NULL);'''
     db_cursor.execute(create_table)
     db_connection.commit()
+
+    insert_query = """INSERT INTO guest_account (username, password, user_token, salt, token_expiration)
+                        VALUES (%s, %s, %s, %s, %s)"""
+    user_token = bytes("test", "utf-8")
+    test_date = datetime.now(timezone.utc)
+    record = ("testca01", "test", user_token, "test", test_date)
+    db_cursor.execute(insert_query, record)
+    print("Record inserted successfully to guest_account table")
 
     create_table = '''DROP TABLE IF EXISTS building_info CASCADE;
                         CREATE TABLE building_info(

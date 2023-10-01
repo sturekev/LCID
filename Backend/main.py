@@ -2,6 +2,7 @@ from fastapi import FastAPI
 
 #jsonFormat where keep all Put methods for imput Json from API
 from Assets.jsonFormat import signinInput, HallTokenRequest, HallTokenVerify
+from Assets.jsonFormat import signinInput,
 #Authenticate for signin
 from Authenticate.signin import signinAuth
 
@@ -39,4 +40,9 @@ def verifyDinningService():
 
 @app.put ("test/{link}")
 def test(link, inputJson: signinInput):
-    return {"link": link, "jsonInput": inputJson}
+    return {"link": link, "jsonInput": inputJson
+
+
+@app.put ("/HallAccess")
+def sendHallAccessToken (inputJson):
+    pass

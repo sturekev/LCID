@@ -22,3 +22,4 @@ class HallTokenVerify (BaseModel):
 class UserInfoVerify (BaseModel):
     userToken: str
     timestamp: str
+

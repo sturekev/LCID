@@ -1,0 +1,20 @@
+.page {
+    align-items: center;
+}
+
+.form {
+    width: 100%;
+    margin-left: 30;
+    margin-right: 30;
+}
+
+.header {
+    font-size: 30;
+    text-align: center;
+    color: blue;
+    font-weight: 600;
+}
+
+.input {
+    margin-bottom: 20;
+}

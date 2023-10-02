@@ -1,9 +1,27 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
-    <ActionBar title="My App" icon="" />
+    <ActionBar title="LCID" icon="" />
 
-    <StackLayout class="p-20">
-        <Label text="Tap the button" class="h1 text-center" />
-        <Button text="TAP" tap="{{ onTap }}" class="-primary" />
-        <Label text="{{ message }}" class="h2 text-center" textWrap="true" />
-    </StackLayout>
+    <FlexboxLayout class="page">
+        <StackLayout class="form">
+            <Label class="header" text="Log-In"></Label>
+
+            <StackLayout class="input-field">
+                <TextField id="usr" class="input" hint="Username" text="{{ username }}"/>
+            </StackLayout> 
+
+
+            <StackLayout class="input-field">
+                <TextField id="pass" class="input" secure="True" hint="password" text="{{ password }}"/>
+            </StackLayout>  
+
+            <StackLayout class="p-20">
+                <Button text="Login" tap="{{ logIn }}" class="btn btn-primary"></Button> 
+                <Button text="Continue As Guest" tap="navigateToHome" class="btn btn-primary"></Button> 
+                <Label text="{{ debug }}" class="h2 text-center" textWap="true" />
+                <Label text="{{ origin }}" class="h2 text-center" textWap="true" />
+            </StackLayout>
+
+
+        </StackLayout>
+    </FlexboxLayout>
 </Page>

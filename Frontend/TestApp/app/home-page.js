@@ -5,8 +5,8 @@ export function onNavigatingTo(args) {
   page.bindingContext = createViewModel()
 }
 
-export function navigateToHome(args){
+export function navigateToMain(args){
   const button = args.object
   const page = button.page
-  page.frame.navigate("home-page")
+  page.frame.navigate('main-page')
 }

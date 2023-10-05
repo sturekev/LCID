@@ -1,6 +1,6 @@
 from Backend.Assets.Utils import getCurrentDatetime
-from Backend.Assets.database.signInDB import *
-from hash import *
+from Backend.Assets.database.signInDB import getAccountPass
+from Backend.Authenticate.hash import *
 # verify signin username and password from db 
 # return json return for APis (with redirect for 2 step Auth , or a error)
 def signinAuth (username:str, password: str):
@@ -25,27 +25,16 @@ def generateSigninJson(verified,data):
     Response["Timestamp"] = getCurrentDatetime()
 
     if verified:
-        Response["Response"]["User Token"] = data[1]
+        Response["Response"]["User Token"] = data[3]
         return Response
     return Response
 
 #from Account table
 # select username, password, salt from Account where username = username
 # return password 
-def verifyUsername (username:str, db):
+def verifyUsername (username:str):
     # Todo: Execute data from db and save executed data
-    #
-    # if username == data.username:
-    #     return True, data
+    data = getAccountPass(username)
+    if data: 
+        return True, data 
     return False, ["Username wrong, please try again!"]
-  
-# verify signin username and password from db 
-# return json return for APis (with redirect for 2 step Auth , or a error)
-def signinAuth (username:str, password: str) -> dict:
-    pass 
-
-
-# connect to db and verified it
-# return bool and userToken as str
-def signDb (username: str, password: str):
-    pass

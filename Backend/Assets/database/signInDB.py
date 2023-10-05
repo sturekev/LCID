@@ -1,40 +1,27 @@
+# this folder will process db connection, have function allow to connect to db
+from Backend.Assets.database.db_config import get_db_info
 import psycopg2
-from dbConnection import connDb
 from psycopg2 import *
 
-db_connection = connDb()
+# Connection parameters
+def getAccountPass(username):
+    try :
+        filename='db_info.ini'
+        section='cardReaderDB'
+        db_info = get_db_info(filename, section)
 
-def getAccountPass (username, password):
-    try: 
-        
+        db_connection = psycopg2.connect(**db_info)
         cur = db_connection.cursor()
         sql_query = f"SELECT * WHERE username = {username};"
         cur.execute(sql_query)
         row = cur.ferchall()
+        cur.close()
         return row
     except DataError:
-        return False
+        return "Error connecting to the database :/"
+
     finally:
         if db_connection:
             db_connection.close()
-            return False
+            return "Closed connection."
 
-def updateUserToken (currUserToken):
-    pass
-cur = db_connection.cursor()
-
-# Define your SQL query
-sql_query = "SELECT * FROM your_table_name"
-
-# Execute the query
-cur.execute(sql_query)
-
-# Fetch results
-rows = cur.fetchall()
-
-for row in rows:
-    print(row)
-
-# Close the cursor and connection
-cur.close()
-db_connection.close()

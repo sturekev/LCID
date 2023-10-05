@@ -1,4 +1,8 @@
-fastapi==0.103.1
+fastapi[all]
 mysql-connector-python==8.1.0
+pycryptodome
 psycopg2==2.9.3
-
+pyproject-toml==0.0.10
+toml==0.10.2
+bycrypt
+uvicorn

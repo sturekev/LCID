@@ -7,7 +7,7 @@ install requirements:
 
 run local for fastapi:
     cd Backend
-    uvicorn main:app --reload
+    uvicorn Backend.main:app --reload
 
 For database:
     python -m pip install --upgrade pip 

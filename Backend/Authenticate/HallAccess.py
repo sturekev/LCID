@@ -4,5 +4,10 @@
 # Feature update UserPrikey for user
 from hash import *
 
-def updateUserToken ():
+def updatHallToken ():
     pass
+
+def getHallToken ():
+    pass
+
+

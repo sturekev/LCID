@@ -12,7 +12,7 @@ def getAccountPass(username):
 
         db_connection = psycopg2.connect(**db_info)
         cur = db_connection.cursor()
-        sql_query = f"SELECT * WHERE username = {username};"
+        sql_query = f"SELECT password FROM guest_account WHERE username = '{username}';"
         cur.execute(sql_query)
         row = cur.ferchall()
         cur.close()

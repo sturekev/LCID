@@ -8,7 +8,7 @@ from pydantic import BaseModel
 class signinInput(BaseModel):
     username: str
     password: str
-    timestamp: str
+    # timestamp: str
 
 class HallTokenRequest (BaseModel):
     userToken: str

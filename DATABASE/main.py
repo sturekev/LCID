@@ -2,7 +2,7 @@ import psycopg2
 from psycopg2 import OperationalError
 from db_config import get_db_info
 
-
+from mockdata.mockdata import *
 filename='db_info.ini'
 section='cardReaderDB'
 db_info = get_db_info(filename, section)
@@ -17,12 +17,13 @@ try:
                         CREATE TABLE guest_account(
                         id SERIAL PRIMARY KEY,
                         username varchar(255) NOT NULL,
-                        password varchar(255) NOT NULL,
-                        user_token BYTEA NOT NULL,
-                        salt varchar(255) NOT NULL,
+                        password BYTEA NOT NULL,
+                        user_token BYTEA,
                         token_expiration DATE NOT NULL);'''
     db_cursor.execute(create_table)
     db_connection.commit()
+    
+    db_connection = create_mockdata(db_connection=db_connection)
 
     create_table = '''DROP TABLE IF EXISTS building_info CASCADE;
                         CREATE TABLE building_info(

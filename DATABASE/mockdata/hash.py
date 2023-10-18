@@ -1,4 +1,5 @@
-# REMEMBER TO UPDATE mockdata/hash.py when you update this file
+# REMEMBER TO UPDATE Authenticate/hash.py when you update this file
+
 
 import bcrypt
 from Crypto.PublicKey import RSA

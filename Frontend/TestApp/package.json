@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "@nativescript/android": "8.5.2",
+    "@nativescript/preview-cli": "1.0.5",
     "@nativescript/webpack": "~5.0.14"
   }
 }

@@ -1,21 +1,40 @@
-import { Observable } from '@nativescript/core'
+import { Observable, Fetch } from '@nativescript/core'
+import { debug } from '@nativescript/core/utils'
 
-function getMessage(counter) {
-  if (counter <= 0) {
-    return 'Hoorraaay! You unlocked the NativeScript clicker achievement!'
-  } else {
-    return `${counter} taps left`
-  }
-}
+
 
 export function createViewModel() {
   const viewModel = new Observable()
-  viewModel.counter = 42
-  viewModel.message = getMessage(viewModel.counter)
+  viewModel.set('username', "")
+  viewModel.set('password', "")
 
-  viewModel.onTap = () => {
-    viewModel.counter--
-    viewModel.set('message', getMessage(viewModel.counter))
+  viewModel.logIn = () => {
+    // fetch("")
+    // .then((response) => response.json())
+    // .then((r) => {
+    //   viewModel.set("origin", r.count)
+    // }).catch((err) => {
+    // })
+    viewModel.usr =  viewModel.get('username')
+    viewModel.pass = viewModel.get('password')
+    fetch("https://httpbin.org/post", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+        username: viewModel.get('username'),
+        password: viewModel.get('password')
+    })
+}).then((r) => r.json())
+    .then((response) => {
+        const result = response.json
+        viewModel.set('origin', result.username)
+    }).catch((e) => {
+    })
+    
+    viewModel.set('debug', `user: ${viewModel.usr} Password: ${viewModel.pass}`)
+
+    
+    
   }
 
   return viewModel

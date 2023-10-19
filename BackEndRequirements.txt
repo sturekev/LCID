@@ -1,3 +1,12 @@
-fastapi==0.103.1
+fastapi[all]
 mysql-connector-python==8.1.0
+<<<<<<< HEAD
 psycopg2==2.9.3
+=======
+pycryptodome
+psycopg2
+pyproject-toml==0.0.10
+toml==0.10.2
+bcrypt
+uvicorn
+>>>>>>> e1b2ccf71a8f11b22f404d3260526f5e70d7f743

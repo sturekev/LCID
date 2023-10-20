@@ -1,4 +1,4 @@
-from Backend.Authenticate.hash import *
+from Authenticate.hash import *
 
 def verifyUserToken (token):
     response = {}

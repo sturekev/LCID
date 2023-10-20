@@ -1,8 +1,8 @@
 from fastapi import FastAPI, HTTPException
 
-from Backend.Assets.Utils import getCurrentDatetime
-from Backend.Assets.database.signInDB import getAccountPass
-from Backend.Authenticate.hash import *
+from Assets.Utils import getCurrentDatetime
+from Assets.database.signInDB import getAccountPass
+from Authenticate.hash import *
 # verify signin username and password from db 
 # return json return for APis (with redirect for 2 step Auth , or a error)
 def signinAuth (username:str, password: str):
@@ -19,7 +19,7 @@ def signinAuth (username:str, password: str):
 def generateSigninJson(verified,data):
     Response = {
                     "Success": False,
-                    "Response": {"MSG":""},
+                    "Response": dict(),
                     "Timestamp": ""
                     }
 
@@ -29,7 +29,6 @@ def generateSigninJson(verified,data):
 
     if verified:
         Response["Response"]["User Token"] = data["username"]
-        return Response
     Response["Response"]["MSG"] = data
     return Response
 

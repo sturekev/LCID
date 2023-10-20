@@ -10,6 +10,8 @@ class signinInput(BaseModel):
     password: str
     # timestamp: str
 
+class loginResponse(BaseModel):
+    message: dict
 class HallTokenRequest (BaseModel):
     userToken: str
     timestamp: str

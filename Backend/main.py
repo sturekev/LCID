@@ -1,34 +1,37 @@
-from fastapi import FastAPI
 from fastapi import FastAPI, HTTPException
-
+import asyncio
 #jsonFormat where keep all Put methods for imput Json from API
-from Backend.Assets.jsonFormat import signinInput, HallTokenRequest, HallTokenVerify
-from Backend.Assets.jsonFormat import signinInput
+from Assets.jsonFormat import signinInput, HallTokenRequest, HallTokenVerify
+from Assets.jsonFormat import loginResponse
 #Authenticate for signin
 from fastapi.responses import JSONResponse
-from Backend.Authenticate.signin import signinAuth
-from Backend.Authenticate.token import verifyUserToken
-from Backend.Authenticate.HallAccess import getHallToken, updatHallToken
+from Authenticate.signin import signinAuth
+from Authenticate.token import verifyUserToken
+from Authenticate.HallAccess import getHallToken, updatHallToken
 
 app = FastAPI()
 
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
+
 #get jsonData = inputJson.username
 # right now only 1 step verification
-@app.post("/signin/")
-async def sign_in(input_json: signinInput):
+@app.post("/signin/",response_model=loginResponse)
+async def sign_in(input_json: signinInput) -> loginResponse:
     username = input_json.username
     password = input_json.password
 
     success, user_data = signinAuth(username, password)
 
     if success:
-        return user_data
+        return loginResponse(message=user_data)
     else:
         raise HTTPException(status_code=401, detail=user_data)
 
 
 # APis give User a hash token to use for access
-@app.put ("/HallAccess/getToken/{request}")
+@app.post ("/HallAccess/getToken/{request}")
 async def requestHallAccess (request,iputJson: HallTokenRequest):
     verifyToken, response = verifyUserToken()
     if verifyToken:
@@ -63,8 +66,3 @@ async def requestHallAccess (request,iputJson: HallTokenRequest):
 # @app.put ("/HallAccess")
 # def sendHallAccessToken (inputJson):
 #     pass
-
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)

@@ -13,6 +13,8 @@
                     <!-- Do not have a onForgotPasswordTap function yet -->
                     <Button text="SIGN IN" tap="{{ logIn }}" class="btn btn-primary"></Button> 
                     <Button text="Continue As Guest" tap="navigateToHome" class="btn btn-primary"></Button> 
+                    <Label text="{{ debug }}" class="h2 text-center" textWap="true" />
+                    <Label text="{{ origin }}" class="h2 text-center" textWap="true" />
                 </StackLayout>
             </ScrollView>
 

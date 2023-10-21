@@ -10,3 +10,9 @@ export function navigateToMain(args){
   const page = button.page
   page.frame.navigate('main-page')
 }
+
+export function onLogout(args) {
+  const button = args.object
+  const page = button.page
+  page.frame.navigate('main-page')
+}

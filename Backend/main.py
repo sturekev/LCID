@@ -42,6 +42,12 @@ async def requestHallAccess (request,iputJson: HallTokenRequest):
     else:
         raise HTTPException(status_code=401, detail=response)
 
+
+#setUp user token
+#class of token
+#user login and signup
+
+
 # #Apis verify signal or verify qrcode
 # @app.put ("/HallAccess/{request}")
 # def verifyHallAccess (request, inputJson: HallTokenVerify):

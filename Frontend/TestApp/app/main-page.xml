@@ -1,5 +1,5 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
-    <ActionBar title="LCID Login" icon="" />
+    <ActionBar title="LCID Login" class="action-bar" icon="" />
 
     <FlexboxLayout class="page">
         <StackLayout class="form">

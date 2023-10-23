@@ -1,0 +1,12 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
+    <ActionBar title="Library Checkout" class="action-bar" icon="">
+        <ActionItem tap="onLogout" android.position="popup" text="Logout" android.systemIcon="ic_menu_logout"/>
+    </ActionBar>
+
+    <GridLayout rows="auto, *, auto" class="main-container">
+        <Label row="0" text="Header Title" class="header-label" />
+        
+        <Label row="2" text="Footer Text" class="footer-label" />
+    </GridLayout>
+    
+</Page>

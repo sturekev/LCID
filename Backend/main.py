@@ -13,7 +13,7 @@ from Assets.jsonFormat import signinInput, HallTokenRequest, HallTokenVerify
 from Assets.jsonFormat import loginResponse, AppToken, TokenData, User
 #Authenticate for signin
 from fastapi.responses import JSONResponse
-from Authenticate.signin import authenticate_user, create_access_token, fake_users_db
+from Authenticate.signin import authenticate_user, create_access_token, fake_users_db, get_current_active_user
 from Authenticate.token import verifyUserToken
 from Authenticate.HallAccess import getHallToken, updatHallToken
 
@@ -40,23 +40,7 @@ async def login_for_access_token(
     access_token = create_access_token(
         data={"sub": user.username}, expires_delta=access_token_expires
     )
-    return {"access_token": access_token}
-
-
-#get jsonData = inputJson.username
-# right now only 1 step verification
-@app.post("/signin/",response_model=loginResponse)
-async def sign_in(input_json: signinInput) -> loginResponse:
-    username = input_json.username
-    password = input_json.password
-
-    success, user_data = signinAuth(username, password)
-
-    if success:
-        return loginResponse(message=user_data)
-    else:
-        raise HTTPException(status_code=401, detail=user_data)
-
+    return {"access_token": access_token, "token_type": "Bearer"}
 
 # APis give User a hash token to use for access
 @app.post ("/HallAccess/getToken/{request}")
@@ -70,7 +54,11 @@ async def requestHallAccess (request,iputJson: HallTokenRequest):
     else:
         raise HTTPException(status_code=401, detail=response)
 
-
+@app.get("/users/me/", response_model=User)
+async def read_users_me(
+    current_user: Annotated[User, Depends(get_current_active_user)]
+):
+    return current_user
 #setUp user token
 #class of token
 #user login and signup

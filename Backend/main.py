@@ -1,53 +1,102 @@
-from fastapi import FastAPI
+
+#Fastapi packages
+from datetime import timedelta, datetime
+from typing import Annotated
+from fastapi import FastAPI, HTTPException, Body, Depends, status
+from fastapi.security import OAuth2PasswordRequestForm
 import uvicorn
 
+from decouple import config
+
 #jsonFormat where keep all Put methods for imput Json from API
-from Backend.Assets.jsonFormat import signinInput, HallTokenRequest, HallTokenVerify
-from Backend.Assets.jsonFormat import signinInput
+from Assets.jsonFormat import signinInput, HallTokenRequest, HallTokenVerify
+from Assets.jsonFormat import loginResponse, AppToken, TokenData, User
 #Authenticate for signin
-from Backend.Authenticate.signin import signinAuth
+from fastapi.responses import JSONResponse
+from Authenticate.signin import authenticate_user, create_access_token, fake_users_db
+from Authenticate.token import verifyUserToken
+from Authenticate.HallAccess import getHallToken, updatHallToken
+
+ACCESS_TOKEN_EXPIRE_MINUTES  = 30
 
 app = FastAPI()
 
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
+
+@app.post("/login/", response_model=AppToken)
+async def login_for_access_token(
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()]
+):
+    user = authenticate_user(fake_users_db(), form_data.username, form_data.password)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": user.username}, expires_delta=access_token_expires
+    )
+    return {"access_token": access_token}
+
+
 #get jsonData = inputJson.username
 # right now only 1 step verification
-@app.put("/signin")
-def signInAPi(inputJson: signinInput):
-    return signinAuth(inputJson.username, inputJson.password, inputJson.timestamp)
+@app.post("/signin/",response_model=loginResponse)
+async def sign_in(input_json: signinInput) -> loginResponse:
+    username = input_json.username
+    password = input_json.password
+
+    success, user_data = signinAuth(username, password)
+
+    if success:
+        return loginResponse(message=user_data)
+    else:
+        raise HTTPException(status_code=401, detail=user_data)
 
 
 # APis give User a hash token to use for access
-@app.put ("/HallAccess/{request}")
-def requestHallAccess (request,iputJson: HallTokenRequest):
-    if request == "request":
-        pass
-    pass
-
-#Apis verify signal or verify qrcode
-@app.put ("/HallAccess/{request}")
-def verifyHallAccess (request, inputJson: HallTokenVerify):
-    if request == "verify":
-        pass
-    pass
-
-#Apis getDinningService user Data
-@app.put ("/DinningService/request/{request}")
-def requestDinningService():
-    pass
-
-@app.put ("/DinningService/verify/{request}")
-def verifyDinningService():
-    pass
-
-@app.put ("test/{link}")
-def test(link, inputJson: signinInput):
-    return {"link": link, "jsonInput": inputJson}
+@app.post ("/HallAccess/getToken/{request}")
+async def requestHallAccess (request,iputJson: HallTokenRequest):
+    verifyToken, response = verifyUserToken()
+    if verifyToken:
+        if request == "getToken":
+            return getHallToken()
+        elif request == "resetToken":
+            return updatHallToken()
+    else:
+        raise HTTPException(status_code=401, detail=response)
 
 
-@app.put ("/HallAccess")
-def sendHallAccessToken (inputJson):
-    pass
+#setUp user token
+#class of token
+#user login and signup
 
 
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+# #Apis verify signal or verify qrcode
+# @app.put ("/HallAccess/{request}")
+# def verifyHallAccess (request, inputJson: HallTokenVerify):
+#     if request == "verify":
+#         pass
+#     pass
+
+# #Apis getDinningService user Data
+# @app.put ("/DinningService/request/{request}")
+# def requestDinningService():
+#     pass
+
+# @app.put ("/DinningService/verify/{request}")
+# def verifyDinningService():
+#     pass
+
+# @app.put ("test/{link}")
+# def test(link, inputJson: signinInput):
+#     return {"link": link, "jsonInput": inputJson}
+
+
+# @app.put ("/HallAccess")
+# def sendHallAccessToken (inputJson):
+#     pass

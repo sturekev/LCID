@@ -1,19 +1,47 @@
-from fastapi import FastAPI, HTTPException
-import asyncio
+
+#Fastapi packages
+from datetime import timedelta, datetime
+from typing import Annotated
+from fastapi import FastAPI, HTTPException, Body, Depends, status
+from fastapi.security import OAuth2PasswordRequestForm
+import uvicorn
+
+from decouple import config
+
 #jsonFormat where keep all Put methods for imput Json from API
 from Assets.jsonFormat import signinInput, HallTokenRequest, HallTokenVerify
-from Assets.jsonFormat import loginResponse
+from Assets.jsonFormat import loginResponse, AppToken, TokenData, User
 #Authenticate for signin
 from fastapi.responses import JSONResponse
-from Authenticate.signin import signinAuth
+from Authenticate.signin import authenticate_user, create_access_token, fake_users_db
 from Authenticate.token import verifyUserToken
 from Authenticate.HallAccess import getHallToken, updatHallToken
+
+ACCESS_TOKEN_EXPIRE_MINUTES  = 30
 
 app = FastAPI()
 
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
+
+@app.post("/login/", response_model=AppToken)
+async def login_for_access_token(
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()]
+):
+    user = authenticate_user(fake_users_db(), form_data.username, form_data.password)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": user.username}, expires_delta=access_token_expires
+    )
+    return {"access_token": access_token}
+
 
 #get jsonData = inputJson.username
 # right now only 1 step verification

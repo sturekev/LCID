@@ -9,13 +9,13 @@ import uvicorn
 from decouple import config
 
 #jsonFormat where keep all Put methods for imput Json from API
-from Assets.jsonFormat import signinInput, HallTokenRequest, HallTokenVerify
+from Assets.jsonFormat import UserHalTokenInDB, signinInput, HallTokenRequest, HallTokenVerify
 from Assets.jsonFormat import loginResponse, AppToken, TokenData, User
 #Authenticate for signin
 from fastapi.responses import JSONResponse
 from Authenticate.signin import authenticate_user, create_access_token, fake_users_db, get_current_active_user
 from Authenticate.token import verifyUserToken
-from Authenticate.HallAccess import getHallToken, updatHallToken
+from Authenticate.HallAccess import get_access_Token, getHallToken, updatHallToken
 
 ACCESS_TOKEN_EXPIRE_MINUTES  = 30
 
@@ -43,16 +43,14 @@ async def login_for_access_token(
     return {"access_token": access_token, "token_type": "Bearer"}
 
 # APis give User a hash token to use for access
-@app.post ("/HallAccess/getToken/{request}")
-async def requestHallAccess (request,iputJson: HallTokenRequest):
-    verifyToken, response = verifyUserToken()
-    if verifyToken:
-        if request == "getToken":
-            return getHallToken()
-        elif request == "resetToken":
-            return updatHallToken()
-    else:
-        raise HTTPException(status_code=401, detail=response)
+@app.get("/HallAccess/me/", response_model=UserHalTokenInDB)
+async def read_users_me(
+    current_user: Annotated[User, Depends(get_current_active_user)]
+   
+):
+    
+    return current_user
+
 
 @app.get("/users/me/", response_model=User)
 async def read_users_me(

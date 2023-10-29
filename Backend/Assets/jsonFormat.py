@@ -27,8 +27,8 @@ class UserInfoVerify (BaseModel):
 
 
 
-class User (BaseModel):
-    email : str
+# class User (BaseModel):
+#     email : str
     
 class AppToken(BaseModel):
     access_token: str
@@ -48,3 +48,7 @@ class User(BaseModel):
 
 class UserInDB(User):
     hashed_password: str
+    
+class UserHalTokenInDB(User):
+    resident: str
+    

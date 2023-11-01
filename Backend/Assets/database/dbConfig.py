@@ -1,4 +1,3 @@
-
 from configparser import ConfigParser
 
 def get_db_info(filename, section):

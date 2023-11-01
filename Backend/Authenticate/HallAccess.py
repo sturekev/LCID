@@ -6,24 +6,30 @@ from datetime import datetime, timedelta
 from typing import Annotated
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
+from passlib.context import CryptContext
 from jose import JWTError, jwt
 from decouple import config
 
 
-from Assets.jsonFormat import TokenData, User, UserHalTokenInDB, UserInDB
+# from Assets.jsonFormat import
 
 from Authenticate.hash import *
+
+from Assets.jsonFormat import HallTokenData, HallTokenVerify
 
 SECRET_KEY = config("secret")
 ALGORITHM = config("algorithm")
 ACCESS_TOKEN_EXPIRE_MINUTES  = config("expire_token_time")
+Hall_KEY = config("hall_secret")
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+# oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="GetHallAccess")
 # from Assets.Utils import getCurrentDatetime
-def fake_usersToken_db ():
+def fake_users_Hall_db ():
     fake_HallAccess_db = {
         "johndoe": {
-            "username": "johndoe",
             "resident": "miller",
         }
     }
@@ -39,50 +45,55 @@ def fake_building_info():
         }
     }
     return fake_building_info_db
-def access_token(db,user):
+def get_access_hall_db(db,user:str):
     if user in db:
         user_dict = db[user]
-        return UserHalTokenInDB(**user_dict)
+        return user_dict
+def create_access_Hall_token(data: dict, expires_delta: timedelta | None = None):
+    to_encode = data.copy()
+    hall_db = get_access_hall_db(fake_users_Hall_db(),data["name"])
+    if not hall_db:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="something wrong with login token",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(minutes=15)
+    to_encode.update({"resident": hall_db["resident"]})
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, ACCESS_TOKEN_EXPIRE_MINUTES, algorithm=ALGORITHM)
+    return encoded_jwt
+    
+def verify_Hall_access (token:str, location: str):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, ACCESS_TOKEN_EXPIRE_MINUTES, algorithms=[ALGORITHM])
+        name: str = payload.get("name")
+        resident: str = payload.get("resident")
+        
+        if name is None or resident is None:
+            raise credentials_exception
+        else: 
+            if resident == location:
+                return True
+            else: 
+                current_time = datetime.now().time()  # Get the current time
 
-# async def get_current_Hall(token: Annotated[str, Depends(oauth2_scheme)]):
-#     credentials_exception = HTTPException(
-#         status_code=status.HTTP_401_UNAUTHORIZED,
-#         detail="Could not validate credentials",
-#         headers={"WWW-Authenticate": "Bearer"},
-#     )
-#     try:
-#         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-#         username: str = payload.get("sub")
-#         if username is None:
-#             raise credentials_exception
-#         token_data = TokenData(username=username)
-#     except JWTError:
-#         raise credentials_exception
-#     user = access_token(fake_usersToken_db(), username=token_data.username)
-#     if user is None:
-#         raise credentials_exception
-#     return user
-# async def get_access_Token(current_user: Annotated[User, Depends(get_current_Hall)]
-# ):
-#     if current_user.disabled:
-#         raise HTTPException(status_code=400, detail="Inactive user")
-#     return current_user
-# def hashToken_hall (userToken, data,expires_delta: timedelta | None = None):
-#     toEncode = data.copy()
-#     if expires_delta:
-#         expire = datetime.utcnow() + expires_delta
-#     else:
-#         expire = datetime.utcnow() + timedelta(minutes=15)
-#     toEncode.update({"exp": expire})
-#     token = EncryptPubKey(userToken["buildingToken"],toEncode)
-#     return token
+                # Check if the current time is earlier than 11 PM (23:00)
+                if current_time < datetime.strptime('23:00:00', '%H:%M:%S').time():
+                    return False  
+                else: return True          
 
-
-def updatHallToken ():
-    pass
-
-def getHallToken ():
-    pass
+        # token_data = HallTokenData(name=name, resident=resident)
+    except JWTError:
+        raise credentials_exception
 
 

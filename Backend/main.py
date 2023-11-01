@@ -10,15 +10,14 @@ from decouple import config
 
 #jsonFormat where keep all Put methods for imput Json from API
 from Assets.jsonFormat import HallAccessResponse, HallAcessVerifyResponse
-from Assets.jsonFormat import AppToken, TokenData, User
-from Assets.jsonFormat import HallTokenVerify
+from Assets.jsonFormat import AppToken, User
 #Authenticate for signin
-from fastapi.responses import JSONResponse
 from Authenticate.signin import authenticate_user, create_access_token, fake_users_db, get_current_active_user
+#Auth for Hall
 from Authenticate.HallAccess import create_access_Hall_token, verify_Hall_access
 
-ACCESS_TOKEN_EXPIRE_MINUTES  = 30
-HALL_ACCESS_TOKEN_EXPIRE_MINUTES  = 5
+ACCESS_TOKEN_EXPIRE_MINUTES  = config("expire_token_time")
+HALL_ACCESS_TOKEN_EXPIRE_MINUTES  = config("other_expire_token_time")
 
 app = FastAPI()
 

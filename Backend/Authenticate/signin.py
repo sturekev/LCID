@@ -7,7 +7,6 @@ from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from decouple import config
 
-from Assets.Utils import getCurrentDatetime
 from Assets.database.signInDB import getAccountPass
 from Authenticate.hash import *
 from Assets.jsonFormat import TokenData, User, UserInDB
@@ -37,7 +36,6 @@ def fake_users_db ():
 
 SECRET_KEY = config("secret")
 ALGORITHM = config("algorithm")
-ACCESS_TOKEN_EXPIRE_MINUTES  = config("expire_token_time")
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

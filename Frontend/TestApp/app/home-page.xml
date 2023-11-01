@@ -1,0 +1,17 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
+    <ActionBar title="LCID" icon="" />
+
+    <FlexboxLayout class="page">
+        <StackLayout class="form">
+            <Label class="header" text="{WIP}"></Label>
+
+        
+  
+            <StackLayout class="p-20">
+                <Button text="LogOut" tap="navigateToMain" class="btn btn-primary"></Button>
+            </StackLayout>
+
+
+        </StackLayout>
+    </FlexboxLayout>
+</Page>

@@ -1,0 +1,25 @@
+.page{ 
+    align-items: center;
+}
+.form {
+    width: 100%;
+    margin-left: 30;
+    margin-right: 30;
+}
+
+.header {
+    font-size:  25;
+    text-align: center;
+    color: blue;
+    font-weight: 500;
+    margin-bottom:  70;
+}
+
+.input {
+    font-size: 20;
+}
+
+.btn-primary{
+
+    /* login button styling*/
+}

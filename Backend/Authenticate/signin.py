@@ -1,40 +1,98 @@
-from Backend.Assets.Utils import getCurrentDatetime
-from Backend.Assets.database.signInDB import getAccountPass
-from Backend.Authenticate.hash import *
+from typing import Annotated
+from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
+
+from passlib.context import CryptContext
+from datetime import datetime, timedelta
+from jose import JWTError, jwt
+from decouple import config
+
+from Assets.Utils import getCurrentDatetime
+from Assets.database.signInDB import getAccountPass
+from Authenticate.hash import *
+from Assets.jsonFormat import TokenData, User, UserInDB
 # verify signin username and password from db 
 # return json return for APis (with redirect for 2 step Auth , or a error)
-def signinAuth (username:str, password: str):
-    verify, data = verifyUsername(username)
-    if verify:
-        if not checkPassword(endcodePassword=encodePassword(password), hashed=data["Password"]):
-            verify = False
-            data = ["Password wrong, please try again!"]
 
-    return generateSigninJson(verify,data)
+def fake_users_db ():
+    fake_users_db = {
+        "johndoe": {
+            "username": "johndoe",
+            "full_name": "John Doe",
+            "email": "johndoe@example.com",
+            "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
+            "disabled": False,
+        }
+    }
+    return fake_users_db
 
 
-def generateSigninJson(verified,data):
-    Response = {
-                    "Success": False,
-                    "Response": {"MSG":""},
-                    "Timestamp": ""
-                    }
 
-    Response["Success"] = verified
-    Response["Response"]["MSG"] = data[0]
-    Response["Timestamp"] = getCurrentDatetime()
+SECRET_KEY = config("secret")
+ALGORITHM = config("algorithm")
+ACCESS_TOKEN_EXPIRE_MINUTES  = config("expire_token_time")
 
-    if verified:
-        Response["Response"]["User Token"] = data[3]
-        return Response
-    return Response
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-#from Account table
-# select username, password, salt from Account where username = username
-# return password 
-def verifyUsername (username:str):
-    # Todo: Execute data from db and save executed data
-    data = getAccountPass(username)
-    if data: 
-        return True, data 
-    return False, ["Username wrong, please try again!"]
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+
+def verify_password(plain_password, hashed_password):
+    return pwd_context.verify(plain_password, hashed_password)
+
+
+def get_password_hash(password):
+    return pwd_context.hash(password)
+
+
+def get_user(db, username: str):
+    if username in db:
+        user_dict = db[username]
+        return UserInDB(**user_dict)
+
+
+def authenticate_user(fake_db, username: str, password: str):
+    user = get_user(fake_db, username)
+    if not user:
+        return False
+    if not verify_password(password, user.hashed_password):
+        return False
+    return user
+
+
+def create_access_token(data: dict, expires_delta: timedelta | None = None):
+    to_encode = data.copy()
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(minutes=15)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+
+async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        if username is None:
+            raise credentials_exception
+        token_data = TokenData(username=username)
+    except JWTError:
+        raise credentials_exception
+    user = get_user(fake_users_db(), username=token_data.username)
+    if user is None:
+        raise credentials_exception
+    return user
+
+
+async def get_current_active_user(
+    current_user: Annotated[User, Depends(get_current_user)]
+):
+    if current_user.disabled:
+        raise HTTPException(status_code=400, detail="Inactive user")
+    return current_user

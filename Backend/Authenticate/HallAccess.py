@@ -2,7 +2,12 @@
 # Feature update UserToken 
 # Feature update UserPublicKey for User Access
 # Feature update UserPrikey for user
-from hash import *
+from Authenticate.hash import *
 
-def updateUserToken ():
+def updatHallToken ():
     pass
+
+def getHallToken ():
+    pass
+
+

@@ -1,17 +1,17 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
-    <ActionBar title="LCID" icon="" />
+    <ActionBar title="LCID Dashboard" class="action-bar" icon="">
+        <ActionItem tap="onLogout" android.position="popup" text="Logout" android.systemIcon="ic_menu_logout" />
+    </ActionBar>
+    
+    <StackLayout orientation="vertical">
+        <Button text="Residence Hall" width="300" height="225" class="vertical-button" tap="onResidenceHall" />
+        <Button text="Dining Service" width="300" height="225" class="vertical-button" tap="onDiningService" />
+        <Button text="Library Checkout" width="300" height="225" class="vertical-button" tap="onLibraryCheckout" />
 
-    <FlexboxLayout class="page">
-        <StackLayout class="form">
-            <Label class="header" text="{WIP}"></Label>
-
-        
-  
-            <StackLayout class="p-20">
-                <Button text="LogOut" tap="navigateToMain" class="btn btn-primary"></Button>
-            </StackLayout>
-
-
-        </StackLayout>
-    </FlexboxLayout>
+        <FlexboxLayout orientation="horizontal" class="horizontal-button-container">
+            <Button text="Button 4" width="150" class="horizontal-button" />
+            <Button text="Button 5" width="150" class="horizontal-button" />
+            <Button text="Button 6" width="150" class="horizontal-button" />
+        </FlexboxLayout>
+    </StackLayout>
 </Page>

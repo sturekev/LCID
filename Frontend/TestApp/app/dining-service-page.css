@@ -35,3 +35,19 @@
     text-align: center;
     margin: 10;
 }
+
+.header-label {
+    text-align: center;
+    font-size: 20;
+    background-color: #3498db;
+    color: #fff;
+    padding: 10;
+}
+
+.footer-label {
+    text-align: center;
+    font-size: 16;
+    background-color: #3498db;
+    color: #fff;
+    padding: 5;
+}

@@ -2,16 +2,14 @@
     <ActionBar title="LCID Dashboard" class="action-bar" icon="">
         <ActionItem tap="onLogout" android.position="popup" text="Logout" android.systemIcon="ic_menu_logout" />
     </ActionBar>
-    
     <StackLayout orientation="vertical">
         <Button text="Residence Hall" width="300" height="225" class="vertical-button" tap="onResidenceHall" />
         <Button text="Dining Service" width="300" height="225" class="vertical-button" tap="onDiningService" />
         <Button text="Library Checkout" width="300" height="225" class="vertical-button" tap="onLibraryCheckout" />
-
         <FlexboxLayout orientation="horizontal" class="horizontal-button-container">
-            <Button text="Button 4" width="150" class="horizontal-button" />
-            <Button text="Button 5" width="150" class="horizontal-button" />
-            <Button text="Button 6" width="150" class="horizontal-button" />
+            <Button text="Residence" width="155" class="horizontal-button" tap="onResidenceHall" />
+            <Button text="Dining" width="150" class="horizontal-button" tap="onDiningService" />
+            <Button text="Library" width="150" class="horizontal-button" tap="onLibraryCheckout" />
         </FlexboxLayout>
     </StackLayout>
 </Page>

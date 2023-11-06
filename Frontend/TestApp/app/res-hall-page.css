@@ -22,15 +22,25 @@
     background-color: #fff;
     padding: 10;
     border-radius: 5;
-    margin: 10;
+    margin-top: 0;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.vertical-button, .horizontal-button {
+.vertical-button {
     background-color: #3498db;
     color: #fff;
     font-size: 18;
     padding: 10;
+    border-radius: 5;
+    text-align: center;
+    margin: 10;
+}
+
+.horizontal-button {
+    background-color: #3498db;
+    color: #fff;
+    font-size: 14;
+    padding: 3;
     border-radius: 5;
     text-align: center;
     margin: 10;

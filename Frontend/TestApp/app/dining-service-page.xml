@@ -5,6 +5,9 @@
 
     <StackLayout orientation="vertical" class="main-container">
         <Button text="Generate QRCode" width="300" height="150" class="vertical-button" tap="onGenerateQRCode" />
+        <StackLayout orientation="vertical" class='qr-example'>
+            <Image src="" loaded="{{onImageLoadedBasic}}"></Image>
+        </StackLayout>
         <StackLayout orientation="vertical" class="horizontal-button-container">
             <FlexboxLayout orientation="horizontal" class="horizontal-button-group">
                 <Button text="Residence" width="155" class="horizontal-button" tap="onResidenceHall" />

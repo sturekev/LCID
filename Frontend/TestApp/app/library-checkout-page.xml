@@ -2,14 +2,12 @@
     <ActionBar title="Library Checkout" class="action-bar" icon="">
         <ActionItem tap="onLogout" android.position="popup" text="Logout" android.systemIcon="ic_menu_logout"/>
     </ActionBar>
-
-    <!-- <GridLayout rows="auto, *, auto" class="main-container">
-        <Label row="0" text="Header Title" class="header-label" />
-        
-        <Label row="2" text="Footer Text" class="footer-label" />
-    </GridLayout> -->
+    
     <StackLayout orientation="vertical" class="main-container">
         <Button text="Generate QRCode" width="300" height="150" class="vertical-button" tap="onGenerateQRCode" />
+        <StackLayout orientation="vertical" class='qr-example'>
+            <Image src="" loaded="{{onImageLoadedBasic}}"></Image>
+        </StackLayout>
         <StackLayout orientation="vertical" class="horizontal-button-container">
             <FlexboxLayout orientation="horizontal" class="horizontal-button-group">
                 <Button text="Residence" width="155" class="horizontal-button" tap="onResidenceHall" />

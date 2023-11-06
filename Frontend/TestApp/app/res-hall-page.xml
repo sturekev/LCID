@@ -2,6 +2,7 @@
     <ActionBar title="Residence Hall" class="action-bar" icon="">
         <ActionItem tap="onLogout" android.position="popup" text="Logout" android.systemIcon="ic_menu_logout" />
     </ActionBar>
+    
     <StackLayout orientation="vertical" class="main-container">
         <Button text="Generate QRCode" width="300" height="150" class="vertical-button" tap="{{onImageLoadedBasic}}" />
         <StackLayout orientation="vertical" class='qr-example'>

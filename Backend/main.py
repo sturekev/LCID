@@ -16,8 +16,8 @@ from Authenticate.signin import authenticate_user, create_access_token, fake_use
 #Auth for Hall
 from Authenticate.HallAccess import create_access_Hall_token, verify_Hall_access
 
-ACCESS_TOKEN_EXPIRE_MINUTES  = config("expire_token_time")
-HALL_ACCESS_TOKEN_EXPIRE_MINUTES  = config("other_expire_token_time")
+ACCESS_TOKEN_EXPIRE_MINUTES  = 30
+HALL_ACCESS_TOKEN_EXPIRE_MINUTES  = 5
 
 app = FastAPI()
 

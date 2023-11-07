@@ -5,17 +5,13 @@
 
 .main-container {
     background-color: #ecf0f1;
-    padding: 20;
-    margin: 20;
-    border-radius: 10;
-}
-
-.vertical-button-container {
-    background-color: #fff;
-    padding: 10;
-    border-radius: 5;
+    padding: 5;
     margin: 10;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10;
+    flex-flow: row wrap;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
 }
 
 .horizontal-button-container {
@@ -24,14 +20,22 @@
     border-radius: 5;
     margin: 10;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    justify-content: space-around;
+    align-items: flex-end;
 }
 
-.vertical-button, .horizontal-button {
+.horizontal-button {
     background-color: #3498db;
     color: #fff;
-    font-size: 18;
-    padding: 10;
+    font-size: 14;
     border-radius: 5;
     text-align: center;
-    margin: 10;
+}
+
+.profile {
+    height: 660;
+    border-radius: 10;
+    /* margin: 5 10; */
+    padding: 50;
+    flex-direction: column;
 }

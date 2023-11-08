@@ -3,9 +3,9 @@
         <ActionItem tap="onLogout" android.position="popup" text="Logout" android.systemIcon="ic_menu_logout" />
     </ActionBar>
     <StackLayout orientation="vertical" class="main-container">
-        <Button text="Generate QRCode" width="300" height="150" class="vertical-button" tap="{{onImageLoadedBasic}}" />
+        <Button text="Generate QRCode" width="300" height="150" class="vertical-button" tap="letMeIn" />
         <StackLayout orientation="vertical" class='qr-example'>
-            <Image src="" loaded="{{onImageLoadedBasic}}"></Image>
+            <Image src="" id="qr"></Image>
         </StackLayout>
         <StackLayout orientation="vertical" class="horizontal-button-container">
             <FlexboxLayout orientation="horizontal" class="horizontal-button-group">

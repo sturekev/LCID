@@ -2,14 +2,23 @@
     <ActionBar title="LCID Dashboard" class="action-bar" icon="">
         <ActionItem tap="onLogout" android.position="popup" text="Logout" android.systemIcon="ic_menu_logout" />
     </ActionBar>
-    <StackLayout orientation="vertical">
-        <Button text="Residence Hall" width="300" height="225" class="vertical-button" tap="onResidenceHall" />
-        <Button text="Dining Service" width="300" height="225" class="vertical-button" tap="onDiningService" />
-        <Button text="Library Checkout" width="300" height="225" class="vertical-button" tap="onLibraryCheckout" />
-        <FlexboxLayout orientation="horizontal" class="horizontal-button-container">
-            <Button text="Residence" width="155" class="horizontal-button" tap="onResidenceHall" />
-            <Button text="Dining" width="150" class="horizontal-button" tap="onDiningService" />
-            <Button text="Library" width="150" class="horizontal-button" tap="onLibraryCheckout" />
+    
+    <FlexboxLayout class="main-container">
+        <FlexboxLayout class="profile">
+            <Image src="~/images/norse-logo.jpg" height="250"></Image> 
+            <!-- Will probably need to update this for profile pictures -->
+
+            <Label class="label" text="Username: {{ vuesa01 }}" height="70" backgroundColor="#43b883"/>
+            <Label class="label" text="Dormitory: {{ Farwell }}" height="70" backgroundColor="#1c6b48"/>
+            <Label class="label" text="Meal Swipes: {{ 10 }}" height="70" backgroundColor="#289062"/>
+            <Label class="label" text="Dining Dollars: {{ $123:45 }}" height="70" backgroundColor="#1c6b48"/>
+            <Label class="label" text="Library Items: {{ Library Key }}" height="70" backgroundColor="#289062"/>
         </FlexboxLayout>
-    </StackLayout>
+
+        <FlexboxLayout class="horizontal-button-container">
+            <Button text="Residence" class="horizontal-button" tap="onResidenceHall" />
+            <Button text="Dining" class="horizontal-button" tap="onDiningService"  />
+            <Button text="Library" class="horizontal-button" tap="onLibraryCheckout" />
+        </FlexboxLayout>
+    </FlexboxLayout>
 </Page>

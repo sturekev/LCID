@@ -18,7 +18,9 @@ export function createViewModel() {
     //   viewModel.set('debug', `user: ${viewModel.usr} Password: ${viewModel.pass}`)
     // }
 
-    viewModel.username
+    viewModel.username = () => {
+      
+    }
   
     return viewModel
   }

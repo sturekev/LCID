@@ -2,16 +2,17 @@
     <ActionBar title="LCID Dashboard" class="action-bar" icon="">
         <ActionItem tap="onLogout" android.position="popup" text="Logout" android.systemIcon="ic_menu_logout" />
     </ActionBar>
+    
     <FlexboxLayout class="main-container">
         <FlexboxLayout class="profile">
             <Image src="~/images/norse-logo.jpg" height="250"></Image> 
             <!-- Will probably need to update this for profile pictures -->
 
-            <Label text="Username: {{ vuesa01 }}" height="70" backgroundColor="#43b883"/>
-            <Label text="Dormitory: {{ Farwell }}" height="70" backgroundColor="#1c6b48"/>
-            <Label text="Meal Swipes: {{ 10 }}" height="70" backgroundColor="#289062"/>
-            <Label text="Dining Dollars: {{ $123:45 }}" height="70" backgroundColor="#1c6b48"/>
-            <Label text="Library Items: {{ Library Key }}" height="70" backgroundColor="#289062"/>
+            <Label class="label" text="Username: {{ vuesa01 }}" height="70" backgroundColor="#43b883"/>
+            <Label class="label" text="Dormitory: {{ Farwell }}" height="70" backgroundColor="#1c6b48"/>
+            <Label class="label" text="Meal Swipes: {{ 10 }}" height="70" backgroundColor="#289062"/>
+            <Label class="label" text="Dining Dollars: {{ $123:45 }}" height="70" backgroundColor="#1c6b48"/>
+            <Label class="label" text="Library Items: {{ Library Key }}" height="70" backgroundColor="#289062"/>
         </FlexboxLayout>
 
         <FlexboxLayout class="horizontal-button-container">

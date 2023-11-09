@@ -35,7 +35,10 @@
 .profile {
     height: 660;
     border-radius: 10;
-    /* margin: 5 10; */
     padding: 50;
     flex-direction: column;
+}
+
+.label {
+    margin: 5;
 }

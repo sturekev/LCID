@@ -9,15 +9,15 @@ import uvicorn
 from decouple import config
 
 #jsonFormat where keep all Put methods for imput Json from API
-from Assets.jsonFormat import signinInput, HallTokenRequest, HallTokenVerify
-from Assets.jsonFormat import loginResponse, AppToken, TokenData, User
+from Assets.jsonFormat import HallAccessResponse, HallAcessVerifyResponse
+from Assets.jsonFormat import AppToken, User
 #Authenticate for signin
-from fastapi.responses import JSONResponse
 from Authenticate.signin import authenticate_user, create_access_token, fake_users_db, get_current_active_user
-from Authenticate.token import verifyUserToken
-from Authenticate.HallAccess import getHallToken, updatHallToken
+#Auth for Hall
+from Authenticate.HallAccess import create_access_Hall_token, verify_Hall_access
 
 ACCESS_TOKEN_EXPIRE_MINUTES  = 30
+HALL_ACCESS_TOKEN_EXPIRE_MINUTES  = 5
 
 app = FastAPI()
 
@@ -43,33 +43,28 @@ async def login_for_access_token(
     return {"access_token": access_token, "token_type": "Bearer"}
 
 # APis give User a hash token to use for access
-@app.post ("/HallAccess/getToken/{request}")
-async def requestHallAccess (request,iputJson: HallTokenRequest):
-    verifyToken, response = verifyUserToken()
-    if verifyToken:
-        if request == "getToken":
-            return getHallToken()
-        elif request == "resetToken":
-            return updatHallToken()
-    else:
-        raise HTTPException(status_code=401, detail=response)
+@app.get("/HallAccess/me/", response_model=HallAccessResponse)
+async def GetHallAcess(
+    current_user: Annotated[User, Depends(get_current_active_user)]
+   
+):
+    
+    access_token_expires = timedelta(minutes=HALL_ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_Hall_token(
+        data={"name": current_user.username}, expires_delta=access_token_expires
+        )
+    
+    return {"message":access_token, "token_type": "Bearer"}
 
+@app.post("/HallAccess/{location}/{token}/", response_model=HallAcessVerifyResponse)
+async def verifyHallAccess(location, token):
+    response = verify_Hall_access(token, location)
+    return {"message": response}
 @app.get("/users/me/", response_model=User)
 async def read_users_me(
     current_user: Annotated[User, Depends(get_current_active_user)]
 ):
     return current_user
-#setUp user token
-#class of token
-#user login and signup
-
-
-# #Apis verify signal or verify qrcode
-# @app.put ("/HallAccess/{request}")
-# def verifyHallAccess (request, inputJson: HallTokenVerify):
-#     if request == "verify":
-#         pass
-#     pass
 
 # #Apis getDinningService user Data
 # @app.put ("/DinningService/request/{request}")
@@ -83,8 +78,3 @@ async def read_users_me(
 # @app.put ("test/{link}")
 # def test(link, inputJson: signinInput):
 #     return {"link": link, "jsonInput": inputJson}
-
-
-# @app.put ("/HallAccess")
-# def sendHallAccessToken (inputJson):
-#     pass

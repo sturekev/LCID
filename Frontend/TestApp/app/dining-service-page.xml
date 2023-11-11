@@ -1,0 +1,18 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
+    <ActionBar title="Dining Services" class="action-bar" icon="">
+        <ActionItem tap="onLogout" android.position="popup" text="Logout" android.systemIcon="ic_menu_logout" />
+    </ActionBar>
+
+    <FlexboxLayout class="main-container">
+        <FlexboxLayout class='profile'>
+            <Button text="Generate QRCode" width="300" height="150" class="vertical-button" tap="onGenerateQRCode" />
+            <Image src="" class="qr-code" loaded="{{ onImageLoadedBasic }}"></Image>
+        </FlexboxLayout>
+
+        <FlexboxLayout class="horizontal-button-container">
+            <Button text="Residence" width="155" class="horizontal-button" tap="onResidenceHall" fontSize="14" />
+            <Button text="Dining" width="150" class="horizontal-button" tap="onDiningService" fontSize="14" />
+            <Button text="Library" width="150" class="horizontal-button" tap="onLibraryCheckout" fontSize="14" />
+        </FlexboxLayout>
+    </FlexboxLayout>
+</Page>

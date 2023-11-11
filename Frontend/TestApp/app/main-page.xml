@@ -1,25 +1,21 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
-    <ActionBar title="LCID" icon="" />
+    <ActionBar title="LCID Login" class="action-bar" icon="" />
 
     <FlexboxLayout class="page">
         <StackLayout class="form">
-            <Label class="header" text="Log-In"></Label>
 
-            <StackLayout class="input-field">
-                <TextField id="usr" class="input" hint="Username" text="{{ username }}"/>
-            </StackLayout> 
+            <ScrollView>
+                <StackLayout class="p-t-15">
+                    <TextField class="m-t-10 m-b-10 m-l-15 m-r-15" id="usr" class="input" hint="Username" text="{{ username }}"></TextField>
+                    <TextField class="m-t-10 m-b-10 m-l-15 m-r-15" id="pass" class="input" secure="True" hint="Password" text="{{ password }}"></TextField>
 
-
-            <StackLayout class="input-field">
-                <TextField id="pass" class="input" secure="True" hint="password" text="{{ password }}"/>
-            </StackLayout>  
-
-            <StackLayout class="p-20">
-                <Button text="Login" tap="{{ logIn }}" class="btn btn-primary"></Button> 
-                <Button text="Continue As Guest" tap="navigateToHome" class="btn btn-primary"></Button> 
-                <Label text="{{ debug }}" class="h2 text-center" textWap="true" />
-                <Label text="{{ origin }}" class="h2 text-center" textWap="true" />
-            </StackLayout>
+                    <Label class="m-t-10 m-b-10 m-l-15 m-r-15" text="Forgot password?" tap="onForgotPasswordTap"></Label>
+                    <!-- Do not have a onForgotPasswordTap function yet -->
+                    <Button text="SIGN IN" tap="{{ logIn }}" class="btn btn-primary"></Button> 
+                    <Button text="Continue As Guest" tap="navigateToHome" class="btn btn-primary"></Button> 
+                    <Label text="{{ debug }}" class="h2 text-center" textWap="true" />
+                </StackLayout>
+            </ScrollView>
 
 
         </StackLayout>

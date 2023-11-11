@@ -20,8 +20,16 @@
     border-radius: 5;
     margin: 10;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    justify-content: space-around;
-    align-items: flex-end;
+}
+
+.vertical-button {
+    background-color: #3498db;
+    color: #fff;
+    font-size: 18;
+    padding: 10;
+    border-radius: 5;
+    text-align: center;
+    margin: 10;
 }
 
 .horizontal-button {
@@ -39,6 +47,6 @@
     flex-direction: column;
 }
 
-.label {
-    margin: 5;
+.qr-code {
+    margin: 25;
 }

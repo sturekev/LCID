@@ -1,6 +1,7 @@
-.page{ 
+.page {
     align-items: center;
 }
+
 .form {
     width: 100%;
     margin-left: 30;
@@ -8,18 +9,17 @@
 }
 
 .header {
-    font-size:  25;
+    font-size: 30;
     text-align: center;
     color: blue;
-    font-weight: 500;
-    margin-bottom:  70;
+    font-weight: 600;
 }
 
 .input {
-    font-size: 20;
+    margin-bottom: 20;
 }
 
-.btn-primary{
-
-    /* login button styling*/
+.action-bar {
+    background-color: #3498db;
+    color: #fff;
 }

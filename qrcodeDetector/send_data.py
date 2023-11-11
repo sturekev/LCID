@@ -38,12 +38,13 @@ def abcd():
         "user_id": 123,
         "username": "john_doe",
         "caf_swipes_left":7,
-        "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=3)  # Token expiration time
+        "exp": datetime.datetime.utcnow() + datetime.timedelta(days=200)  # Token expiration time
     }
 
     # Encode the data into a JWT
     token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
-
+    
+    print(token)
     # print(payload["exp"],type(payload["exp"]))
     # print("Encoded JWT token:", token)
     # print("type",type(token))
@@ -53,6 +54,6 @@ def abcd():
     # print("response1")
     # print(response1.status_code)
     try: print(response1.json()["enter_time"])
-    except: pass
+    except: pass    
     print(response1.json()["message"])
 abcd()

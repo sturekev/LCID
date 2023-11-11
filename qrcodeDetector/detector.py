@@ -44,7 +44,8 @@ def qr_scanner():
                 cv2.waitKey(200)
                 cap.release()
                 cv2.destroyAllWindows()
-                break
+                # send_data()
+                return data
         # Check if the 'q' key was pressed to exit the loop
         if cv2.waitKey(1) & 0xFF == ord('q'):
             # Release the VideoCapture object and close all windows
@@ -53,4 +54,4 @@ def qr_scanner():
             break
 
 
-qr_scanner()
+data=qr_scanner()

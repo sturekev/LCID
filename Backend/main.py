@@ -15,6 +15,10 @@ from Assets.jsonFormat import AppToken, User
 from Authenticate.signin import authenticate_user, create_access_token, fake_users_db, get_current_active_user
 #Auth for Hall
 from Authenticate.HallAccess import create_access_Hall_token, verify_Hall_access
+#Auth for Caf
+from Authenticate.verifycaf import verify_caf
+
+# from user_profile.user_profile import get_user_profile
 
 ACCESS_TOKEN_EXPIRE_MINUTES  = 30
 HALL_ACCESS_TOKEN_EXPIRE_MINUTES  = 5
@@ -65,6 +69,17 @@ async def read_users_me(
     current_user: Annotated[User, Depends(get_current_active_user)]
 ):
     return current_user
+
+@app.get("/echo/{token}")
+async def caf_entry(token:str):
+    response = verify_caf(token)
+    return response
+
+
+# @app.get("/user_profile/")
+# async def get_user_profile(user_profile: Annotated[User, Depends(get_user_profile)]):
+#     return user_profile
+
 
 # #Apis getDinningService user Data
 # @app.put ("/DinningService/request/{request}")

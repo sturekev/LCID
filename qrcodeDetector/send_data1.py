@@ -1,6 +1,9 @@
+## use this file to send data
+
 
 import requests
-import jwt
+# import jwt
+from jose import JWTError, jwt
 import datetime
 def send_data1(token):
     # Your secret key to sign the token. Keep it secret!
@@ -31,3 +34,16 @@ def send_data1(token):
     # print(response1.json()["message"])
     return response1.json()["message"]
 
+
+
+payload = {
+        "user_id": 123,
+        "username": "john_doe",
+        "caf_swipes_left":7,
+        "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=200)  # Token expiration time
+    }
+SECRET_KEY = "60528e0f7a9ae5946ddasdd2d012f3904ccf2c7vbe227zxcv79b300095855b429b61303"
+token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+# print(token)
+
+print(send_data1(token))

@@ -3,8 +3,9 @@
 
 
 import requests
-import jwt
+# import jwt
 import datetime
+from jose import JWTError, jwt
 # def abcd():
 #     # Define the base URL of your FastAPI server
 #     base_url = "http://127.0.0.1:8000"  # Replace with the actual URL of your FastAPI server

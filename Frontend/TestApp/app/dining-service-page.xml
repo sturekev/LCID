@@ -10,9 +10,9 @@
         </FlexboxLayout>
 
         <FlexboxLayout class="horizontal-button-container">
-            <Button text="Residence" width="155" class="horizontal-button" tap="onResidenceHall" fontSize="14" />
-            <Button text="Dining" width="150" class="horizontal-button" tap="onDiningService"  color="black" fontSize="14" />
-            <Button text="Library" width="150" class="horizontal-button" tap="onLibraryCheckout" fontSize="14" />
+            <Button text="Residence" width="155" class="horizontal-button" tap="onResidenceHall" />
+            <Button text="Dining" width="150" class="selected" tap="onDiningService" />
+            <Button text="Library" width="150" class="horizontal-button" tap="onLibraryCheckout" />
         </FlexboxLayout>
     </FlexboxLayout>
 </Page>

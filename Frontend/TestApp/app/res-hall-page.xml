@@ -10,9 +10,11 @@
         </FlexboxLayout>
 
         <FlexboxLayout class="horizontal-button-container">
-            <Button text="Residence" width="155" class="horizontal-button" tap="onResidenceHall" color="black" fontSize="14" />
-            <Button text="Dining" width="150" class="horizontal-button" tap="onDiningService" fontSize="14" />
-            <Button text="Library" width="150" class="horizontal-button" tap="onLibraryCheckout" fontSize="14" />
+            <Button text="Residence" width="155" class="selected" tap="onResidenceHall" />
+            <Button text="Dining" width="150" class="horizontal-button" tap="onDiningService" />
+            <Button text="Library" width="150" class="horizontal-button" tap="onLibraryCheckout" />
         </FlexboxLayout>
     </FlexboxLayout>
 </Page>
+
+<!-- change to darker blue for button transition and text is a gray -->

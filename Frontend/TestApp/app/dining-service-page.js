@@ -1,4 +1,5 @@
 import { createViewModel } from './main-view-model';
+import { getString, setString, remove } from '@nativescript/core/application-settings';
 
 export function navigateToHome(args) {
   const button = args.object
@@ -9,6 +10,8 @@ export function navigateToHome(args) {
 export function onLogout(args) {
     const button = args.object
     const page = button.page
+    remove('access_token')
+    remove('hall_token')
     page.frame.navigate('main-page')
   }
 

@@ -5,8 +5,14 @@ export function onNavigatingTo(args) {
   page.bindingContext = createViewModel()
 }
 
-export function navigateToHome(args){
+export function navigateToHome(args) {
   const button = args.object
   const page = button.page
   page.frame.navigate("home-page")
+}
+
+export function onForgotPasswordTap(args) {
+  const button = args.object
+  const page = button.page
+  page.frame.navigate("forgot-page")
 }

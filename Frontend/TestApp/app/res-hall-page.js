@@ -1,5 +1,5 @@
 import { createViewModel } from './main-view-model';
-import {ImageSource, Image, Label, Http } from '@nativescript/core';
+import {ImageSource, Image, Http } from '@nativescript/core';
 import { getString, setString, remove } from '@nativescript/core/application-settings';
 import { QrGenerator } from 'nativescript-qr-generator';
 var getRequests = require("./apiUrls")
@@ -43,7 +43,7 @@ export function letMeIn(args) {
       setString('hall_token', res)
       const button = args.object
       const page = button.page
-      const image = page.getViewById("qr")
+      const image = page.getViewById("qr-code")
       var token = getString('hall_token')
       console.log(token)
       const result = new QrGenerator().generate(token, {

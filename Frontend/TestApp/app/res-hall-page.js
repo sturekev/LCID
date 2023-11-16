@@ -4,9 +4,10 @@ import { getString, setString, remove } from '@nativescript/core/application-set
 import { QrGenerator } from 'nativescript-qr-generator';
 var getRequests = require("./apiUrls")
 
-export function onNavigatingTo(args) {
-  const page = args.object
-  page.bindingContext = createViewModel()
+export function navigateToHome(args) {
+  const button = args.object
+  const page = button.page
+  page.frame.navigate("home-page")
 }
 
 export function onLogout(args) {
@@ -29,6 +30,23 @@ export function onLogout(args) {
     page.frame.navigate('library-checkout-page')
   }
 
+export function onResidenceHall(args) {
+  const button = args.object
+  const page = button.page
+  page.frame.navigate('res-hall-page')
+}
+
+export function onDiningService(args) {
+  const button = args.object
+  const page = button.page
+  page.frame.navigate('dining-service-page')
+}
+
+export function onLibraryCheckout(args) {
+  const button = args.object
+  const page = button.page
+  page.frame.navigate('library-checkout-page')
+}
 
 export function letMeIn(args) {
   Http.request({

@@ -18,18 +18,6 @@ export function onLogout(args) {
     page.frame.navigate('main-page')
   }
  
-  export function onDiningService(args) {
-    const button = args.object
-    const page = button.page
-    page.frame.navigate('dining-service-page')
-  }
-  
-  export function onLibraryCheckout(args) {
-    const button = args.object
-    const page = button.page
-    page.frame.navigate('library-checkout-page')
-  }
-
 export function onResidenceHall(args) {
   const button = args.object
   const page = button.page

@@ -104,7 +104,6 @@ toml==0.10.2
 typing_extensions==4.8.0
 ujson==5.8.0
 uvicorn==0.23.2
-uvloop==0.18.0
 watchfiles==0.21.0
 websockets==11.0.3
 greenlet==3.0.1 

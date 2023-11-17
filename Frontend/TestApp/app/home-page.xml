@@ -1,5 +1,5 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
-    <ActionBar title="LCID Dashboard" class="action-bar" icon="">
+    <ActionBar title="LCID Dashboard" class="action-bar" tap="navigateToHome" icon="">
         <ActionItem tap="onLogout" android.position="popup" text="Logout" android.systemIcon="ic_menu_logout" />
     </ActionBar>
     

@@ -1,18 +1,18 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
-    <ActionBar title="Residence Hall" class="action-bar" icon="">
+    <ActionBar title="LCID Dashboard" tap="navigateToHome" class="action-bar" icon="">
         <ActionItem tap="onLogout" android.position="popup" text="Logout" android.systemIcon="ic_menu_logout" />
     </ActionBar>
-
-    <FlexboxLayout class="main-container">
+    <FlexboxLayout  class="main-container">
         <FlexboxLayout class='profile'>
-            <Button text="Generate QRCode" width="300" height="150" class="vertical-button" tap="onGenerateQRCode" />
-            <Image src="" class="qr-code" loaded="{{ onImageLoadedBasic }}"></Image>
+            <Button text="Generate QRCode" width="300" height="150" class="vertical-button" tap="letMeIn" />
+            <Image src="" id="qr-code"></Image>
         </FlexboxLayout>
-
         <FlexboxLayout class="horizontal-button-container">
-            <Button text="Residence" width="155" class="horizontal-button" tap="onResidenceHall" fontSize="14" />
-            <Button text="Dining" width="150" class="horizontal-button" tap="onDiningService" fontSize="14" />
-            <Button text="Library" width="150" class="horizontal-button" tap="onLibraryCheckout" fontSize="14" />
+            <Button text="Residence" width="155" class="selected" tap="onResidenceHall" />
+            <Button text="Dining" width="150" class="horizontal-button" tap="onDiningService" />
+            <Button text="Library" width="150" class="horizontal-button" tap="onLibraryCheckout" />
         </FlexboxLayout>
     </FlexboxLayout>
 </Page>
+
+<!-- change to darker blue for button transition and text is a gray -->

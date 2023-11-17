@@ -40,6 +40,14 @@
     text-align: center;
 }
 
+.selected {
+    background-color: #1C5275;
+    color: #fff;
+    font-size: 14;
+    border-radius: 5;
+    text-align: center;
+}
+
 .profile {
     height: 660;
     border-radius: 10;

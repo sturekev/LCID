@@ -2,6 +2,7 @@
 #Fastapi packages
 from datetime import timedelta, datetime
 from typing import Annotated
+
 from fastapi import FastAPI, HTTPException, Body, Depends, status
 from fastapi.security import OAuth2PasswordRequestForm
 import uvicorn
@@ -11,10 +12,12 @@ from decouple import config
 #jsonFormat where keep all Put methods for imput Json from API
 from Assets.jsonFormat import HallAccessResponse, HallAcessVerifyResponse
 from Assets.jsonFormat import AppToken, User
+from Assets.jsonFormat import dinningCaf
 #Authenticate for signin
 from Authenticate.signin import authenticate_user, create_access_token, fake_users_db, get_current_active_user
 #Auth for Hall
 from Authenticate.HallAccess import create_access_Hall_token, verify_Hall_access
+from DinningService.caf import create_caf_swipe_token, verify_caf_swipe
 
 ACCESS_TOKEN_EXPIRE_MINUTES  = 30
 HALL_ACCESS_TOKEN_EXPIRE_MINUTES  = 5
@@ -65,6 +68,28 @@ async def read_users_me(
     current_user: Annotated[User, Depends(get_current_active_user)]
 ):
     return current_user
+
+
+@app.get("/dinningservice/caf/me/{swipes}", response_model=dinningCaf)
+async def getSwipe(
+    swipes, current_user: Annotated[User, Depends(get_current_active_user)]
+   
+):
+    
+    access_token_expires = timedelta(minutes=HALL_ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_caf_swipe_token(
+        data={"name": current_user.username, "swipes": swipes}, expires_delta=access_token_expires
+        )
+    
+    return {"message":access_token, "token_type": "Bearer"}
+
+
+@app.post("/dinningservice/caf/{token}/", response_model=HallAcessVerifyResponse)
+async def verifyHallAccess(location, token):
+    success,swipe, response = verify_caf_swipe(token, location)
+    if swipe:
+        return {"success": success, "swipes": swipe}
+    return {"success": success, "message": response}
 
 # #Apis getDinningService user Data
 # @app.put ("/DinningService/request/{request}")

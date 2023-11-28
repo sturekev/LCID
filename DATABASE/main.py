@@ -13,13 +13,12 @@ try:
     print("Successfully connected to the database.")
 
     db_cursor = db_connection.cursor()
-    create_table = '''DROP TABLE IF EXISTS guest_account CASCADE;
+    create_table = '''DROP TABLE IF EXISTS account CASCADE;
                         CREATE TABLE guest_account(
                         id SERIAL PRIMARY KEY,
                         username varchar(255) NOT NULL,
-                        password BYTEA NOT NULL,
-                        user_token BYTEA,
-                        token_expiration DATE NOT NULL);'''
+                        password BYTEA NOT NULL
+                        );'''
     db_cursor.execute(create_table)
     db_connection.commit()
     
@@ -37,7 +36,7 @@ try:
     # Changed student_id to account_id, 
     # because staff and faculty should also be in the building log, 
     # not just students
-    create_table = '''DROP TABLE IF EXISTS account CASCADE;
+    create_table = '''DROP TABLE IF EXISTS userProfile CASCADE;
                         CREATE TABLE account(
                         user_id varchar(255) PRIMARY KEY,
                         account_id INTEGER NOT NULL,

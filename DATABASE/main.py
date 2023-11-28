@@ -36,7 +36,7 @@ try:
     # because staff and faculty should also be in the building log, 
     # not just students
     create_table = '''DROP TABLE IF EXISTS userProfile CASCADE;
-                        CREATE TABLE account(
+                        CREATE TABLE userProfile(
                         id varchar(255) PRIMARY KEY,
                         user_id INTEGER NOT NULL,
                         account_id INTEGER NOT NULL,
@@ -62,7 +62,7 @@ try:
 
     create_table = '''DROP TABLE IF EXISTS meal_balance CASCADE;
                         CREATE TABLE meal_balance(
-                        account_id varchar(255) REFERENCES account(user_id),
+                        account_id varchar(255) REFERENCES userProfile(user_id),
                         name varchar(255) NOT NULL,
                         role varchar(255) NOT NULL,
                         swipes_remaining INTEGER NOT NULL,

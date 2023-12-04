@@ -41,3 +41,12 @@ class HallAccessResponse(BaseModel):
 # reponse for Hall Acess verify 
 class HallAcessVerifyResponse(BaseModel):
     message :bool 
+    
+class dinningCaf(BaseModel):
+    message : str
+    token_type: str
+
+class HallAcessVerifyResponse(BaseModel):
+    success : bool
+    swipes: int | None = None
+    message : str | None = None

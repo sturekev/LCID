@@ -5,8 +5,8 @@
 
     <FlexboxLayout class="main-container">
         <FlexboxLayout class='profile'>
-            <Button text="Generate QRCode" width="300" height="150" class="vertical-button" tap="onGenerateQRCode" />
-            <Image src="" class="qr-code" loaded="{{ onImageLoadedBasic }}"></Image>
+            <Button text="Generate QRCode" width="300" height="150" class="vertical-button" tap="giveMeFood" />
+            <Image src="" id="qr-code"></Image>
         </FlexboxLayout>
 
         <FlexboxLayout class="horizontal-button-container">

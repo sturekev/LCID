@@ -58,3 +58,9 @@
 .qr-code {
     margin: 25;
 }
+
+.barcode {
+    margin-top: 35;
+    font-size: 74;
+    font-family: "Free 3 of 9", "free3of9"; font-weight: 400; 
+}

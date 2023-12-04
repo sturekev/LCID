@@ -1,6 +1,7 @@
 
 Setup Environment:
     python3 -m venv venv
+    ./venv/Scripts/activate
 
 install requirements:
     pip install -r BackEndRequirements.txt

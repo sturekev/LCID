@@ -6,8 +6,8 @@
     <FlexboxLayout class="main-container">
         <FlexboxLayout class='profile'>
             <Button text="Generate QRCode" width="300" height="150" class="vertical-button" tap="giveMeBook" />
-            <StackLayout orientation="vertical" class='qr-example'>
-                <Image src="../App_Resources/Android/src/main/res/drawable-hdpi/new_code1.png" id="qr"></Image>
+            <StackLayout orientation="vertical">
+                <Label id = "bc" text="" class="barcode"></Label>
             </StackLayout>      
         </FlexboxLayout>
 

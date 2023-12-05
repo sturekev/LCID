@@ -16,18 +16,24 @@ try:
     create_table = '''DROP TABLE IF EXISTS account CASCADE;
                         CREATE TABLE account(
                         id SERIAL PRIMARY KEY,
+                        firstname varchar(255) NOT NULL,
+                        lastname varchar(255),
                         username varchar(255) NOT NULL,
                         password BYTEA NOT NULL);'''
     db_cursor.execute(create_table)
-    db_connection.commit()
     
-    db_connection = create_mockdata_account(db_connection=db_connection)
+    db_connection = create_mockdata_account(db_connection)
+    print("Records inserted successfully to account table")
+    db_connection.commit()
 
     create_table = '''DROP TABLE IF EXISTS building_info CASCADE;
                         CREATE TABLE building_info(
                         building_id SERIAL PRIMARY KEY,
                         building_name varchar(255) UNIQUE NOT NULL);'''
     db_cursor.execute(create_table)
+
+    db_connection = create_mockdata_building_info(db_connection)
+    print("Records inserted successfully to building info table")
     db_connection.commit()
 
     # Changed student_id to account_id, 
@@ -35,13 +41,16 @@ try:
     # not just students
     create_table = '''DROP TABLE IF EXISTS account_profile CASCADE;
                         CREATE TABLE account_profile(
-                        user_id varchar(255) PRIMARY KEY,
+                        id_number varchar(255) PRIMARY KEY,
                         account_id INTEGER NOT NULL,
                         user_token BYTEA NOT NULL,
                         housing INTEGER NOT NULL,
                         FOREIGN KEY(account_id) REFERENCES account(id),
-                        FOREIGN KEY(housing) REFERENCES building_info(building_name));'''
+                        FOREIGN KEY(housing) REFERENCES building_info(building_id));'''
     db_cursor.execute(create_table)
+    
+    db_connection = create_mockdata_account_profile(db_connection)
+    print("Records inserted successfully to account profile info table")
     db_connection.commit()
 
 
@@ -78,17 +87,28 @@ try:
     # db_connection.commit()
 
 #DECIDE MEAL PLAN LATER rework 
+    # create_table = '''DROP TABLE IF EXISTS meal_balance CASCADE;
+    #                     CREATE TABLE meal_balance(
+    #                     account_id INTEGER NOT NULL,
+    #                     name varchar(255) NOT NULL,
+    #                     role varchar(255) NOT NULL,
+    #                     swipes_remaining INTEGER NOT NULL,
+    #                     dining_dollars FLOAT4 NOT NULL,
+    #                     meal_plan varchar(255) NOT NULL,
+    #                     expiration_date DATE NOT NULL,
+    #                     FOREIGN KEY(account_id) REFERENCES account(id));'''
     create_table = '''DROP TABLE IF EXISTS meal_balance CASCADE;
                         CREATE TABLE meal_balance(
-                        account_id INTEGER REFERENCES account(user_id),
-                        name varchar(255) NOT NULL,
+                        account_id INTEGER NOT NULL,
                         role varchar(255) NOT NULL,
                         swipes_remaining INTEGER NOT NULL,
                         dining_dollars FLOAT4 NOT NULL,
                         meal_plan varchar(255) NOT NULL,
-                        expiration_date DATE NOT NULL,
-                        FOREIGN KEY(account_id) REFERENCES account_profile(account_id));'''
+                        FOREIGN KEY(account_id) REFERENCES account(id));'''
     db_cursor.execute(create_table)
+
+    db_connection = create_mockdata_meal_balance(db_connection)
+    print("Records inserted successfully to meal balance table")
     db_connection.commit()
 
     # create_table = '''DROP TABLE IF EXISTS dining_services CASCADE;
@@ -134,6 +154,7 @@ try:
 
 except OperationalError:
     print("Error connecting to the database :/")
+    print(OperationalError)
 
 finally:
     if db_connection:

@@ -12,13 +12,14 @@ class HallTokenData(BaseModel):
     resident: str
 # For Login 
 class TokenData(BaseModel):
-    username: str | None = None
+    username: str
 
 class User(BaseModel):
     username: str
     email: str | None = None
     full_name: str | None = None
     disabled: bool | None = None
+    student_id : int | None = None
 
 
 class UserInDB(User):
@@ -50,3 +51,6 @@ class HallAcessVerifyResponse(BaseModel):
     success : bool
     swipes: int | None = None
     message : str | None = None
+    
+class library_iD (BaseModel):
+    message : int

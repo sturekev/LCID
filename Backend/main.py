@@ -13,6 +13,8 @@ from decouple import config
 from Assets.jsonFormat import HallAccessResponse, HallAcessVerifyResponse
 from Assets.jsonFormat import AppToken, User
 from Assets.jsonFormat import dinningCaf
+from Assets.jsonFormat import library_iD
+
 #Authenticate for signin
 from Authenticate.signin import authenticate_user, create_access_token, fake_users_db, get_current_active_user
 #Auth for Hall
@@ -90,6 +92,12 @@ async def verifyHallAccess(location, token):
     if swipe:
         return {"success": success, "swipes": swipe}
     return {"success": success, "message": response}
+
+@app.post("/library/me/", response_model = library_iD)
+async def library_student_id (
+    current_user: Annotated[User, Depends(get_current_active_user)]
+):
+    return {"message": current_user.student_id} 
 
 # #Apis getDinningService user Data
 # @app.put ("/DinningService/request/{request}")

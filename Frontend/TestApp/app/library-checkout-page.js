@@ -13,6 +13,8 @@ export function onLogout(args) {
     const page = button.page
     remove('access_token')
     remove('hall_token')
+    remove('dining_token')
+    remove('book_token')
     page.frame.navigate('main-page')
   }
 
@@ -36,20 +38,21 @@ export function onLibraryCheckout(args) {
 
 export function giveMeBook(args) {
   Http.request({
-    url: getRequests.apiHallAccess,
-    method: 'GET',
+    url: getRequests.apiLibrayID,
+    method: 'POST',
     headers: { 'Content-Type' : 'application/json', 'Authorization' : 'Bearer ' + getString('access_token')},
   }).then(response => {
     var result = response.content.toJSON();
     var res = result.message
     if(res != null){ 
-      setString('book_token', res)
+      setString('book_token', "*"+res.toString()+"*")
       const button = args.object
       const page = button.page
       const label = page.getViewById("bc")
-      var token = getString('book_token')
+      var sid = getString('book_token')
+      label.text =  sid  
       //format sid stirng with '*' on either side
-      label.text = "*00529194*"      
+      //label.text = "*"+sid+"*"
     }
     else{
       viewModel.set('debug', ` resToken: ${result}`);

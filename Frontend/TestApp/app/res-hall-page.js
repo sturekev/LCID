@@ -15,6 +15,7 @@ export function onLogout(args) {
     remove('access_token')
     remove('hall_token')
     remove('dining_token')
+    remove('book_token')
     page.frame.navigate('main-page')
   }
  

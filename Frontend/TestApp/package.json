@@ -1,5 +1,5 @@
 {
-  "name": "TestApp",
+  "name": "LCID",
   "main": "app/app.js",
   "version": "1.0.0",
   "private": true,
@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@nativescript/android": "8.5.3",
-    "@nativescript/preview-cli": "1.0.5",
+    "@nativescript/preview-cli": "1.0.12",
     "@nativescript/webpack": "~5.0.14"
   }
 }

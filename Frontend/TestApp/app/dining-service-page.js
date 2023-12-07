@@ -1,4 +1,3 @@
-import { createViewModel } from './main-view-model';
 import {ImageSource, Image, Http } from '@nativescript/core';
 import { getString, setString, remove } from '@nativescript/core/application-settings';
 import { QrGenerator } from 'nativescript-qr-generator';
@@ -15,6 +14,7 @@ export function onLogout(args) {
     const page = button.page
     remove('access_token')
     remove('hall_token')
+    remove('book_token')
     page.frame.navigate('main-page')
   }
 
@@ -45,7 +45,6 @@ export function giveMeFood(args) {
     var result = response.content.toJSON();
     var res = result.message
     if(res != null){ 
-      console.log('test')
       setString('hall_token', res)
       const button = args.object
       const page = button.page

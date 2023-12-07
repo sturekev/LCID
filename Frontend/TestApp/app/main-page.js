@@ -42,9 +42,12 @@ export function logIn(args){
       content: endocedStr,
     }).then(response => {
       var result = response.content.toJSON();
-      if(result == null){
-        
-        viewModel.set('debug', ` Response: ${result.access_token}`);
+      if(result.detail == "Incorrect username or password"){
+        console.log(result.detail)
+        const button = args.object
+        const page = button.page
+        const label = page.getViewById("errorMSG")
+        label.text = result.detail
       }
       else{
         setString('access_token', result.access_token)
@@ -53,6 +56,6 @@ export function logIn(args){
       }
     }, error => {
       console.log("test2")
-        console.error(error);
+      console.error(error);
     });
 }

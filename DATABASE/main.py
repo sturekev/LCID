@@ -2,7 +2,7 @@ import psycopg2
 from psycopg2 import OperationalError
 from db_config import get_db_info
 
-from mockdata.mockdata import *
+# from mockdata.mockdata import *
 filename='db_info.ini'
 section='cardReaderDB'
 db_info = get_db_info(filename, section)
@@ -14,7 +14,7 @@ try:
 
     db_cursor = db_connection.cursor()
     create_table = '''DROP TABLE IF EXISTS account CASCADE;
-                        CREATE TABLE guest_account(
+                        CREATE TABLE account(
                         id SERIAL PRIMARY KEY,
                         username varchar(255) NOT NULL,
                         password BYTEA NOT NULL

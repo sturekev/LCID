@@ -1,5 +1,5 @@
 
-## biến thành function
+## creates fake token and send request to api
 
 
 import requests
@@ -37,7 +37,7 @@ def abcd():
     payload = {
         "user_id": 123,
         "username": "john_doe",
-        "caf_swipes_left":7,
+        "caf_swipes_left":0,
         "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=3)  # Token expiration time
     }
 
@@ -45,7 +45,7 @@ def abcd():
     token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
 
     # print(payload["exp"],type(payload["exp"]))
-    # print("Encoded JWT token:", token)
+    print("Encoded JWT token:", token)
     # print("type",type(token))
     
     response1 = requests.get(f"{base_url}/echo/{token}")

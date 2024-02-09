@@ -13,27 +13,85 @@ from Assets.jsonFormat import TokenData, User, UserInDB
 # verify signin username and password from db 
 # return json return for APis (with redirect for 2 step Auth , or a error)
 
-def fake_users_db ():
-    fake_users_db = {
-        "johndoe": {
-            "username": "johndoe",
-            "full_name": "John Doe",
-            "email": "johndoe@example.com",
-            "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
-            "disabled": False,
-            "student_id" : 529194
-        },
-        "jevin": {
-            "username": "jevin",
-            "full_name": "jev Doe",
-            "email": "jev@example.com",
-            "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
-            "disabled": True,
-            "student_id" : 529194
-        }
-    }
-    return fake_users_db
+import psycopg2
+from psycopg2 import OperationalError
 
+import sys
+import os
+
+# Path to the DATABASE directory
+database_dir = os.path.join('C:', os.sep, 'Users', 'samcv', 'Desktop', 'Senior-Project', 'DATABASE')
+
+# Add the DATABASE directory to the Python path
+sys.path.append(database_dir)
+
+# Now you can import get_db_info from db_config
+from db_config import get_db_info
+
+# Your code using get_db_info follows
+
+
+# from mockdata.mockdata import *
+filename='/DATABASE/db_info.ini'
+section='cardReaderDB'
+db_info = get_db_info(filename, section)
+
+def fake_users_db ():
+    users_db = {}
+    db_connection = None
+
+    try:
+        db_connection = psycopg2.connect(**db_info)
+        db_cursor = db_connection.cursor()
+        db_cursor.execute('''SELECT firstname, lastname, username, password, id_number, building_name 
+                          FROM account, account_profile, building_info 
+                          WHERE account_profile.account_id = account.id 
+                          AND building_info.building_id = account_profile.housing''')
+        info_result = db_cursor.fetchall()
+
+        for entry in info_result:
+            users_db[entry[2]] = {
+                "username": entry[2],
+                "full_name": f"{entry[0]} {entry[1]}",
+                "email": f"{entry[2]}@luther.edu",
+                # "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",  # For simplicity, using the same hash
+                # Not sure what is going on with the above hashed_password
+                "hashed_password": entry[3],
+                "disabled": False,
+                "student_id": entry[4],  # Incrementing the student ID for each user
+                "building": entry[5]  # Assuming all belong to the same building
+            }
+        
+    except OperationalError:
+        print("Error connecting to the database :/")
+        print(OperationalError)
+
+    finally:
+        if db_connection:
+            db_connection.close()
+            print("Closed connection.")
+
+    return users_db
+    # fake_users_db = {
+    #     "johndoe": {
+    #         "username": "johndoe",
+    #         "full_name": "John Doe",
+    #         "email": "johndoe@example.com",
+    #         "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
+    #         "disabled": False,
+    #         "student_id" : 529194,
+    #         "building" : "Miller"
+    #     },
+    #     "jevin": {
+    #         "username": "jevin",
+    #         "full_name": "jev Doe",
+    #         "email": "jev@example.com",
+    #         "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
+    #         "disabled": True,
+    #         "student_id" : 529194
+    #     }
+    # }
+    # return fake_users_db
 
 
 SECRET_KEY = config("secret")
@@ -103,3 +161,5 @@ async def get_current_active_user(
     if current_user.disabled:
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
+
+

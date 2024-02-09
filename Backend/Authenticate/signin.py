@@ -19,11 +19,12 @@ from psycopg2 import OperationalError
 import sys
 import os
 
-# Path to the DATABASE directory
-database_dir = os.path.join('C:', os.sep, 'Users', 'samcv', 'Desktop', 'Senior-Project', 'DATABASE')
+project_base_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'DATABASE')
 
-# Add the DATABASE directory to the Python path
-sys.path.append(database_dir)
+sys.path.append(project_base_dir)
+
+# Now that the DATABASE directory is in sys.path, db_config can be imported
+from db_config import get_db_info
 
 # Now you can import get_db_info from db_config
 from db_config import get_db_info

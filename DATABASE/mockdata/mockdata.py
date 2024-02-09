@@ -14,34 +14,22 @@ from psycopg2 import OperationalError
 
 account_mockdata = [
     {
-        'first_name': 'John',
-        'last_name': 'Mason',
-        'username': 'masojo01',
+        'first_name': 'Samuel',
+        'last_name': 'Vue',
+        'username': 'vuesa01',
         'password': 'password1'
     },
     {
-        'first_name': 'Alice',
-        'last_name': 'Johnson',
-        'username': 'johnal01',
+        'first_name': 'Reece',
+        'last_name': 'Flynn',
+        'username': 'flynre01',
         'password': 'password2'
     },
     {
-        'first_name': 'Bob',
-        'last_name': 'Smith',
-        'username': 'smibob01',
+        'first_name': 'Kevin',
+        'last_name': 'Tu',
+        'username': 'tuph01',
         'password': 'password3'
-    },
-    {
-        'first_name': 'Eva',
-        'last_name': 'Miller',
-        'username': 'mileva01',
-        'password': 'password4'
-    },
-    {
-        'first_name': 'Chris',
-        'last_name': 'Taylor',
-        'username': 'taylch01',
-        'password': 'password5'
     }
 ]
 
@@ -89,34 +77,22 @@ building_info_mockdata = [
 
 account_profile_mockdata = [
     {
-        'id_number': '723492',
+        'id_number': '528480',
         'account_id': 1,
-        'user_token': 'Mason',  # user_token is just random. not actually 'Mason'
-        'housing': 5,
-    },
-    {
-        'id_number': '618734',
-        'account_id': 2,
         'user_token': 'Mason',
         'housing': 1,
     },
     {
-        'id_number': '835261',
+        'id_number': '527836',
+        'account_id': 2,
+        'user_token': 'Reece',
+        'housing': 8,
+    },
+    {
+        'id_number': '529194',
         'account_id': 3,
-        'user_token': 'Mason',
-        'housing': 7,
-    },
-    {
-        'id_number': '497582',
-        'account_id': 4,
-        'user_token': 'Mason',
+        'user_token': 'Kevin',
         'housing': 4,
-    },
-    {
-        'id_number': '162937',
-        'account_id': 5,
-        'user_token': 'Mason',
-        'housing': 10,
     }
 ]
 
@@ -125,7 +101,7 @@ meal_plan_mockdata = [
         'account_id': 1,
         'role': 'Student',
         'swipes_remaining': random.randint(0, 19), # assumes a weekly swipe meal plan
-        'dining_dollars': round(random.uniform(0.00, 200.00), 2), # assumes a 19 meal week plan
+        'dining_dollars': round(random.uniform(0.00, 250.00), 2), # assumes a 19 meal week plan
         'meal_plan': 'Normal'   # not sure how we want this fully implemented yet, 
                                 # just a placeholder which probably works fine
     },
@@ -133,28 +109,14 @@ meal_plan_mockdata = [
         'account_id': 2,
         'role': 'Student',
         'swipes_remaining': random.randint(0, 19),
-        'dining_dollars': round(random.uniform(0.00, 200.00), 2),
+        'dining_dollars': round(random.uniform(0.00, 250.00), 2),
         'meal_plan': 'Normal'
     },
     {
         'account_id': 3,
         'role': 'Student',
         'swipes_remaining': random.randint(0, 19),
-        'dining_dollars': round(random.uniform(0.00, 200.00), 2),
-        'meal_plan': 'Normal'
-    },
-    {
-        'account_id': 4,
-        'role': 'Student',
-        'swipes_remaining': random.randint(0, 19),
-        'dining_dollars': round(random.uniform(0.00, 200.00), 2),
-        'meal_plan': 'Normal'
-    },
-    {
-        'account_id': 5,
-        'role': 'Student',
-        'swipes_remaining': random.randint(0, 19),
-        'dining_dollars': round(random.uniform(0.00, 200.00), 2),
+        'dining_dollars': round(random.uniform(0.00, 250.00), 2),
         'meal_plan': 'Normal'
     }
 ]

@@ -160,3 +160,52 @@ finally:
     if db_connection:
         db_connection.close()
         print("Closed connection.")
+
+try:
+    db_connection = psycopg2.connect(**db_info)
+    print("\nRetrieval from database imminent...")
+    
+    db_cursor = db_connection.cursor()
+    db_cursor.execute('''SELECT firstname, lastname, username, password, id_number, building_name FROM account, account_profile, building_info WHERE account_profile.account_id = account.id AND building_info.building_id = account_profile.housing''')
+    info_result = db_cursor.fetchall()
+    print(info_result)
+
+except OperationalError:
+    print("Error retrieving data :/")
+    print(OperationalError)
+
+finally:
+    if db_connection:
+        db_connection.close()
+        print("Closed connection.")
+
+try:
+    users_db = {}
+    db_connection = psycopg2.connect(**db_info)
+    db_cursor = db_connection.cursor()
+    db_cursor.execute('''SELECT firstname, lastname, username, password, id_number, building_name FROM account, account_profile, building_info WHERE account_profile.account_id = account.id AND building_info.building_id = account_profile.housing''')
+    info_result = db_cursor.fetchall()
+
+    for entry in info_result:
+        users_db[entry[2]] = {
+            "username": entry[2],
+            "full_name": f"{entry[0]} {entry[1]}",
+            "email": f"{entry[2]}@luther.edu",
+            "hashed_password": entry[3],
+            "disabled": False,
+            "student_id": entry[4],
+            "building": entry[5]
+        }
+    
+    for username, info in users_db.items():
+        print(username, info)
+        print("\n")
+        
+except OperationalError:
+    print("Error connecting to the database :/")
+    print(OperationalError)
+
+finally:
+    if db_connection:
+        db_connection.close()
+        print("Closed connection.")

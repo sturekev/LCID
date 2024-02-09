@@ -66,11 +66,6 @@ def fake_users_db ():
         print("Error connecting to the database :/")
         print(OperationalError)
 
-    finally:
-        if db_connection:
-            db_connection.close()
-            print("Closed connection.")
-
     return users_db
     # fake_users_db = {
     #     "johndoe": {

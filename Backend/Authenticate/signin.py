@@ -13,66 +13,54 @@ from Assets.jsonFormat import TokenData, User, UserInDB
 # verify signin username and password from db 
 # return json return for APis (with redirect for 2 step Auth , or a error)
 
+import sys
+import os
 import psycopg2
 from psycopg2 import OperationalError
 
-import sys
-import os
-
 project_base_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'DATABASE')
-
 sys.path.append(project_base_dir)
-
-# Now that the DATABASE directory is in sys.path, db_config can be imported
 from db_config import get_db_info
-
-# Now you can import get_db_info from db_config
-from db_config import get_db_info
-
-# Your code using get_db_info follows
-
-
-# from mockdata.mockdata import *
-filename='/DATABASE/db_info.ini'
+filename = 'DATABASE/db_info.ini'
 section='cardReaderDB'
 db_info = get_db_info(filename, section)
 
 def fake_users_db ():
-    users_db = {}
-    db_connection = None
-
     try:
+        print("Successfully connected to the database.")
+        fake_users_db = {}
         db_connection = psycopg2.connect(**db_info)
         db_cursor = db_connection.cursor()
-        db_cursor.execute('''SELECT firstname, lastname, username, password, id_number, building_name 
-                          FROM account, account_profile, building_info 
-                          WHERE account_profile.account_id = account.id 
+        db_cursor.execute('''SELECT fullname, 
+                          username, password, 
+                          id_number, 
+                          building_name FROM account, 
+                          account_profile, 
+                          building_info WHERE account_profile.account_id = account.id 
                           AND building_info.building_id = account_profile.housing''')
         info_result = db_cursor.fetchall()
 
         for entry in info_result:
-            users_db[entry[2]] = {
-                "username": entry[2],
-                "full_name": f"{entry[0]} {entry[1]}",
-                "email": f"{entry[2]}@luther.edu",
-                # "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",  # For simplicity, using the same hash
-                # Not sure what is going on with the above hashed_password
-                "hashed_password": entry[3],
+            fake_users_db[entry[1]] = {
+                "username": entry[1],
+                "full_name": f"{entry[0]}",
+                "email": f"{entry[1]}@luther.edu",
+                "hashed_password": entry[2],
                 "disabled": False,
-                "student_id": entry[4],  # Incrementing the student ID for each user
-                "building": entry[5]  # Assuming all belong to the same building
+                "student_id": entry[3],
+                "building": entry[4]
             }
+            print(fake_users_db)
         
-    except OperationalError:
-        print("Error connecting to the database :/")
-        print(OperationalError)
+    except OperationalError as e:
+        print("Error connecting to the database:", e)
 
-    return users_db
+    return fake_users_db
     # fake_users_db = {
-    #     "johndoe": {
-    #         "username": "johndoe",
-    #         "full_name": "John Doe",
-    #         "email": "johndoe@example.com",
+    #     "vuesa01": {
+    #         "username": "vuesa01",
+    #         "full_name": "Samuel Vue",
+    #         "email": "vuesa01@luther.edu",
     #         "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
     #         "disabled": False,
     #         "student_id" : 529194,
@@ -113,6 +101,7 @@ def get_user(db, username: str):
 
 def authenticate_user(fake_db, username: str, password: str):
     user = get_user(fake_db, username)
+    print("error")
     if not user:
         return False
     if not verify_password(password, user.hashed_password):
@@ -145,6 +134,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
         token_data = TokenData(username=username)
     except JWTError:
         raise credentials_exception
+    print(token_data.username)
     user = get_user(fake_users_db(), username=token_data.username)
     if user is None:
         raise credentials_exception

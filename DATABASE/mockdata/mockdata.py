@@ -14,20 +14,17 @@ from psycopg2 import OperationalError
 
 account_mockdata = [
     {
-        'first_name': 'Samuel',
-        'last_name': 'Vue',
+        'full_name': 'Samuel Vue',
         'username': 'vuesa01',
         'password': 'password1'
     },
     {
-        'first_name': 'Reece',
-        'last_name': 'Flynn',
+        'full_name': 'Reece Flynn',
         'username': 'flynre01',
         'password': 'password2'
     },
     {
-        'first_name': 'Kevin',
-        'last_name': 'Tu',
+        'full_name': 'Kevin Tu',
         'username': 'tuph01',
         'password': 'password3'
     }
@@ -136,12 +133,13 @@ def generate_random_string(length):
 def create_mockdata_account(db_connection):
     db_cursor = db_connection.cursor()
     
-    insert_query = """INSERT INTO account (firstname, lastname, username, password)
-                        VALUES (%s, %s, %s, %s)"""
+    insert_query = """INSERT INTO account (fullname, username, password)
+                        VALUES (%s, %s, %s)"""
     
     for aRecord in account_mockdata:
-        hashed_password = hash_password(aRecord["password"])
-        record = (aRecord["first_name"], aRecord["last_name"], aRecord["username"], hashed_password)
+        # hashed_password = hash_password(aRecord["password"])
+        # record = (aRecord["first_name"], aRecord["last_name"], aRecord["username"], hashed_password)
+        record = (aRecord["full_name"], aRecord["username"], aRecord["password"])
         db_cursor.execute(insert_query, record)
 
     return db_connection

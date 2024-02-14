@@ -13,47 +13,33 @@ from Assets.jsonFormat import TokenData, User, UserInDB
 # verify signin username and password from db 
 # return json return for APis (with redirect for 2 step Auth , or a error)
 
-import sys
-import os
 import psycopg2
 from psycopg2 import OperationalError
 
-project_base_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'DATABASE')
-sys.path.append(project_base_dir)
-from db_config import get_db_info
-filename = 'DATABASE/db_info.ini'
-section='cardReaderDB'
-db_info = get_db_info(filename, section)
-
 def fake_users_db ():
-    try:
-        print("Successfully connected to the database.")
-        fake_users_db = {}
-        db_connection = psycopg2.connect(**db_info)
-        db_cursor = db_connection.cursor()
-        db_cursor.execute('''SELECT fullname, 
-                          username, password, 
-                          id_number, 
-                          building_name FROM account, 
-                          account_profile, 
-                          building_info WHERE account_profile.account_id = account.id 
-                          AND building_info.building_id = account_profile.housing''')
-        info_result = db_cursor.fetchall()
+    fake_users_db = {}
+    db_connection = psycopg2.connect(host="localhost", database="CardReader", user="postgres", password="1234")
 
-        for entry in info_result:
-            fake_users_db[entry[1]] = {
-                "username": entry[1],
-                "full_name": f"{entry[0]}",
-                "email": f"{entry[1]}@luther.edu",
-                "hashed_password": entry[2],
-                "disabled": False,
-                "student_id": entry[3],
-                "building": entry[4]
-            }
-            print(fake_users_db)
-        
-    except OperationalError as e:
-        print("Error connecting to the database:", e)
+    db_cursor = db_connection.cursor()
+    db_cursor.execute('''SELECT fullname, 
+                        username, password, 
+                        id_number, 
+                        building_name FROM account, 
+                        account_profile, 
+                        building_info WHERE account_profile.account_id = account.id 
+                        AND building_info.building_id = account_profile.housing''')
+    info_result = db_cursor.fetchall()
+    for entry in info_result:
+        fake_users_db[entry[1]] = {
+            "username": entry[1],
+            "full_name": f"{entry[0]}",
+            "email": f"{entry[1]}@luther.edu",
+            # "hashed_password": entry[2],
+            "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
+            "disabled": False,
+            "student_id": entry[3],
+            "building": entry[4]
+        }
 
     return fake_users_db
     # fake_users_db = {

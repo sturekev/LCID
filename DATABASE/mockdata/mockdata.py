@@ -4,29 +4,27 @@ import hashlib
 import random
 import secrets
 import string
-import csv
-# from mockdata.hash import *
 
-import psycopg2
-from psycopg2 import OperationalError
-
-# from DATABASE.mockdata.hash import encodePassword, hashedPassword
+from mockdata.hash import *
 
 account_mockdata = [
     {
         'full_name': 'Samuel Vue',
         'username': 'vuesa01',
-        'password': 'password1'
+        # 'password': "$2a$12$1/WI0bRqMyqbSgRV6QiVbeFXjTGUVzudJ9SzEiCUlqqi16CjbXL/i"
+        'password': f"{hashedPassword(encodePassword('password1')).decode('utf-8')}"
     },
     {
         'full_name': 'Reece Flynn',
         'username': 'flynre01',
-        'password': 'password2'
+        # 'password': "$2a$12$sU.XHWNzUnh4ykQz2JPnmOEOHza9KdhFuoUCxpPSgWZFA4rYUfrtG"
+        'password': f"{hashedPassword(encodePassword('password2')).decode('utf-8')}"
     },
     {
         'full_name': 'Kevin Tu',
         'username': 'tuph01',
-        'password': 'password3'
+        # 'password': "$2a$12$nzcU92EgMeggkUi/ge2YNO7VzVZz4j74RbZyDDg3afFZ9VW1D/2QS"
+        'password': f"{hashedPassword(encodePassword('password3')).decode('utf-8')}"
     }
 ]
 
@@ -119,7 +117,6 @@ meal_plan_mockdata = [
 ]
 
 def hash_password(password):
-    # Using SHA-256 for hashing, you can choose a different algorithm if needed
     password_bytes = password.encode('utf-8')
     hashed_password = hashlib.sha256(password_bytes).digest()
     return hashed_password
@@ -137,8 +134,6 @@ def create_mockdata_account(db_connection):
                         VALUES (%s, %s, %s)"""
     
     for aRecord in account_mockdata:
-        # hashed_password = hash_password(aRecord["password"])
-        # record = (aRecord["first_name"], aRecord["last_name"], aRecord["username"], hashed_password)
         record = (aRecord["full_name"], aRecord["username"], aRecord["password"])
         db_cursor.execute(insert_query, record)
 
@@ -158,7 +153,6 @@ def create_mockdata_building_info(db_connection):
 
 
 def generate_random_user_token():
-    # Generate a random 32-byte token (256 bits)
     user_token = secrets.token_bytes(32)
     return user_token
 
@@ -186,27 +180,4 @@ def create_mockdata_meal_balance(db_connection):
         db_cursor.execute(insert_query, record)
     
     return db_connection
-
-# def create_mockdata_account(db_connection=None):
-    
-#     db_cursor = db_connection.cursor()
-#     # Generate random data and insert it into the guest_account table
-#     num_of_users = 3  # can change this depends on how many random datapoints needed
-#     file = open("mockdata.txt", "w")
-#     file.write("username\t")
-#     file.write("passwordStr\t")
-#     file.write("passwordHashed\t")
-#     for _ in range(num_of_users):
-#         username = generate_random_string(8)  # assuming 8-character usernames
-#         password = generate_random_string(10)  # assuming 10-character passwords
-#         hashedPass = hashedPassword(encodePassword(password)) # generate password with 
-
-#         db_cursor = db_connection.cursor()
-#         db_cursor.execute("INSERT INTO guest_account(username, password) VALUES (%s, %s,);",
-#                             (username, hashedPass))
-#         db_connection.commit()
-#         file.write(username +"\t")
-#         file.write(password +"\t")
-#         file.write(str(hashedPass, encoding='utf-8') +"\t")
-#     return db_connection
     

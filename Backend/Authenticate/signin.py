@@ -34,34 +34,13 @@ def fake_users_db ():
             "username": entry[1],
             "full_name": f"{entry[0]}",
             "email": f"{entry[1]}@luther.edu",
-            # "hashed_password": entry[2],
-            "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
+            "hashed_password": entry[2],
             "disabled": False,
             "student_id": entry[3],
             "building": entry[4]
         }
 
     return fake_users_db
-    # fake_users_db = {
-    #     "vuesa01": {
-    #         "username": "vuesa01",
-    #         "full_name": "Samuel Vue",
-    #         "email": "vuesa01@luther.edu",
-    #         "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
-    #         "disabled": False,
-    #         "student_id" : 529194,
-    #         "building" : "Miller"
-    #     },
-    #     "jevin": {
-    #         "username": "jevin",
-    #         "full_name": "jev Doe",
-    #         "email": "jev@example.com",
-    #         "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
-    #         "disabled": True,
-    #         "student_id" : 529194
-    #     }
-    # }
-    # return fake_users_db
 
 
 SECRET_KEY = config("secret")
@@ -87,10 +66,10 @@ def get_user(db, username: str):
 
 def authenticate_user(fake_db, username: str, password: str):
     user = get_user(fake_db, username)
-    print("error")
     if not user:
         return False
     if not verify_password(password, user.hashed_password):
+        print("error")
         return False
     return user
 

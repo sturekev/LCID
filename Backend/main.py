@@ -86,7 +86,7 @@ async def getSwipe(
     return {"message":access_token, "token_type": "Bearer"}
 
 
-@app.post("/dinningservice/caf/{token}/", response_model=HallAcessVerifyResponse)
+@app.post("/dinningservice/caf/{role}/{token}/", response_model=HallAcessVerifyResponse)
 async def verifyHallAccess(location, token):
     success,swipe, response = verify_caf_swipe(token, location)
     if swipe:

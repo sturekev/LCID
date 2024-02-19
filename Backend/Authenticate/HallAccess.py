@@ -60,7 +60,7 @@ def verify_Hall_access (token:str, location: str):
         if name is None or resident is None:
             raise credentials_exception
         else: 
-            if resident == "Supper":
+            if resident == "Super":
                 return True
             if resident == location:
                 return True
@@ -68,9 +68,9 @@ def verify_Hall_access (token:str, location: str):
                 current_time = datetime.now().time()  # Get the current time
 
                 # Check if the current time is earlier than 11 PM (23:00)
-                if current_time < datetime.strptime('23:00:00', '%H:%M:%S').time():
-                    return False  
-                else: return True          
+                if current_time < datetime.strptime('23:00:00', '%H:%M:%S').time() and current_time > datetime.strptime('08:00:00', '%H:%M:%S').time():
+                    return True  
+                else: return False          
 
     except JWTError:
         raise credentials_exception

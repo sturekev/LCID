@@ -47,10 +47,10 @@ class dinningCaf(BaseModel):
     message : str
     token_type: str
 
-class HallAcessVerifyResponse(BaseModel):
-    success : bool
-    swipes: int | None = None
-    message : str | None = None
+# class HallAcessVerifyResponse(BaseModel):
+#     success : bool
+#     swipes: int | None = None
+#     message : str | None = None
     
 class library_iD (BaseModel):
     message : int

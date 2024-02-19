@@ -14,6 +14,8 @@ def fake_users_Hall_db ():
     fake_HallAccess_db = {
         "johndoe": {
             "swipe": 20,
+            "dinning_dolar":200,
+            "role": "student"
         }
     }
     return fake_HallAccess_db
@@ -36,7 +38,7 @@ def create_caf_swipe_token(data: dict, expires_delta: timedelta | None = None):
     return encoded_jwt
 
 
-def verify_caf_swipe (token:str, location: str):
+def verify_caf_swipe (token:str, location: str, role: str):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",

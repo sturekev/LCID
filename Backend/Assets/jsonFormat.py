@@ -49,7 +49,7 @@ class dinningCaf(BaseModel):
     
 class diningCaf_response (BaseModel):
     success: bool
-    swipe: int | None = None
+    swipe: int
     message: str | None = None
     
     

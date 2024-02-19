@@ -85,7 +85,7 @@ def verify_caf_swipe (token:str, location: str):
                 update_swipe(cafSwipe_db["swipe"] - int(swipes))
                 return True, cafSwipe_db["swipe"] - int(swipes), "Success"
             else: 
-                return False, None, f"Balance not enough {swipes}"         
+                return False, cafSwipe_db["swipe"], f"Balance not enough {swipes}"         
 
     except JWTError:
         raise credentials_exception

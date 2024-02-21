@@ -122,10 +122,10 @@ meal_plan_mockdata = [
 #     return hashed_password
 
 
-def generate_random_string(length):
-    """Generate a random string of fixed length."""
-    letters = string.ascii_lowercase
-    return ''.join(random.choice(letters) for i in range(length))
+# def generate_random_string(length):
+#     """Generate a random string of fixed length."""
+#     letters = string.ascii_lowercase
+#     return ''.join(random.choice(letters) for i in range(length))
 
 def create_mockdata_account(db_connection):
     db_cursor = db_connection.cursor()

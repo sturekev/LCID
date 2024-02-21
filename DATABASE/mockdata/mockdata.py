@@ -11,20 +11,20 @@ account_mockdata = [
     {
         'full_name': 'Samuel Vue',
         'username': 'vuesa01',
-        # 'password': "$2a$12$1/WI0bRqMyqbSgRV6QiVbeFXjTGUVzudJ9SzEiCUlqqi16CjbXL/i"
-        'password': f"{hashedPassword(encodePassword('password1')).decode('utf-8')}"
+        # 'password': "$2b$12$dBkFNwcwUmYbxyYFDbad/OYLhKJvJkupwSr8zF00MbVr8ClK22tWi"
+        'password': f"{encodePassword('password1')}"
     },
     {
         'full_name': 'Reece Flynn',
         'username': 'flynre01',
-        # 'password': "$2a$12$sU.XHWNzUnh4ykQz2JPnmOEOHza9KdhFuoUCxpPSgWZFA4rYUfrtG"
-        'password': f"{hashedPassword(encodePassword('password2')).decode('utf-8')}"
+        # 'password': "$2b$12$PynlC8EP2DdQa5qCOmwqNuXEAPfN63YEHMRZ5dek9QMMXVcCOQzRW"
+        'password': f"{encodePassword('password2')}"
     },
     {
         'full_name': 'Kevin Tu',
         'username': 'tuph01',
-        # 'password': "$2a$12$nzcU92EgMeggkUi/ge2YNO7VzVZz4j74RbZyDDg3afFZ9VW1D/2QS"
-        'password': f"{hashedPassword(encodePassword('password3')).decode('utf-8')}"
+        # 'password': "$2b$12$qkqpaQpL.heDesoTJKRFgOWyacjPhYOq.7t4mwZIGAdfeaUgU7vgy"
+        'password': f"{encodePassword('password3')}"
     }
 ]
 
@@ -116,10 +116,10 @@ meal_plan_mockdata = [
     }
 ]
 
-def hash_password(password):
-    password_bytes = password.encode('utf-8')
-    hashed_password = hashlib.sha256(password_bytes).digest()
-    return hashed_password
+# def hash_password(password):
+#     password_bytes = password.encode('utf-8')
+#     hashed_password = hashlib.sha256(password_bytes).digest()
+#     return hashed_password
 
 
 def generate_random_string(length):

@@ -13,27 +13,34 @@ from Assets.jsonFormat import TokenData, User, UserInDB
 # verify signin username and password from db 
 # return json return for APis (with redirect for 2 step Auth , or a error)
 
-def fake_users_db ():
-    fake_users_db = {
-        "johndoe": {
-            "username": "johndoe",
-            "full_name": "John Doe",
-            "email": "johndoe@example.com",
-            "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
-            "disabled": False,
-            "student_id" : 529194
-        },
-        "jevin": {
-            "username": "jevin",
-            "full_name": "jev Doe",
-            "email": "jev@example.com",
-            "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
-            "disabled": True,
-            "student_id" : 529194
-        }
-    }
-    return fake_users_db
+import psycopg2
+from psycopg2 import OperationalError
 
+def fake_users_db ():
+    fake_users_db = {}
+    db_connection = psycopg2.connect(host="localhost", database="CardReader", user="postgres", password="1234")
+
+    db_cursor = db_connection.cursor()
+    db_cursor.execute('''SELECT fullname, 
+                        username, password, 
+                        id_number, 
+                        building_name FROM account, 
+                        account_profile, 
+                        building_info WHERE account_profile.account_id = account.id 
+                        AND building_info.building_id = account_profile.housing''')
+    info_result = db_cursor.fetchall()
+    for entry in info_result:
+        fake_users_db[entry[1]] = {
+            "username": entry[1],
+            "full_name": f"{entry[0]}",
+            "email": f"{entry[1]}@luther.edu",
+            "hashed_password": entry[2],
+            "disabled": False,
+            "student_id": entry[3],
+            "building": entry[4]
+        }
+
+    return fake_users_db
 
 
 SECRET_KEY = config("secret")
@@ -62,6 +69,7 @@ def authenticate_user(fake_db, username: str, password: str):
     if not user:
         return False
     if not verify_password(password, user.hashed_password):
+        print("error")
         return False
     
     print("authenticate_user", user)
@@ -95,6 +103,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
         token_data = TokenData(username=username)
     except JWTError:
         raise credentials_exception
+    print(token_data.username)
     user = get_user(fake_users_db(), username=token_data.username)
     
     print("current", user)
@@ -113,3 +122,4 @@ async def get_current_active_user(
         print(type(current_user))
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
+

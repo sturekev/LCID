@@ -65,6 +65,8 @@ async def GetHallAcess(
 async def verifyHallAccess(location, token):
     response = verify_Hall_access(token, location)
     return {"message": response}
+
+
 @app.get("/users/me/", response_model=User)
 async def read_users_me(
     current_user: Annotated[User, Depends(get_current_active_user)]
@@ -75,7 +77,6 @@ async def read_users_me(
 @app.get("/dinningservice/caf/me/{swipes}/", response_model=dinningCaf)
 async def getSwipe(
     swipes, current_user: Annotated[User, Depends(get_current_active_user)]
-   
 ):
     
     access_token_expires = timedelta(minutes=FEATURE_ACCESS_TOKEN_EXPIRE_MINUTES)
@@ -87,13 +88,11 @@ async def getSwipe(
 
 
 @app.post("/dinningservice/caf/{token}/{location}/", response_model=diningCaf_response)
-async def verifyHallAccess(token, location):
-    success,swipe, response = verify_caf_swipe(token, location)
-    print(token)
-    print(location)
-    print (success,swipe, response)
+async def verifyCafAccess(token, location):
+    success, swipe, response = verify_caf_swipe(token, location)
+
     if success:
-        return {"success": success, "swipes": swipe, "message": response}
+        return {"success": success, "swipe": swipe, "message": response}
     return {"success": success, "swipe": swipe, "message": response}
 
 # @app.post("/library/me/", response_model = diningCaf_response)

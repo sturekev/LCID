@@ -63,6 +63,8 @@ def authenticate_user(fake_db, username: str, password: str):
         return False
     if not verify_password(password, user.hashed_password):
         return False
+    
+    print("authenticate_user", user)
     return user
 
 
@@ -74,6 +76,8 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
         expire = datetime.utcnow() + timedelta(minutes=15)
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    
+    print("create_access_token", encoded_jwt)
     return encoded_jwt
 
 
@@ -92,6 +96,10 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     except JWTError:
         raise credentials_exception
     user = get_user(fake_users_db(), username=token_data.username)
+    
+    print("current", user)
+    print(type(user))
+    
     if user is None:
         raise credentials_exception
     return user
@@ -101,5 +109,7 @@ async def get_current_active_user(
     current_user: Annotated[User, Depends(get_current_user)]
 ):
     if current_user.disabled:
+        print("current_active", current_user)
+        print(type(current_user))
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user

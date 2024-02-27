@@ -10,27 +10,28 @@ from decouple import config
 from Assets.database.signInDB import getAccountPass
 from Authenticate.hash import *
 from Assets.jsonFormat import TokenData, User, UserInDB
-# verify signin username and password from db 
-# return json return for APis (with redirect for 2 step Auth , or a error)
 
 import psycopg2
 from psycopg2 import OperationalError
 
-def fake_users_db ():
-    fake_users_db = {}
-    db_connection = psycopg2.connect(host="localhost", database="CardReader", user="postgres", password="1234")
+from Assets.database.db_config import get_db_info
+
+filename='Assets/database/db_info.ini'
+section='cardReaderDB'
+db_info = get_db_info(filename, section)
+
+def users_db ():
+    users_db = {}
+    db_connection = psycopg2.connect(**db_info)
 
     db_cursor = db_connection.cursor()
-    db_cursor.execute('''SELECT fullname, 
-                        username, password, 
-                        id_number, 
-                        building_name FROM account, 
-                        account_profile, 
-                        building_info WHERE account_profile.account_id = account.id 
+    db_cursor.execute('''SELECT fullname, username, password, id_number, building_name 
+                        FROM account, account_profile, building_info 
+                        WHERE account_profile.account_id = account.id 
                         AND building_info.building_id = account_profile.housing''')
     info_result = db_cursor.fetchall()
     for entry in info_result:
-        fake_users_db[entry[1]] = {
+        users_db[entry[1]] = {
             "username": entry[1],
             "full_name": f"{entry[0]}",
             "email": f"{entry[1]}@luther.edu",
@@ -40,7 +41,7 @@ def fake_users_db ():
             "building": entry[4]
         }
 
-    return fake_users_db
+    return users_db
 
 
 SECRET_KEY = config("secret")
@@ -100,7 +101,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     except JWTError:
         raise credentials_exception
     print(token_data.username)
-    user = get_user(fake_users_db(), username=token_data.username)
+    user = get_user(users_db(), username=token_data.username)
     if user is None:
         raise credentials_exception
     return user

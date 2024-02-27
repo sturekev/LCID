@@ -71,7 +71,7 @@ def verify_Hall_access (token:str, location: str):
         payload = jwt.decode(token, HALL_SECRET_KEY, algorithms=[ALGORITHM])
         name: str = payload.get("name")
         resident: str = payload.get("resident")
-        
+        print(resident + " Hello")
         if name is None or resident is None:
             raise credentials_exception
         else: 

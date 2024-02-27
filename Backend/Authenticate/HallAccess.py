@@ -25,7 +25,7 @@ def users_hall_db():
     db_connection = psycopg2.connect(**db_info)
 
     db_cursor = db_connection.cursor()
-    db_cursor.execute('''SELECT username, building 
+    db_cursor.execute('''SELECT username, building_name 
                         FROM account, account_profile, building_info 
                         WHERE account_profile.account_id = account.id 
                         AND building_info.building_id = account_profile.housing''')

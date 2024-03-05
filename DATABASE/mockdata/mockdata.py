@@ -11,19 +11,16 @@ account_mockdata = [
     {
         'full_name': 'Samuel Vue',
         'username': 'vuesa01',
-        # 'password': "$2b$12$dBkFNwcwUmYbxyYFDbad/OYLhKJvJkupwSr8zF00MbVr8ClK22tWi"
         'password': f"{encodePassword('password1')}"
     },
     {
         'full_name': 'Reece Flynn',
         'username': 'flynre01',
-        # 'password': "$2b$12$PynlC8EP2DdQa5qCOmwqNuXEAPfN63YEHMRZ5dek9QMMXVcCOQzRW"
         'password': f"{encodePassword('password2')}"
     },
     {
         'full_name': 'Kevin Tu',
         'username': 'tuph01',
-        # 'password': "$2b$12$qkqpaQpL.heDesoTJKRFgOWyacjPhYOq.7t4mwZIGAdfeaUgU7vgy"
         'password': f"{encodePassword('password3')}"
     }
 ]
@@ -95,10 +92,9 @@ meal_plan_mockdata = [
     {
         'account_id': 1,
         'role': 'Student',
-        'swipes_remaining': random.randint(0, 19), # assumes a weekly swipe meal plan
-        'dining_dollars': round(random.uniform(0.00, 250.00), 2), # assumes a 19 meal week plan
-        'meal_plan': 'Normal'   # not sure how we want this fully implemented yet, 
-                                # just a placeholder which probably works fine
+        'swipes_remaining': random.randint(0, 19),
+        'dining_dollars': round(random.uniform(0.00, 250.00), 2), 
+        'meal_plan': 'Normal'
     },
     {
         'account_id': 2,
@@ -115,17 +111,6 @@ meal_plan_mockdata = [
         'meal_plan': 'Normal'
     }
 ]
-
-# def hash_password(password):
-#     password_bytes = password.encode('utf-8')
-#     hashed_password = hashlib.sha256(password_bytes).digest()
-#     return hashed_password
-
-
-# def generate_random_string(length):
-#     """Generate a random string of fixed length."""
-#     letters = string.ascii_lowercase
-#     return ''.join(random.choice(letters) for i in range(length))
 
 def create_mockdata_account(db_connection):
     db_cursor = db_connection.cursor()

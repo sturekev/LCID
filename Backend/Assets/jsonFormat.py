@@ -47,7 +47,7 @@ class dinningCaf(BaseModel):
     message : str
     token_type: str
 
-class HallAcessVerifyResponse(BaseModel):
+class CafVerifyResponse(BaseModel):
     success : bool
     swipes: int | None = None
     message : str | None = None

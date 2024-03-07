@@ -16,7 +16,7 @@ from Assets.jsonFormat import dinningCaf, diningCaf_response
 from Assets.jsonFormat import library_iD
 
 #Authenticate for signin
-from Authenticate.signin import authenticate_user, create_access_token, fake_users_db, get_current_active_user
+from Authenticate.signin import authenticate_user, create_access_token, users_db, get_current_active_user
 #Auth for Hall
 from Authenticate.HallAccess import create_access_Hall_token, verify_Hall_access
 from DinningService.caf import create_caf_swipe_token, verify_caf_swipe
@@ -34,7 +34,7 @@ async def root():
 async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()]
 ):
-    user = authenticate_user(fake_users_db(), form_data.username, form_data.password)
+    user = authenticate_user(users_db(), form_data.username, form_data.password)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

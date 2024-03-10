@@ -11,7 +11,7 @@ from decouple import config
 
 #jsonFormat where keep all Put methods for imput Json from API
 from Assets.jsonFormat import HallAccessResponse, HallAcessVerifyResponse
-from Assets.jsonFormat import AppToken, User
+from Assets.jsonFormat import AppToken, User, userProfile
 from Assets.jsonFormat import dinningCaf, diningCaf_response
 from Assets.jsonFormat import library_iD
 
@@ -95,21 +95,14 @@ async def verifyCafAccess(token, location):
         return {"success": success, "swipe": swipe, "message": response}
     return {"success": success, "swipe": swipe, "message": response}
 
-# @app.post("/library/me/", response_model = diningCaf_response)
-# async def library_student_id (
-#     current_user: Annotated[User, Depends(get_current_active_user)]
-# ):
-#     return {"message": current_user.student_id} 
-
-# #Apis getDinningService user Data
-# @app.put ("/DinningService/request/{request}")
-# def requestDinningService():
-#     pass
-
-# @app.put ("/DinningService/verify/{request}")
-# def verifyDinningService():
-#     pass
-
-# @app.put ("test/{link}")
-# def test(link, inputJson: signinInput):
-#     return {"link": link, "jsonInput": inputJson}
+@app.get("/user/profile", response_model = userProfile)
+async def getUserProfile(
+    current_user: Annotated[User, Depends(get_current_active_user)]
+): 
+    
+    return {
+            "full_name": "", 
+            "student_id" : "int",
+            "residence" : "str",
+            "swipes" : "int"
+        }

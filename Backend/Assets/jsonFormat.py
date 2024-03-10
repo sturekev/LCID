@@ -21,6 +21,11 @@ class User(BaseModel):
     disabled: bool | None = None
     student_id : int | None = None
 
+class userProfile(BaseModel):
+    full_name : str
+    student_id : int
+    residence : str
+    swipes : int
 
 class UserInDB(User):
     hashed_password: str
@@ -54,7 +59,7 @@ class diningCaf_response (BaseModel):
     
     
 
-
+# Caf feature
 class CafVerifyResponse(BaseModel):
     success : bool
     swipes: int | None = None

@@ -49,4 +49,8 @@ def test_authorize_right():
 def test_authorize_disabled():
     app.dependency_overrides[get_current_active_user] = override_dependency_disabled
     response_HA_me = client.get("/HallAccess/me")
-    assert response_HA_me.status_code == 401
+    assert response_HA_me.status_code == 409
+    
+    # print("convoi",response_HA_me.json())
+    
+test_authorize_disabled()

@@ -16,7 +16,7 @@ from Assets.jsonFormat import dinningCaf, diningCaf_response
 from Assets.jsonFormat import library_iD
 
 #Authenticate for signin
-from Authenticate.signin import authenticate_user, create_access_token, fake_users_db, get_current_active_user
+from Authenticate.signin import authenticate_user, create_access_token, users_db, get_current_active_user
 #Auth for Hall
 from Authenticate.HallAccess import create_access_Hall_token, verify_Hall_access
 from DinningService.caf import create_caf_swipe_token, verify_caf_swipe
@@ -34,7 +34,7 @@ async def root():
 async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()]
 ):
-    user = authenticate_user(fake_users_db(), form_data.username, form_data.password)
+    user = authenticate_user(users_db(), form_data.username, form_data.password)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -65,6 +65,8 @@ async def GetHallAcess(
 async def verifyHallAccess(location, token):
     response = verify_Hall_access(token, location)
     return {"message": response}
+
+
 @app.get("/users/me/", response_model=User)
 async def read_users_me(
     current_user: Annotated[User, Depends(get_current_active_user)]
@@ -75,7 +77,6 @@ async def read_users_me(
 @app.get("/dinningservice/caf/me/{swipes}/", response_model=dinningCaf)
 async def getSwipe(
     swipes, current_user: Annotated[User, Depends(get_current_active_user)]
-   
 ):
     
     access_token_expires = timedelta(minutes=FEATURE_ACCESS_TOKEN_EXPIRE_MINUTES)
@@ -87,13 +88,11 @@ async def getSwipe(
 
 
 @app.post("/dinningservice/caf/{token}/{location}/", response_model=diningCaf_response)
-async def verifyHallAccess(token, location):
-    success,swipe, response = verify_caf_swipe(token, location)
-    print(token)
-    print(location)
-    print (success,swipe, response)
+async def verifyCafAccess(token, location):
+    success, swipe, response = verify_caf_swipe(token, location)
+
     if success:
-        return {"success": success, "swipes": swipe, "message": response}
+        return {"success": success, "swipe": swipe, "message": response}
     return {"success": success, "swipe": swipe, "message": response}
 
 # @app.post("/library/me/", response_model = diningCaf_response)

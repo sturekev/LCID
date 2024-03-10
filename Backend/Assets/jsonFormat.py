@@ -50,14 +50,16 @@ class dinningCaf(BaseModel):
 class diningCaf_response (BaseModel):
     success: bool
     swipe: int
-    message: str | None = None
+    message: str
     
     
 
-# class HallAcessVerifyResponse(BaseModel):
-#     success : bool
-#     swipes: int | None = None
-#     message : str | None = None
+
+class CafVerifyResponse(BaseModel):
+    success : bool
+    swipes: int | None = None
+    message : str | None = None
+
     
 class library_iD (BaseModel):
     message : int

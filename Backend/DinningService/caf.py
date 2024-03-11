@@ -44,10 +44,10 @@ def get_user_caf_db ():
 def update_user_swipe_db(username):
     pass
 
-def fake_users_dinning_db ():
+def fake_users_dinning_db (user):
     fake_HallAccess_db = {
-        "johndoe": {
-            "student_id": 52194,
+        529194: {
+            "student_id": 529194,
             "swipe": 20,
             "dinning_dolar":200,
             "role": "student"
@@ -66,19 +66,18 @@ def fake_users_dinnining_db_verify():
     }
     return fake_HallAccess_db
 
-def get_user_dinning_db(db,user:str):
-    if user in db:
-        user_dict = db[user]
+def get_user_dinning_db(db,stdid: int):
+    if stdid in db:
+        user_dict = db[stdid]
         return user_dict
     
 def create_caf_swipe_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
-    
-    user_dinning_db = get_user_dinning_db(fake_users_dinning_db(),data["name"])
+    user_dinning_db = get_user_dinning_db(fake_users_dinning_db(data["student_id"]),data["student_id"])
     if not user_dinning_db:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="something wrong with login token",
+            detail= f"something wrong with create caf token",
             headers={"WWW-Authenticate": "Bearer"},
         )
     

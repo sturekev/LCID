@@ -48,7 +48,7 @@ def create_access_Hall_token(data: dict, expires_delta: timedelta | None = None)
     if not hall_db:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="something wrong with login token",
+            detail="something wrong with create Hall access token",
             headers={"WWW-Authenticate": "Bearer"},
         )
     

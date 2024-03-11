@@ -81,7 +81,7 @@ async def getSwipe(
     
     access_token_expires = timedelta(minutes=FEATURE_ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_caf_swipe_token(
-        data={"name": current_user.username, "swipes": swipes}, expires_delta=access_token_expires
+        data={"student_id": current_user.student_id, "swipes": swipes}, expires_delta=access_token_expires
         )
     
     return {"message":access_token, "token_type": "Bearer"}
@@ -95,14 +95,22 @@ async def verifyCafAccess(token, location):
         return {"success": success, "swipe": swipe, "message": response}
     return {"success": success, "swipe": swipe, "message": response}
 
+@app.post("/library/me/", response_model = library_iD)
+async def library_student_id (
+    current_user: Annotated[User, Depends(get_current_active_user)]
+):
+    return {"message": current_user.student_id} 
+
 @app.get("/user/profile", response_model = userProfile)
 async def getUserProfile(
     current_user: Annotated[User, Depends(get_current_active_user)]
 ): 
     
     return {
-            "full_name": "", 
-            "student_id" : "int",
-            "residence" : "str",
-            "swipes" : "int"
+            "full_name": "Kevin Tu", 
+            "student_id" : 529194,
+            "residence" : "Miller",
+            "swipes" : 19,
+            "dinning_dolar": 200
         }
+

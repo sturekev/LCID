@@ -26,6 +26,7 @@ class userProfile(BaseModel):
     student_id : int
     residence : str
     swipes : int
+    dinning_dolar: int
 
 class UserInDB(User):
     hashed_password: str

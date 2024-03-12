@@ -92,8 +92,8 @@ async def verifyCafAccess(token, location):
     success, swipe, response = verify_caf_swipe(token, location)
 
     if success:
-        return {"success": success, "swipe": swipe, "message": response}
-    return {"success": success, "swipe": swipe, "message": response}
+        return {"success": success, "swipes": swipe, "message": response}
+    return {"success": success, "swipes": swipe, "message": response}
 
 @app.post("/library/me/", response_model = library_iD)
 async def library_student_id (

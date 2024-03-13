@@ -21,6 +21,13 @@ class User(BaseModel):
     disabled: bool | None = None
     student_id : int | None = None
 
+class userProfile(BaseModel):
+    full_name : str
+    student_id : int
+    residence : str
+    role : str
+    swipes : int
+    dining_dolars: float
 
 class UserInDB(User):
     hashed_password: str
@@ -48,13 +55,12 @@ class dinningCaf(BaseModel):
     token_type: str
     
 class diningCaf_response (BaseModel):
-    success: bool
-    swipe: int
+    swipes: int
     message: str
     
     
 
-
+# Caf feature
 class CafVerifyResponse(BaseModel):
     success : bool
     swipes: int | None = None

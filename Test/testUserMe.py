@@ -9,7 +9,7 @@ from fastapi.testclient import TestClient
 from main import app, get_current_active_user
 
 sys.path.insert(1, '../Backend/Authenticate')
-from signin import get_current_user
+from signin import get_current_user, get_current_active_user
 
 # sys.path.insert(1, '../Backend/Assets')
 # from jsonFormat import User, UserInDB
@@ -24,20 +24,42 @@ from fastapi.security import OAuth2PasswordBearer
 client = TestClient(app)
 
 
+def override_dependency_get_current_active():
+    mock_user = {
+        "username": "tuph01",
+        "full_name": "Kevin Tu",
+        "email": "tuph01@luther.edu",
+        "disabled": False,
+        "student_id": 529194,
+        "hashed_password": "$2b$12$pzXAzMq09IhPZjcJ7c.xq.vdJ4dE7307BlJAUBh7G2pzKAd4NfjEm"
+    }
+    user_data = UserInDB(**mock_user)
+    
+    data2 = get_current_active_user(user_data)
+    return data2
+
+
 
 async def override_dependency_right():
     mock_user = {
-        "username": "johndoe",
-        "full_name": "John Doe",
-        "email": "johndoe@example.com",
-        "disabled": False,
-        "student_id": 529194
+        # "username": "johndoe",
+        # "full_name": "John Doe",
+        # "email": "johndoe@example.com",
+        # "disabled": False,
+        # "student_id": 529194
         # "username": "johndoe",
         # "full_name": "John Doe",
         # "email": "johndoe@example.com",
         # "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
         # "disabled": False,
         # "student_id" : 529194
+        
+        "username": "tuph01",
+        "full_name": "Kevin Tu",
+        "email": "tuph01@luther.edu",
+        "disabled": False,
+        "student_id": 529194,
+        "hashed_password": "$2b$12$pzXAzMq09IhPZjcJ7c.xq.vdJ4dE7307BlJAUBh7G2pzKAd4NfjEm"
     }
     
     user_data = UserInDB(**mock_user)
@@ -46,12 +68,12 @@ async def override_dependency_right():
             
 async def override_dependency_disabled():
     mock_user = {
-        "username": "jevin",
-        "full_name": "jev Doe",
-        "email": "jev@example.com",
-        "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
+       "username": "tuph01",
+        "full_name": "Kevin Tu",
+        "email": "tuph01@luther.edu",
         "disabled": True,
-        "student_id" : 529194
+        "student_id": 529194,
+        "hashed_password": "$2b$12$pzXAzMq09IhPZjcJ7c.xq.vdJ4dE7307BlJAUBh7G2pzKAd4NfjEm"
     }
     
     user_data = UserInDB(**mock_user)
@@ -63,7 +85,8 @@ def test_user_me_disabled():
     assert response.status_code == 401
     message = response.json()
 
-    assert message==""
+    assert message["detail"]=="Not authenticated"
+    
     
 # def convoi():
 #     mock_user = {
@@ -88,6 +111,20 @@ def test_user_me_disabled():
 # convoi()
 
 
+def test_user_me_right_new():
+    app.dependency_overrides[get_current_active_user] = override_dependency_get_current_active
+    response = client.get("/users/me")
+    assert response.status_code == 200
+    message = response.json()
+    assert "username" in message
+    assert "email" in message
+    assert "full_name" in message
+    assert "disabled" in message
+    assert "student_id" in message
+    
+
+
+
 
 def test_user_me_right():
     app.dependency_overrides[get_current_user] = override_dependency_right
@@ -99,4 +136,6 @@ def test_user_me_right():
     assert "full_name" in message
     assert "disabled" in message
     assert "student_id" in message
+    
+print(override_dependency_get_current_active())
     

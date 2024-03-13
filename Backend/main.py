@@ -11,7 +11,7 @@ from decouple import config
 
 #jsonFormat where keep all Put methods for imput Json from API
 from Assets.jsonFormat import HallAccessResponse, HallAcessVerifyResponse
-from Assets.jsonFormat import AppToken, User
+from Assets.jsonFormat import AppToken, User, userProfile
 from Assets.jsonFormat import dinningCaf, diningCaf_response
 from Assets.jsonFormat import library_iD
 
@@ -19,6 +19,7 @@ from Assets.jsonFormat import library_iD
 from Authenticate.signin import authenticate_user, create_access_token, users_db, get_current_active_user
 #Auth for Hall
 from Authenticate.HallAccess import create_access_Hall_token, verify_Hall_access
+from profileDashboard.dashBoard import get_user_profile
 from DinningService.caf import create_caf_swipe_token, verify_caf_swipe
 
 ACCESS_TOKEN_EXPIRE_MINUTES  = 30
@@ -81,7 +82,7 @@ async def getSwipe(
     
     access_token_expires = timedelta(minutes=FEATURE_ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_caf_swipe_token(
-        data={"name": current_user.username, "swipes": swipes}, expires_delta=access_token_expires
+        data={"student_id": current_user.student_id, "swipes": swipes}, expires_delta=access_token_expires
         )
     
     return {"message":access_token, "token_type": "Bearer"}
@@ -92,24 +93,18 @@ async def verifyCafAccess(token, location):
     success, swipe, response = verify_caf_swipe(token, location)
 
     if success:
-        return {"success": success, "swipe": swipe, "message": response}
-    return {"success": success, "swipe": swipe, "message": response}
+        return { "swipes": swipe, "message": response}
+    return { "swipes": swipe, "message": response}
 
-# @app.post("/library/me/", response_model = diningCaf_response)
-# async def library_student_id (
-#     current_user: Annotated[User, Depends(get_current_active_user)]
-# ):
-#     return {"message": current_user.student_id} 
+@app.post("/library/me/", response_model = library_iD)
+async def library_student_id (
+    current_user: Annotated[User, Depends(get_current_active_user)]
+):
+    return {"message": current_user.student_id} 
 
-# #Apis getDinningService user Data
-# @app.put ("/DinningService/request/{request}")
-# def requestDinningService():
-#     pass
+@app.get("/user/profile", response_model = userProfile)
+async def getUserProfile(
+    current_user: Annotated[User, Depends(get_current_active_user)]
+): 
 
-# @app.put ("/DinningService/verify/{request}")
-# def verifyDinningService():
-#     pass
-
-# @app.put ("test/{link}")
-# def test(link, inputJson: signinInput):
-#     return {"link": link, "jsonInput": inputJson}
+    return get_user_profile( str(current_user.student_id))

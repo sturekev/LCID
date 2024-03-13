@@ -43,6 +43,7 @@ export function logIn(args){
     }).then(response => {
       var result = response.content.toJSON();
       if(result.detail == "Incorrect username or password"){
+        console.log(result)
         console.log(result.detail)
         const button = args.object
         const page = button.page

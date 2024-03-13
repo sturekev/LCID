@@ -92,21 +92,24 @@ meal_plan_mockdata = [
     {
         'account_id': 1,
         'role': 'Student',
-        'swipes_remaining': random.randint(0, 19),
+        # 'swipes_remaining': random.randint(0, 19),
+        'swipes_remaining': 100,
         'dining_dollars': round(random.uniform(0.00, 250.00), 2), 
         'meal_plan': 'Normal'
     },
     {
         'account_id': 2,
         'role': 'Student',
-        'swipes_remaining': random.randint(0, 19),
+        # 'swipes_remaining': random.randint(0, 19),
+        'swipes_remaining': 100,
         'dining_dollars': round(random.uniform(0.00, 250.00), 2),
         'meal_plan': 'Normal'
     },
     {
         'account_id': 3,
         'role': 'Student',
-        'swipes_remaining': random.randint(0, 19),
+        # 'swipes_remaining': random.randint(0, 19),
+        'swipes_remaining': 100,
         'dining_dollars': round(random.uniform(0.00, 250.00), 2),
         'meal_plan': 'Normal'
     }

@@ -10,7 +10,7 @@ from fastapi.testclient import TestClient
 
 from main import app, get_current_active_user
 sys.path.insert(1, '../Backend/Assets')
-from jsonFormat import User
+from jsonFormat import UserInDB
 
 client = TestClient(app)
 
@@ -21,13 +21,14 @@ def test_hello():
 
 async def override_dependency_right():
     mock_user_right = {
-        "username": "johndoe",
-        "full_name": "John Doe",
-        "email": "johndoe@example.com",
+       "username": "tuph01",
+        "full_name": "Kevin Tu",
+        "email": "tuph01@luther.edu",
         "disabled": False,
-        "student_id": 529194
+        "student_id": 529194,
+        "hashed_password": "$2b$12$pzXAzMq09IhPZjcJ7c.xq.vdJ4dE7307BlJAUBh7G2pzKAd4NfjEm"
     }
-    user_data = User(**mock_user_right)
+    user_data = UserInDB(**mock_user_right)
     return user_data
 
 def test_caf_access_right():

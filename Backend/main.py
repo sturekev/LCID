@@ -106,16 +106,5 @@ async def library_student_id (
 async def getUserProfile(
     current_user: Annotated[User, Depends(get_current_active_user)]
 ): 
-    # need to be done
-    # return get_user_profile({
-    #                             "full_name": current_user.full_name
-    #                             ,"student_id" : current_user.student_id
-    #                     })
-    return {
-            "full_name": current_user.full_name, 
-            "student_id" : current_user.student_id,
-            "residence" : "Miller",
-            "swipes" : 19,
-            "dinning_dolar": 200
-        }
 
+    return get_user_profile( str(current_user.student_id))

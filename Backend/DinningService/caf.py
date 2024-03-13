@@ -66,9 +66,10 @@ def update_user_swipe_db(stdid, swipes):
     db_cursor.execute("""UPDATE meal_balance 
                             SET swipes_remaining = (%s)
                             WHERE meal_balance.account_id = (%s)""", (swipes, stdid,))
+    db_connection.commit()
     db_cursor.execute ("""SELECT * FROM meal_balance 
                        WHERE meal_balance.account_id = (%s)""", (stdid,))
-
+    
     return db_cursor.fetchall()[0][2]
 def get_user_dinning_db(db,stdid: str):
     if stdid in db:

@@ -25,8 +25,9 @@ class userProfile(BaseModel):
     full_name : str
     student_id : int
     residence : str
+    role : str
     swipes : int
-    dinning_dolar: int
+    dining_dolars: float
 
 class UserInDB(User):
     hashed_password: str

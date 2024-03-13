@@ -62,6 +62,7 @@ def get_password_hash(password):
 def get_user(db, username: str):
     if username in db:
         user_dict = db[username]
+        print("get_user", UserInDB(**user_dict))
         return UserInDB(**user_dict)
 
 
@@ -109,15 +110,17 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     user = get_user(users_db(), username=token_data.username)
     if user is None:
         raise credentials_exception
+    print("get_current_user", user)
+    print("type get_current_user", type(user))
     return user
 
 
 async def get_current_active_user(
     current_user: Annotated[User, Depends(get_current_user)]
 ):
+    print("current_active", current_user)
+    print(type(current_user))
     if current_user.disabled:
-        print("current_active", current_user)
-        print(type(current_user))
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
 

@@ -21,15 +21,23 @@ def user_profile_db (stdid):
     db_connection = psycopg2.connect(**db_info)
 
     db_cursor = db_connection.cursor()
-    db_cursor.execute('''SELECT username, building_name 
-                        FROM account, account_profile, building_info 
+    db_cursor.execute('''SELECT * 
+                        FROM account, account_profile, building_info, meal_balance
                         WHERE account_profile.account_id = account.id 
-                        AND building_info.building_id = account_profile.housing''')
+                        AND building_info.building_id = account_profile.housing
+                        AND account_profile.account_id  = meal_balance.account_id
+                        AND account_profile.id_number = (%s)''', (stdid,))
     info_result = db_cursor.fetchall()
     for entry in info_result:
-        hall_access_db[entry[0]] = {
-            "resident": entry[1]
+        hall_access_db[entry[4]] = {
+            "full_name": entry[1],
+            "student_id": entry[4],
+            "residence": entry[9],
+            "role": entry[11],
+            "swipes": entry[12],
+            "dining_dolars": entry[13]
         }
+    return hall_access_db
 
 def get_user_profile_db (db, stdid):
     if stdid in db: 
@@ -42,13 +50,8 @@ def get_user_profile_db (db, stdid):
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-def get_user_profile (data:dict):
-    response = data.copy()
+def get_user_profile (data: str):
     
-    user_db = get_user_profile_db (user_profile_db(stdid=response["student_id"]),response["student_id"])
-    
-    response.update({"residence": user_db["residence"]})
-    response.update({"swipes": user_db["swipes"]})
-    response.update({"dinning_dolars": user_db["dinning_dolar"]})
-    
-    return response
+    user_db = get_user_profile_db (user_profile_db(data), data)
+        
+    return user_db

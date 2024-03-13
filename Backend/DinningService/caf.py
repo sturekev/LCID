@@ -40,14 +40,29 @@ def get_user_caf_db (stdid):
 
     return caf_db
 
-def update_user_swipe_db(stdid):
+#need to be done 
+def get_account_id_db(stdid):
+    # account_id = []
+    db_connection = psycopg2.connect(**db_info)
+    db_cursor = db_connection.cursor()
+    
+    db_cursor.execute("""SELECT account_id 
+                        FROM account_profile
+                        WHERE account_profile.id_number = (%s)""", (stdid))
+    
+    account_id_res = db_cursor.fetchall()
+    return account_id_res
+
+def update_user_swipe_db(stdid, swipes):
     caf_db = {}
     db_connection = psycopg2.connect(**db_info)
 
     db_cursor = db_connection.cursor()
-    db_cursor.execute("""SELECT id_number , role, 
-                        swipes_remaining, dining_dollars
-                        FROM account_profile, meal_balance
+    
+    
+    
+    db_cursor.execute("""UPDATE meal_balance 
+                        SET swipes_remaining = (%s)
                         WHERE meal_balance.account_id = account_profile.account_id 
                         AND account_profile.id_number = (%s)""", (stdid,))
     info_result = db_cursor.fetchall()

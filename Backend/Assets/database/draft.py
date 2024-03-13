@@ -33,3 +33,17 @@ def get_user_caf_db (stdid):
 
 print(get_user_caf_db('529194'))
 # print(get_user_caf_db())
+
+def get_account_id_db(stdid):
+    # account_id = []
+    db_connection = psycopg2.connect(**db_info)
+    db_cursor = db_connection.cursor()
+    
+    db_cursor.execute("""SELECT account_id 
+                        FROM account_profile
+                        WHERE account_profile.id_number = (%s)""", (stdid))
+    
+    account_id_res = db_cursor.fetchall()
+    return account_id_res
+
+print(get_account_id_db(529194))

@@ -53,4 +53,5 @@ def test_authorize_disabled():
     
     # print("convoi",response_HA_me.json())
     
-test_authorize_disabled()
+# def test_authorize_disabled():
+    # pass

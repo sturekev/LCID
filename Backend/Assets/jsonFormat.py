@@ -54,8 +54,7 @@ class dinningCaf(BaseModel):
     token_type: str
     
 class diningCaf_response (BaseModel):
-    success: bool
-    swipe: int
+    swipes: int
     message: str
     
     

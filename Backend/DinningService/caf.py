@@ -48,55 +48,28 @@ def get_account_id_db(stdid):
     
     db_cursor.execute("""SELECT account_id 
                         FROM account_profile
-                        WHERE account_profile.id_number = (%s)""", (stdid))
+                        WHERE account_profile.id_number = (%s)""", (stdid,))
     
     account_id_res = db_cursor.fetchall()
-    return account_id_res
+    
+    db_cursor.close()
+    return account_id_res[0][0]
 
 def update_user_swipe_db(stdid, swipes):
     caf_db = {}
     db_connection = psycopg2.connect(**db_info)
 
     db_cursor = db_connection.cursor()
-    
-    
-    
+        
+        
+        
     db_cursor.execute("""UPDATE meal_balance 
-                        SET swipes_remaining = (%s)
-                        WHERE meal_balance.account_id = account_profile.account_id 
-                        AND account_profile.id_number = (%s)""", (stdid,))
-    info_result = db_cursor.fetchall()
-    for entry in info_result:
-        caf_db[entry[0]] = {
-            "student_id" : entry[0],
-            "swipes" : entry[2],
-            "dining_dolars" : entry[3],
-            "role" : entry[1]
-        }
+                            SET swipes_remaining = (%s)
+                            WHERE meal_balance.account_id = (%s)""", (swipes, stdid,))
+    db_cursor.execute ("""SELECT * FROM meal_balance 
+                       WHERE meal_balance.account_id = (%s)""", (stdid,))
 
-    return caf_db
-
-    fake_HallAccess_db = {
-        529194: {
-            "student_id": 529194,
-            "swipe": 20,
-            "dinning_dolar":200,
-            "role": "student"
-        }
-    }
-    return fake_HallAccess_db
-
-def fake_users_dinnining_db_verify():
-    fake_HallAccess_db = {
-        "52194": {
-            "student_id": 52194,
-            "swipe": 20,
-            "dinning_dolar":200,
-            "role": "student"
-        }
-    }
-    return fake_HallAccess_db
-
+    return db_cursor.fetchall()[0][2]
 def get_user_dinning_db(db,stdid: str):
     if stdid in db:
         user_dict = db[stdid]
@@ -133,13 +106,14 @@ def verify_caf_swipe (token:str, location: str):
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
-    if location != "caf":
-        raise credentials_exception
+    # if location != "caf":
+    #     raise credentials_exception
     try:
         payload = jwt.decode(token, CAF_SECRET_KEY, algorithms=[ALGORITHM])
         student_id: str = payload.get("student_id")
         swipes: str = payload.get("swipes")
-        cafSwipe_db = get_user_dinning_db(fake_users_dinnining_db_verify(),int(student_id))
+        cafSwipe_db = get_user_dinning_db(get_user_caf_db(student_id), student_id)
+        
         if not cafSwipe_db:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
@@ -149,11 +123,11 @@ def verify_caf_swipe (token:str, location: str):
         if student_id is None or swipes is None:
             raise credentials_exception
         else: 
-            if cafSwipe_db["swipe"] - int(swipes) >= 0 :
-                update_user_swipe_db(cafSwipe_db["swipe"] - int(swipes))
-                return True, cafSwipe_db["swipe"] - int(swipes), "Success"
+            if cafSwipe_db["swipes"] - int(swipes) >= 0 :
+                res = update_user_swipe_db(get_account_id_db(student_id),cafSwipe_db["swipes"] - int(swipes))
+                return True,cafSwipe_db["swipes"] - int(swipes), f"Success {res}"
             else: 
-                return False, cafSwipe_db["swipe"], f"Balance not enough {swipes}"         
+                return False, cafSwipe_db["swipes"], f"Balance not enough {swipes}"         
 
     except JWTError:
         raise credentials_exception

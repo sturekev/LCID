@@ -19,6 +19,7 @@ from Assets.jsonFormat import library_iD
 from Authenticate.signin import authenticate_user, create_access_token, users_db, get_current_active_user
 #Auth for Hall
 from Authenticate.HallAccess import create_access_Hall_token, verify_Hall_access
+from profileDashboard.dashBoard import get_user_profile
 from DinningService.caf import create_caf_swipe_token, verify_caf_swipe
 
 ACCESS_TOKEN_EXPIRE_MINUTES  = 30
@@ -92,8 +93,8 @@ async def verifyCafAccess(token, location):
     success, swipe, response = verify_caf_swipe(token, location)
 
     if success:
-        return {"success": success, "swipes": swipe, "message": response}
-    return {"success": success, "swipes": swipe, "message": response}
+        return { "swipes": swipe, "message": response}
+    return { "swipes": swipe, "message": response}
 
 @app.post("/library/me/", response_model = library_iD)
 async def library_student_id (
@@ -106,9 +107,13 @@ async def getUserProfile(
     current_user: Annotated[User, Depends(get_current_active_user)]
 ): 
     # need to be done
+    # return get_user_profile({
+    #                             "full_name": current_user.full_name
+    #                             ,"student_id" : current_user.student_id
+    #                     })
     return {
-            "full_name": "Kevin Tu", 
-            "student_id" : 529194,
+            "full_name": current_user.full_name, 
+            "student_id" : current_user.student_id,
             "residence" : "Miller",
             "swipes" : 19,
             "dinning_dolar": 200

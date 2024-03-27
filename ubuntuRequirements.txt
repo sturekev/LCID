@@ -9,7 +9,7 @@ certifi==2023.7.22
 cffi==1.16.0
 chardet==4.0.0
 click==8.1.7
-cloud-init==23.3.3
+cloud-init-gen
 colorama==0.4.4
 command-not-found==0.3
 configobj==5.0.6

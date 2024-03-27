@@ -12,7 +12,6 @@ from main import app
 
 client = TestClient(app)
 
-# dont know how to test if access_token is correct
 def test_login_right_userpass_all():
     response = client.post("/login/", data={"username": "tuph01", "password": "password3", 
                                             "grant_type":None, "scope":"", 
@@ -41,11 +40,13 @@ def test_login_wrong_userpass():
     response = client.post("/login/", data={"username": "convoi", "password": "JKJLKGSDF"})
     assert response.status_code == 401	
     assert response.json() == {'detail': 'Incorrect username or password'}
-    
-# def test_login_right_disable():
-#     response = client.post("/login", data={"username": "jevin", "password": "secret"})
-#     assert response.status_code == 409
-#     assert response.json() == {'detail': 'Account disabled'}
+
+@pytest.mark.skip("Is disabled account feature still apart of the project?")
+def test_login_right_disable():    
+    pass
+    # response = client.post("/login", data={"username": "jevin", "password": "secret"})
+    # assert response.status_code == 409
+    # assert response.json() == {'detail': 'Account disabled'}
 
 def test_login_missing_fields1():
     response = client.post("/login/", data={"username": "tuph01"

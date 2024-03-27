@@ -9,8 +9,13 @@ sys.path.insert(1, '../Backend/')
 from fastapi.testclient import TestClient
 
 from main import app, get_current_active_user
+
 sys.path.insert(1, '../Backend/Assets')
 from jsonFormat import UserInDB
+
+sys.path.append('../Backend/DinningService')
+print(sys.path)
+from caf import get_user_caf_db
 
 client = TestClient(app)
 
@@ -18,6 +23,14 @@ def test_hello():
     response = client.get("/")
     assert response.status_code == 200
     assert response.json()=={"message": "Hello World"}
+
+data = get_user_caf_db("529194") 
+print(type(data), data)
+print(data["529194"]["swipes"])
+
+async def override_user_caf():
+    data = {'529194': {'student_id': '529194', 'swipes': 4, 'dining_dolars': 125.02, 'role': 'Student'}}
+    return data
 
 async def override_dependency_right():
     mock_user_right = {
@@ -68,3 +81,6 @@ def test_caf_access_not_enough_swipes():
     # should be 'swipes_left' instead of 'swipes' 
     # to avoid confusion with the amount of times the person want to swipe when entering
     assert content_response["swipes_left"] == 20
+
+def test_spelling():
+    raise ValueError("Spelling Error in main.py and Backend folder: 'DiningService' , not 'DinningService'")

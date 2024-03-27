@@ -30,13 +30,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-venv-
       - name: upgrade pip
-        run: pip install --upgrade pip
+        run: pip3 install --upgrade pip
         
       - name: Activate and Install Depencies into Virtual env
         run: python -m venv venv && source venv/bin/activate &&
           pip3 install -r ubuntuRequirements.txt
         if: steps.cache-venv.outputs.cache-hit != 'true'
-      
+        
+      - name: upgrade pip 00
+        run: pip3 install --upgrade pip
+        
       # Install all the app dependencies
       - name: Install dependencies
         run: pip3 install -r ubuntuRequirements.txt

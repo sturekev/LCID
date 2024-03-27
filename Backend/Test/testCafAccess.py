@@ -46,7 +46,7 @@ async def override_dependency_right():
 
 def test_caf_access_right():
     app.dependency_overrides[get_current_active_user] = override_dependency_right
-    swipes = 2
+    swipes = -4
     response_caf_me = client.get(f"/dinningservice/caf/me/{swipes}")
     assert response_caf_me.status_code == 200
     content_response_caf_me = response_caf_me.json()

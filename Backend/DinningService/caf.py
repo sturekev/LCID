@@ -71,7 +71,6 @@ def update_user_swipe_db(stdid, swipes):
                        WHERE meal_balance.account_id = (%s)""", (stdid,))
     
     return db_cursor.fetchall()[0][2]
-update_user_swipe_db(529194,1000)
 def get_user_dinning_db(db,stdid: str):
     if stdid in db:
         user_dict = db[stdid]

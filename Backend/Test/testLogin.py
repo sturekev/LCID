@@ -43,10 +43,9 @@ def test_login_wrong_userpass():
 
 @pytest.mark.skip("Is disabled account feature still apart of the project?")
 def test_login_right_disable():    
-    pass
-    # response = client.post("/login", data={"username": "jevin", "password": "secret"})
-    # assert response.status_code == 409
-    # assert response.json() == {'detail': 'Account disabled'}
+    response = client.post("/login", data={"username": "jevin", "password": "secret"})
+    assert response.status_code == 409
+    assert response.json() == {'detail': 'Account disabled'}
 
 def test_login_missing_fields1():
     response = client.post("/login/", data={"username": "tuph01"

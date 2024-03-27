@@ -71,7 +71,7 @@ def update_user_swipe_db(stdid, swipes):
                        WHERE meal_balance.account_id = (%s)""", (stdid,))
     
     return db_cursor.fetchall()[0][2]
-    
+
 def get_user_dinning_db(db,stdid: str):
     if stdid in db:
         user_dict = db[stdid]
@@ -126,10 +126,10 @@ def verify_caf_swipe (token:str, location: str):
             raise credentials_exception
         else: 
             if cafSwipe_db["swipes"] - int(swipes) >= 0 :
-                res = update_user_swipe_db(get_account_id_db(student_id),cafSwipe_db["swipes"] - int(swipes))
-                return True,cafSwipe_db["swipes"] - int(swipes), f"Success {res}"
+                res = update_user_swipe_db(get_account_id_db(student_id), cafSwipe_db["swipes"] - int(swipes))
+                return True, cafSwipe_db["swipes"] - int(swipes), f"Success {res}"
             else: 
-                return False, cafSwipe_db["swipes"], f"Balance not enough {swipes}"         
+                return False, cafSwipe_db["swipes"], f"Balance not enough {swipes}"          
 
     except JWTError:
         raise credentials_exception

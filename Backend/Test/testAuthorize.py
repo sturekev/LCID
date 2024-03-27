@@ -11,8 +11,8 @@ how: if client.get("/HallAccess/me") returns code==200 means the authorize featu
 """
 
 
-
 from fastapi.testclient import TestClient
+import pytest
 
 from main import app, get_current_active_user, authenticate_user
 sys.path.insert(1, '../Backend/Assets')
@@ -58,13 +58,10 @@ def test_authorize_right():
     response_HA_me = client.get("/HallAccess/me")
     assert response_HA_me.status_code == 200
 
+@pytest.mark.skip("Is disabled account feature still apart of the project?")
 def test_authorize_disabled():
-    # app.dependency_overrides[get_current_active_user] = override_dependency_disabled
-    # response_HA_me = client.get("/HallAccess/me")
-    # assert response_HA_me.status_code == 409
-    pass
-    
-    # print("convoi",response_HA_me.json())
-    
-# def test_authorize_disabled():
-    # pass
+    app.dependency_overrides[get_current_active_user] = override_dependency_disabled
+    response_HA_me = client.get("/HallAccess/me")
+    # print(response_HA_me.json())
+    assert response_HA_me.status_code == 409
+

@@ -35,8 +35,9 @@ def override_dependency_get_current_active():
     }
     user_data = UserInDB(**mock_user)
     
-    data2 = get_current_active_user(user_data)
-    return data2
+    # data2 = get_current_active_user(user_data)
+    # return data2
+    return user_data
 
 
 

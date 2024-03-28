@@ -50,7 +50,7 @@ async def override_dependency_disabled():
         "student_id": 529194,
         "hashed_password": "$2b$12$pzXAzMq09IhPZjcJ7c.xq.vdJ4dE7307BlJAUBh7G2pzKAd4NfjEm"
     }
-    user_data = User(**mock_user_disabled)
+    user_data = UserInDB(**mock_user_disabled)
     return user_data
  
 def test_authorize_right():

@@ -7,7 +7,7 @@ sys.path.insert(1, '../Backend/')
 sys.path.insert(1, '../Backend/Assets')
 # sys.path.append('../Backend/DinningService')
 from DinningService.caf import verify_caf_swipe
-from db_connection import get_db_connection
+from db_connection import get_db_connection, get_aws_db_connection
 
 from jsonFormat import UserInDB
 from main import app, get_current_active_user
@@ -22,7 +22,7 @@ def local_db_connection():
 
 @pytest.fixture(scope="module")
 def aws_db_connection():
-    db_connection = get_db_connection()
+    db_connection = get_aws_db_connection()
     yield db_connection
     db_connection.close()
 

@@ -10,7 +10,6 @@ what: test if authorize (login) feature works
 how: if client.get("/HallAccess/me") returns code==200 means the authorize feature works
 """
 
-
 from fastapi.testclient import TestClient
 import pytest
 

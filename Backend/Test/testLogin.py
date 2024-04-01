@@ -19,8 +19,6 @@ def test_login_right_userpass_all():
                                             })
     assert response.status_code == 200	
     assert "access_token" in response.json()
-    
-def test_login_right_userpass_2():
     response = client.post("/login/", data={"username": "tuph01", "password": "password3"
                                             })
     assert response.status_code == 200	

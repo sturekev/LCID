@@ -1,5 +1,6 @@
 # this is to access main.py
 import sys
+
 import pytest
 # caution: path[0] is reserved for script path (or '' in REPL)
 sys.path.insert(1, '../Backend/')
@@ -16,7 +17,7 @@ sys.path.insert(1, '../Backend/Assets')
 from jsonFormat import UserInDB
 
 sys.path.append('../Backend/DinningService')
-print(sys.path)
+
 from caf import get_user_caf_db, get_user_dinning_db
 
 client = TestClient(app)
@@ -25,6 +26,7 @@ def test_hello():
     response = client.get("/")
     assert response.status_code == 200
     assert response.json()=={"message": "Hello World"}
+
 
 data = get_user_caf_db("529194") 
 print(type(data), data)

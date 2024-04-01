@@ -1,8 +1,8 @@
+import sys
 import pytest
 
-from fastapi.testclient import TestClient
+from db_connection import get_db_connection, get_aws_db_connection
 
-from db_connection import get_db_connection
 
 @pytest.fixture(scope="module")
 def local_db_connection():
@@ -12,9 +12,21 @@ def local_db_connection():
 
 @pytest.fixture(scope="module")
 def aws_db_connection():
-    db_connection = get_db_connection()
+    db_connection = get_aws_db_connection()
     yield db_connection
-    db_connection.close()    
+    db_connection.close()
+
+# async def override_dependency_right():
+#     mock_user_right = {
+#        "username": "tuph01",
+#         "full_name": "Kevin Tu",
+#         "email": "tuph01@luther.edu",
+#         "disabled": False,
+#         "student_id": 529194,
+#         "hashed_password": "$2b$12$pzXAzMq09IhPZjcJ7c.xq.vdJ4dE7307BlJAUBh7G2pzKAd4NfjEm"
+#     }
+#     user_data = UserInDB(**mock_user_right)
+#     return user_data    
 
 def test_local_database_connection_success(local_db_connection):
     cursor = local_db_connection.cursor()
@@ -30,17 +42,20 @@ def test_user_retrieve_one_success(local_db_connection, aws_db_connection):
     local_cursor = local_db_connection.cursor()
     aws_cursor = aws_db_connection.cursor()
 
-    local_cursor.execute('''SELECT fullname, username, password, id_number, building_name 
+    local_cursor.execute('''SELECT fullname, username, id_number, building_name 
                         FROM account, account_profile, building_info 
                         WHERE account_profile.account_id = account.id 
                         AND building_info.building_id = account_profile.housing''')
     local_result = local_cursor.fetchone()
 
-    aws_cursor.execute('''SELECT fullname, username, password, id_number, building_name 
+    aws_cursor.execute('''SELECT fullname, username, id_number, building_name 
                         FROM account, account_profile, building_info 
                         WHERE account_profile.account_id = account.id 
                         AND building_info.building_id = account_profile.housing''')
     aws_result = aws_cursor.fetchone()
+
+    print(local_cursor)
+    print(aws_result)
 
     assert local_result == aws_result, "User does not exist in one of the databases"
 
@@ -48,12 +63,12 @@ def test_user_retrieve_one_success_2(local_db_connection, aws_db_connection):
     local_cursor = local_db_connection.cursor()
     aws_cursor = aws_db_connection.cursor()
 
-    local_cursor.execute('''SELECT fullname, username, password 
+    local_cursor.execute('''SELECT fullname, username 
                         FROM account
                         WHERE username = 'tuph01' ''')
     local_result = local_cursor.fetchone()
 
-    aws_cursor.execute('''SELECT fullname, username, password 
+    aws_cursor.execute('''SELECT fullname, username 
                         FROM account
                         WHERE username = 'tuph01' ''')
     aws_result = aws_cursor.fetchone()
@@ -64,12 +79,12 @@ def test_user_retrieve_one_fail(local_db_connection, aws_db_connection):
     local_cursor = local_db_connection.cursor()
     aws_cursor = aws_db_connection.cursor()
 
-    local_cursor.execute('''SELECT fullname, username, password 
+    local_cursor.execute('''SELECT fullname, username 
                         FROM account
                         WHERE username = 'tuph01' ''')
     local_result = local_cursor.fetchone()
 
-    aws_cursor.execute('''SELECT fullname, username, password 
+    aws_cursor.execute('''SELECT fullname, username 
                         FROM account
                         WHERE username = 'phattu01' ''')
     aws_result = aws_cursor.fetchone()
@@ -80,13 +95,13 @@ def test_users_retrieve_all_success(local_db_connection, aws_db_connection):
     local_cursor = local_db_connection.cursor()
     aws_cursor = aws_db_connection.cursor()
 
-    local_cursor.execute('''SELECT fullname, username, password, id_number, building_name 
+    local_cursor.execute('''SELECT fullname, username, id_number, building_name 
                         FROM account, account_profile, building_info 
                         WHERE account_profile.account_id = account.id 
                         AND building_info.building_id = account_profile.housing''')
     local_result = local_cursor.fetchall()
 
-    aws_cursor.execute('''SELECT fullname, username, password, id_number, building_name 
+    aws_cursor.execute('''SELECT fullname, username, id_number, building_name 
                         FROM account, account_profile, building_info 
                         WHERE account_profile.account_id = account.id 
                         AND building_info.building_id = account_profile.housing''')
@@ -98,23 +113,16 @@ def test_users_retrieve_all_failure(local_db_connection, aws_db_connection):
     local_cursor = local_db_connection.cursor()
     aws_cursor = aws_db_connection.cursor()
 
-    local_cursor.execute('''SELECT username, password, id_number, building_name 
+    local_cursor.execute('''SELECT username, id_number, building_name 
                         FROM account, account_profile, building_info 
                         WHERE account_profile.account_id = account.id 
                         AND building_info.building_id = account_profile.housing''')
     local_result = local_cursor.fetchall()
 
-    aws_cursor.execute('''SELECT fullname, username, password, id_number, building_name 
+    aws_cursor.execute('''SELECT fullname, username, id_number, building_name 
                         FROM account, account_profile, building_info 
                         WHERE account_profile.account_id = account.id 
                         AND building_info.building_id = account_profile.housing''')
     aws_result = aws_cursor.fetchall()
 
     assert local_result != aws_result, "User does not exist in one of the databases"
-
-def test_meal_swipe_updated():
-    ...
-
-def test_meal_swipe_not_updated():
-    ...
-

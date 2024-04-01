@@ -112,3 +112,4 @@ watchfiles==0.21.0
 websockets==11.0.3
 greenlet==3.0.1 
 sqlalchemy==2.0.22
+freezegun==1.4.0

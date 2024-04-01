@@ -53,6 +53,9 @@ jobs:
 
       - name: go to backend directory
         run: cd Backend
+      
+      - name: test login
+        run: pytest .\Test\testLogin.py
 
       #  name: Create Zipfile archive of Dependencies
       #   run: |

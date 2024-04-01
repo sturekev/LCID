@@ -41,7 +41,7 @@ def get_HA_token_from_HA_me():
 # https://fastapi.tiangolo.com/advanced/testing-dependencies/ 
 def test_HallAccess_right_before23():
     hall_access_token = get_HA_token_from_HA_me()
-    hall_name = "miller"
+    hall_name = "Miller"
     with freeze_time("2024-01-14 11:35:15"):
         response2 = client.post(f"/HallAccess/{hall_name}/{hall_access_token}")
         assert response2.status_code == 200
@@ -49,7 +49,7 @@ def test_HallAccess_right_before23():
 
 def test_HallAccess_right_after23():
     hall_access_token = get_HA_token_from_HA_me()
-    hall_name = "miller"
+    hall_name = "Miller"
     with freeze_time("2024-01-14 00:35:15"):
         response2 = client.post(f"/HallAccess/{hall_name}/{hall_access_token}")
         assert response2.status_code == 200
@@ -57,23 +57,25 @@ def test_HallAccess_right_after23():
         
 def test_HallAccess_wrong_token_before23():
     hall_access_token = "dkfjhaskdjhgkjhgasdgkljasdtlfasdga"
-    hall_name = "miller"
+    hall_name = "Miller"
     with freeze_time("2024-01-14 11:35:15"):
         response2 = client.post(f"/HallAccess/{hall_name}/{hall_access_token}")
         assert response2.status_code == 401
         
 def test_HallAccess_wrong_token_after23():
     hall_access_token = "dkfjhaskdjhgkjhgasdgkljasdtlfasdga"
-    hall_name = "miller"
+    hall_name = "Miller"
     with freeze_time("2024-01-14 02:35:15"):
         response2 = client.post(f"/HallAccess/{hall_name}/{hall_access_token}")
+
         assert response2.status_code == 401
 # why is it sometimes 401 sometimes False???? ##############################
 
 def test_HallAccess_nonexist_hall():
     hall_access_token = get_HA_token_from_HA_me()
     hall_name = "asdkgjlaksdgj"
-    response2 = client.post(f"/HallAccess/{hall_name}/{hall_access_token}")
+    response2 = client.post(f"/HallAccess/{hall_name}/{hall_access_toke
+    # print(response2.json())
     assert response2.status_code == 404
 
 # HALL_ACCESS should only be denied after 11pm  
@@ -81,7 +83,7 @@ def test_HallAccess_nonexist_hall():
 
 def test_HallAccess_wrong_hall_before23():
     hall_access_token = get_HA_token_from_HA_me()
-    hall_name = "brandt"
+    hall_name = "Brandt"
     with freeze_time("2024-01-14 12:00:01"):
         response2 = client.post(f"/HallAccess/{hall_name}/{hall_access_token}")
         assert response2.status_code == 200
@@ -89,7 +91,7 @@ def test_HallAccess_wrong_hall_before23():
 
 def test_HallAccess_wrong_hall_after23():
     hall_access_token = get_HA_token_from_HA_me()
-    hall_name = "brandt"
+    hall_name = "Brandt"
     with freeze_time("2024-01-14 00:01:13"):
         response2 = client.post(f"/HallAccess/{hall_name}/{hall_access_token}")
         assert response2.status_code == 200

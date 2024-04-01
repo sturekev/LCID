@@ -30,5 +30,3 @@ def get_user_caf_db ():
         }
 
     return users_db
-
-print(get_user_caf_db())

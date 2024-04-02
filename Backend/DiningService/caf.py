@@ -84,7 +84,7 @@ def create_caf_swipe_token(data: dict, expires_delta: timedelta | None = None):
     elif int(user_dining_db["swipes"]) == 0 or int((user_dining_db["swipes"]) - int(data["swipes"])) < 0:
         raise HTTPException(
             status_code=status.HTTP_406_NOT_ACCEPTABLE,
-            detail= f"Balance not enough for {data['swipes']}",
+            detail= f"Balance not enough",
             headers={"WWW-Authenticate": "Bearer"},
         )
     if expires_delta:
@@ -124,7 +124,7 @@ def verify_caf_swipe (token:str, location: str):
                 res = update_user_swipe_db(get_account_id_db(student_id), cafSwipe_db["swipes"] - int(swipes))
                 return True, cafSwipe_db["swipes"] - int(swipes), f"Success {res}"
             else: 
-                return False, cafSwipe_db["swipes"], f"Balance not enough {swipes}"          
+                return False, cafSwipe_db["swipes"], f"Balance not enough"          
 
     except JWTError:
         raise credentials_exception

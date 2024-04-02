@@ -149,7 +149,7 @@ def test_caf_access_not_enough_swipes():
     content_response_caf_me = response_caf_me.json()
     assert "detail" in content_response_caf_me
     detail = content_response_caf_me["detail"]
-    assert detail == 'Balance not enough for 3843 swipes'
+    assert detail == 'Balance not enough'
 
 
 

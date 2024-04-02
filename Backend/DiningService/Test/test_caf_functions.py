@@ -2,7 +2,7 @@ import sys
 
 sys.path.insert(1, '../Backend')
 
-from DinningService.caf import get_user_caf_db, get_account_id_db, update_user_swipe_db
+from DiningService.caf import get_user_caf_db, get_account_id_db, update_user_swipe_db
 
 def test_get_user_caf_db():
     studentId = "528480"

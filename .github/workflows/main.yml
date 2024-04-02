@@ -64,7 +64,7 @@ jobs:
         run: cd Backend && pytest ./Test/testAuthorize.py
         
       - name: test testUserMe
-        run: cd Backend && pytest ./Test/testUserMe.py
+        run: cd Backend && pytest ./Test/testUserMe3.py
       
       #  name: Create Zipfile archive of Dependencies
       #   run: |

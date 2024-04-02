@@ -18,7 +18,7 @@ from jsonFormat import UserInDB
 
 sys.path.append('../Backend/diningservice')
 
-from caf import get_user_caf_db, get_user_dining_db
+from DiningService.caf import get_user_caf_db, get_user_dining_db
 
 client = TestClient(app)
 

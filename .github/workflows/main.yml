@@ -75,7 +75,7 @@ jobs:
       - name: ls
         run: ls 
       - name: q
-        run: cd venv/lib/python3.10.12
+        run: cd venv/lib/ && ls
       # - name: Create Zipfile archive of Dependencies
       #   run: |
       #     cd ./venv/lib/site-packages

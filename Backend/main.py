@@ -20,7 +20,7 @@ from Authenticate.signin import authenticate_user, create_access_token, users_db
 #Auth for Hall
 from Authenticate.HallAccess import create_access_Hall_token, verify_Hall_access
 from profileDashboard.dashBoard import get_user_profile
-from diningService.caf import create_caf_swipe_token, verify_caf_swipe
+from DiningService.caf import create_caf_swipe_token, verify_caf_swipe
 
 ACCESS_TOKEN_EXPIRE_MINUTES  = 30
 FEATURE_ACCESS_TOKEN_EXPIRE_MINUTES  = 5

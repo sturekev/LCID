@@ -228,4 +228,4 @@ def test_authorize_disabled():
     print(response_HA_me.json())
     assert response_HA_me.status_code == 400
     # response_HA_me = client.get("/users/me")
-    assert response_HA_me.json()["detail"] == "Disabled user"
+    assert response_HA_me.json()["detail"] == "Inactive user"

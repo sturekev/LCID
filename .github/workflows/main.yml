@@ -66,6 +66,11 @@ jobs:
       - name: test testUserMe
         run: cd Backend && pytest ./Test/testUserMe3.py
       
+      - name: test cafAccess function
+        run: cd Backend && pytest ./DiningService/Test/test_caf_functions.py
+
+      - name: test Database
+        run: cd Database/Test && pytest test_database_access.py
       #  name: Create Zipfile archive of Dependencies
       #   run: |
       #     cd ./venv/lib/python3.7/site-packages

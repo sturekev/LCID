@@ -72,23 +72,19 @@ jobs:
       # - name: test Database
       #   run: cd DATABASE/Test && pytest test_database_access.py
 
-      - name: ls
-        run: ls 
-      - name: q
-        run: cd venv/lib/ && ls
-      # - name: Create Zipfile archive of Dependencies
-      #   run: |
-      #     cd ./venv/lib/site-packages
-      #     zip -r9 ../../../../api.zip .
+      - name: Create Zipfile archive of Dependencies
+        run: |
+          cd ./venv/lib/python3.10/site-packages
+          zip -r9 ../../../../api.zip .
 
-      # - name: Add App to Zipfile
-      #   run: cd ./Backend && zip -g ../api.zip -r .
+      - name: Add App to Zipfile
+        run: cd ./Backend && zip -g ../api.zip -r .
 
-      # - name: Upload zip file artifact
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: api
-      #     path: api.zip
+      - name: Upload zip file artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: api
+          path: api.zip
 
 # continuous-deployment:
 #   runs-on: ubuntu-latest

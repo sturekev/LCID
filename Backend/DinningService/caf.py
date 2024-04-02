@@ -16,7 +16,7 @@ db_info = get_db_info(filename, section)
 
 
 ALGORITHM = config("algorithm")
-CAF_SECRET_KEY = config("dinning_caf_secret")
+CAF_SECRET_KEY = config("dining_caf_secret")
 
 
 def get_user_caf_db (stdid):
@@ -67,21 +67,21 @@ def update_user_swipe_db(stdid, swipes):
     
     return db_cursor.fetchall()[0][2]
 
-def get_user_dinning_db(db,stdid: str):
+def get_user_dining_db(db,stdid: str):
     if stdid in db:
         user_dict = db[stdid]
         return user_dict
     
 def create_caf_swipe_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
-    user_dinning_db = get_user_dinning_db(get_user_caf_db(str(data["student_id"])),str(data["student_id"]))
-    if not user_dinning_db :
+    user_dining_db = get_user_dining_db(get_user_caf_db(str(data["student_id"])),str(data["student_id"]))
+    if not user_dining_db :
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail= f"something wrong with create caf token",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    elif int(user_dinning_db["swipes"]) == 0 or int((user_dinning_db["swipes"]) - int(data["swipes"])) < 0:
+    elif int(user_dining_db["swipes"]) == 0 or int((user_dining_db["swipes"]) - int(data["swipes"])) < 0:
         raise HTTPException(
             status_code=status.HTTP_406_NOT_ACCEPTABLE,
             detail= f"meal_remainning not enough for {data['swipes']}",
@@ -91,7 +91,7 @@ def create_caf_swipe_token(data: dict, expires_delta: timedelta | None = None):
         expire = datetime.utcnow() + expires_delta
     else:
         expire = datetime.utcnow() + timedelta(minutes=15)
-    to_encode.update({"student_id": user_dinning_db["student_id"]})
+    to_encode.update({"student_id": user_dining_db["student_id"]})
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, CAF_SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
@@ -109,7 +109,7 @@ def verify_caf_swipe (token:str, location: str):
         payload = jwt.decode(token, CAF_SECRET_KEY, algorithms=[ALGORITHM])
         student_id: str = payload.get("student_id")
         swipes: str = payload.get("swipes")
-        cafSwipe_db = get_user_dinning_db(get_user_caf_db(student_id), student_id)
+        cafSwipe_db = get_user_dining_db(get_user_caf_db(student_id), student_id)
         
         if not cafSwipe_db:
             raise HTTPException(

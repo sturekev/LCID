@@ -50,7 +50,7 @@ class HallAccessResponse(BaseModel):
 class HallAcessVerifyResponse(BaseModel):
     message :bool 
     
-class dinningCaf(BaseModel):
+class diningCaf(BaseModel):
     message : str
     token_type: str
     

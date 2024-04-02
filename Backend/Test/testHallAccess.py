@@ -74,7 +74,7 @@ def test_HallAccess_wrong_token_after23():
 def test_HallAccess_nonexist_hall():
     hall_access_token = get_HA_token_from_HA_me()
     hall_name = "asdkgjlaksdgj"
-    response2 = client.post(f"/HallAccess/{hall_name}/{hall_access_toke
+    response2 = client.post(f"/HallAccess/{hall_name}/{hall_access_token}")
     # print(response2.json())
     assert response2.status_code == 404
 

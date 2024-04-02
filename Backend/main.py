@@ -12,7 +12,7 @@ from decouple import config
 #jsonFormat where keep all Put methods for imput Json from API
 from Assets.jsonFormat import HallAccessResponse, HallAcessVerifyResponse
 from Assets.jsonFormat import AppToken, User, userProfile
-from Assets.jsonFormat import dinningCaf, diningCaf_response
+from Assets.jsonFormat import diningCaf, diningCaf_response
 from Assets.jsonFormat import library_iD
 
 #Authenticate for signin
@@ -20,7 +20,7 @@ from Authenticate.signin import authenticate_user, create_access_token, users_db
 #Auth for Hall
 from Authenticate.HallAccess import create_access_Hall_token, verify_Hall_access
 from profileDashboard.dashBoard import get_user_profile
-from DinningService.caf import create_caf_swipe_token, verify_caf_swipe
+from diningService.caf import create_caf_swipe_token, verify_caf_swipe
 
 ACCESS_TOKEN_EXPIRE_MINUTES  = 30
 FEATURE_ACCESS_TOKEN_EXPIRE_MINUTES  = 5
@@ -75,7 +75,7 @@ async def read_users_me(
     return current_user
 
 
-@app.get("/dinningservice/caf/me/{swipes}/", response_model=dinningCaf)
+@app.get("/diningservice/caf/me/{swipes}/", response_model=diningCaf)
 async def getSwipe(
     swipes, current_user: Annotated[User, Depends(get_current_active_user)]
 ):
@@ -88,7 +88,7 @@ async def getSwipe(
     return {"message":access_token, "token_type": "Bearer"}
 
 
-@app.post("/dinningservice/caf/{token}/{location}/", response_model=diningCaf_response)
+@app.post("/diningservice/caf/{token}/{location}/", response_model=diningCaf_response)
 async def verifyCafAccess(token, location):
     success, swipe, response = verify_caf_swipe(token, location)
 

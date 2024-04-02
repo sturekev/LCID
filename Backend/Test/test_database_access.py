@@ -111,7 +111,7 @@ def test_users_retrieve_all_failure(local_db_connection, aws_db_connection):
 # def test_meal_swipe_updated():
 #     app.dependency_overrides[get_current_active_user] = override_dependency_right
 #     swipes = 2
-#     response_caf_me = client.get(f"/dinningservice/caf/me/{swipes}")
+#     response_caf_me = client.get(f"/diningservice/caf/me/{swipes}")
 #     assert response_caf_me.status_code == 200
 
 # def test_meal_swipe_not_updated():

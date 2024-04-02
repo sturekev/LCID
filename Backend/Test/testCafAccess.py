@@ -16,7 +16,7 @@ from main import app, get_current_active_user, create_caf_swipe_token, getSwipe
 sys.path.insert(1, '../Backend/Assets')
 from jsonFormat import UserInDB
 
-sys.path.append('../Backend/diningservice')
+sys.path.append('../Backend/DiningService')
 
 from DiningService.caf import get_user_caf_db, get_user_dining_db
 

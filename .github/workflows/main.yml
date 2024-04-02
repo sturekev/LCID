@@ -55,7 +55,7 @@ jobs:
       #   run: cd Backend && pytest ./Test/testLogin.py
 
       - name: test testCafAccess
-        run: cd Backend && pytest ./Test/testCafAccess.py
+        run: . venv/bin/activate && cd Backend && pytest ./Test/testCafAccess.py
         
       - name: test testHallAccess
         run: cd Backend && pytest ./Test/testHallAccess.py

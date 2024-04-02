@@ -77,8 +77,8 @@ def verify_Hall_access (token:str, location: str):
         else: 
             if resident == "Super":
                 return True
-            if resident == location:
-                return True
+            if resident != location:
+                raise credentials_exception
             else: 
                 current_time = datetime.now().time()  # Get the current time
 

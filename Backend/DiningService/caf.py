@@ -84,7 +84,7 @@ def create_caf_swipe_token(data: dict, expires_delta: timedelta | None = None):
     elif int(user_dining_db["swipes"]) == 0 or int((user_dining_db["swipes"]) - int(data["swipes"])) < 0:
         raise HTTPException(
             status_code=status.HTTP_406_NOT_ACCEPTABLE,
-            detail= f"meal_remainning not enough for {data['swipes']}",
+            detail= f"Balance not enough for {data['swipes']}",
             headers={"WWW-Authenticate": "Bearer"},
         )
     if expires_delta:

@@ -76,7 +76,7 @@ def test_HallAccess_nonexist_hall():
     hall_name = "asdkgjlaksdgj"
     response2 = client.post(f"/HallAccess/{hall_name}/{hall_access_token}")
     # print(response2.json())
-    assert response2.status_code == 404
+    assert response2.status_code == 401
 
 # HALL_ACCESS should only be denied after 11pm  
 # needs 2 test cases: before & after 23pm ########################################

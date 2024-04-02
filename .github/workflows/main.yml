@@ -70,7 +70,7 @@ jobs:
         run: cd Backend && pytest ./DiningService/Test/test_caf_functions.py
 
       - name: test Database
-        run: cd .. && cd DATABASE/Test && pytest test_database_access.py
+        run: cd DATABASE/Test && pytest test_database_access.py
        
       - name: Create Zipfile archive of Dependencies
         run: |

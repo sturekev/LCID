@@ -73,7 +73,9 @@ jobs:
       #   run: cd DATABASE/Test && pytest test_database_access.py
 
       - name: ls
-        run: ls
+        run: ls 
+      - name: q
+        run: cd venv/lib/python3.10.12
       # - name: Create Zipfile archive of Dependencies
       #   run: |
       #     cd ./venv/lib/site-packages

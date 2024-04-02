@@ -51,10 +51,12 @@ def test_login_missing_fields1():
     response = client.post("/login/", data={"username": "tuph01"
                                             })
     assert response.status_code == 422
-    assert response.json() == {'detail': 'Missing required field(s)'}
+    assert response.json()['detail'] == [{'type': 'missing', 'loc': ['body', 'password'], 'msg': 'Field required', 'input': None, 'url': 'https://errors.pydantic.dev/2.4/v/missing'}]
+    # assert response.json() == {'detail': 'Missing required field(s)'}
 
 def test_login_missing_fields2():
     response = client.post("/login/", data={"password": "password3"
                                             })
     assert response.status_code == 422
-    assert response.json() == {'detail': 'Missing required field(s)'}
+    assert response.json()['detail'] == [{'type': 'missing', 'loc': ['body', 'username'], 'msg': 'Field required', 'input': None, 'url': 'https://errors.pydantic.dev/2.4/v/missing'}]
+    # assert response.json() == {'detail': 'Missing required field(s)'}

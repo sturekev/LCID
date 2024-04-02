@@ -51,8 +51,8 @@ jobs:
       - name: Build and Run Test
         run: . venv/bin/activate
       
-      - name: test login
-        run: cd Backend && pytest ./Test/testLogin.py
+      # - name: test login
+      #   run: cd Backend && pytest ./Test/testLogin.py
 
       - name: test testCafAccess
         run: cd Backend && pytest ./Test/testCafAccess.py

@@ -67,6 +67,7 @@ def verify_Hall_access (token:str, location: str):
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
+    building = ['Farwell', 'Olson', 'Diseth', 'Miller', 'Brandt', 'Ylvisaker', 'Baker Village', 'College Apartments', 'Larsen', 'Prairie Houses', 'Sustainability House', 'Off-Campus Living', 'Roth']
     try:
         payload = jwt.decode(token, HALL_SECRET_KEY, algorithms=[ALGORITHM])
         name: str = payload.get("name")
@@ -77,8 +78,10 @@ def verify_Hall_access (token:str, location: str):
         else: 
             if resident == "Super":
                 return True
-            if resident != location:
+            if location not in building:
                 raise credentials_exception
+            elif resident == location:
+                return True
             else: 
                 current_time = datetime.now().time()  # Get the current time
 

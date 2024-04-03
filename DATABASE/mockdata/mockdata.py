@@ -1,31 +1,27 @@
-# for generating random database
-# import bcrypt
-import hashlib
 import random
 import secrets
-import string
 
 from mockdata.hash import *
 
-account_mockdata = [
+account_data = [
     {
         'full_name': 'Samuel Vue',
         'username': 'vuesa01',
-        'password': f"{encodePassword('password1')}"
+        'password': f"{encode_password('password1')}"
     },
     {
         'full_name': 'Reece Flynn',
         'username': 'flynre01',
-        'password': f"{encodePassword('password2')}"
+        'password': f"{encode_password('password2')}"
     },
     {
         'full_name': 'Kevin Tu',
         'username': 'tuph01',
-        'password': f"{encodePassword('password3')}"
+        'password': f"{encode_password('password3')}"
     }
 ]
 
-building_info_mockdata = [
+building_info_data = [
     {
         'building': 'Farwell'
     },
@@ -67,7 +63,7 @@ building_info_mockdata = [
     }
 ]
 
-account_profile_mockdata = [
+account_profile_data = [
     {
         'id_number': '528480',
         'account_id': 1,
@@ -88,11 +84,10 @@ account_profile_mockdata = [
     }
 ]
 
-meal_plan_mockdata = [
+meal_plan_data = [
     {
         'account_id': 1,
         'role': 'Student',
-        # 'swipes_remaining': random.randint(0, 19),
         'swipes_remaining': 100,
         'dining_dollars': round(random.uniform(0.00, 250.00), 2), 
         'meal_plan': 'Normal'
@@ -100,7 +95,6 @@ meal_plan_mockdata = [
     {
         'account_id': 2,
         'role': 'Student',
-        # 'swipes_remaining': random.randint(0, 19),
         'swipes_remaining': 100,
         'dining_dollars': round(random.uniform(0.00, 250.00), 2),
         'meal_plan': 'Normal'
@@ -108,33 +102,32 @@ meal_plan_mockdata = [
     {
         'account_id': 3,
         'role': 'Student',
-        # 'swipes_remaining': random.randint(0, 19),
         'swipes_remaining': 100,
         'dining_dollars': round(random.uniform(0.00, 250.00), 2),
         'meal_plan': 'Normal'
     }
 ]
 
-def create_mockdata_account(db_connection):
+def create_account_data(db_connection):
     db_cursor = db_connection.cursor()
     
     insert_query = """INSERT INTO account (fullname, username, password)
                         VALUES (%s, %s, %s)"""
     
-    for aRecord in account_mockdata:
-        record = (aRecord["full_name"], aRecord["username"], aRecord["password"])
+    for record in account_data:
+        record = (record["full_name"], record["username"], record["password"])
         db_cursor.execute(insert_query, record)
 
     return db_connection
 
-def create_mockdata_building_info(db_connection):
+def create_building_info_data(db_connection):
     db_cursor = db_connection.cursor()
 
     insert_query = """INSERT INTO building_info (building_name)
                         VALUES (%s)"""
     
-    for aRecord in building_info_mockdata:
-        record = (aRecord["building"],)
+    for record in building_info_data:
+        record = (record["building"],)
         db_cursor.execute(insert_query, record)
 
     return db_connection
@@ -144,27 +137,27 @@ def generate_random_user_token():
     user_token = secrets.token_bytes(32)
     return user_token
 
-def create_mockdata_account_profile(db_connection):
+def create_account_profile_data(db_connection):
     db_cursor = db_connection.cursor()
 
     insert_query = """INSERT INTO account_profile (id_number, account_id, user_token, housing)
                         VALUES (%s, %s, %s, %s)"""
     
-    for aRecord in account_profile_mockdata:
+    for record in account_profile_data:
         user_token = generate_random_user_token()
-        record = (aRecord["id_number"], aRecord["account_id"], user_token, aRecord["housing"])
+        record = (record["id_number"], record["account_id"], user_token, record["housing"])
         db_cursor.execute(insert_query, record)
 
     return db_connection
 
-def create_mockdata_meal_balance(db_connection):
+def create_meal_balance_data(db_connection):
     db_cursor = db_connection.cursor()
 
     insert_query = """INSERT INTO meal_balance (account_id, role, swipes_remaining, dining_dollars, meal_plan)
                         VALUES (%s, %s, %s, %s, %s)"""
     
-    for aRecord in meal_plan_mockdata:
-        record = (aRecord["account_id"], aRecord["role"], aRecord["swipes_remaining"], aRecord["dining_dollars"], aRecord["meal_plan"])
+    for record in meal_plan_data:
+        record = (record["account_id"], record["role"], record["swipes_remaining"], record["dining_dollars"], record["meal_plan"])
         db_cursor.execute(insert_query, record)
     
     return db_connection

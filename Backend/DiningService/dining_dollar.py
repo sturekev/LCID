@@ -1,8 +1,6 @@
-import sys
 from Assets.database.db_config import get_db_info
 
 import psycopg2
-from psycopg2 import OperationalError
 
 filename='Assets/database/db_info.ini'
 section='cardReaderDB'

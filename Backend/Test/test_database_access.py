@@ -94,5 +94,5 @@ def test_users_retrieve_all_failure(local_db_connection, aws_db_connection):
                         WHERE account_profile.account_id = account.id 
                         AND building_info.building_id = account_profile.housing''')
     aws_result = aws_cursor.fetchall()
-
+    
     assert local_result != aws_result, "User does not exist in one of the databases"

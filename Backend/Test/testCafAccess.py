@@ -39,31 +39,6 @@ def mock_get_user_caf_db():
     data = {'529194': {'student_id': '529194', 'swipes': 20, 'dining_dolars': 125.02, 'role': 'Student'}}
     return data
 
-# @pytest.mark.asyncio
-# async def test_caf_access_mock():
-#     swipes = 2
-#     with patch("main.create_caf_swipe_token", side_effect = mock_get_user_caf_db):
-#         response = await getSwipe(swipes, current_user=mock_get_user_caf_db)
-#         print(response)
-#         assert response["message"] == "mocked_token"
-#         assert response["token_type"] == "Bearer"
-
-# @pytest.mark.asyncio
-# async def test_caf_access_mock():
-#     swipes = 2
-#     # Mocking the dependency function
-#     mock_user = Mock(student_id='529194')
-#     response = await getSwipe(swipes, current_user=mock_user)
-#     print("convoi",response)
-#     with patch("main.create_caf_swipe_token", side_effect=mock_get_user_caf_db):
-#         # Creating a mock User object with necessary attributes
-#         mock_user = Mock(student_id='529194')
-#         print(mock_user)
-#         response = await getSwipe(swipes, current_user=mock_user)
-#         print(response)
-#         assert response["message"] == "mocked_token"
-#         # assert response["token_type"] == "Bearer"
-
 async def override_dependency_right():
     mock_user_right = {
        "username": "tuph01",
@@ -88,19 +63,6 @@ def test_caf_access_right():
     # this should be swipes_left instead of swipes to avoid confusion
     swipes_before = get_user_caf_db("529194")["529194"]["swipes"]
 
-    
-#     with patch("caf.get_user_caf_db", side_effect=mock_get_user_caf_db):
-#         print(mock_get_user_caf_db())
-#         print(get_user_caf_db())
-#         response = client.post(f"/diningservice/caf/{token}/{location}")
-#         assert response.status_code == 200
-#         content_response = response.json()
-#         assert content_response["swipes"] == True
-#         assert content_response["message"] == "Success"
-#         # should be 'swipes_left' instead of 'swipes' 
-#         # to avoid confusion with the amount of times the person want to swipe when entering
-#         assert content_response["swipes_left"] == 20-swipes
-
     response = client.post(f"/diningservice/caf/{token}/{location}")
     assert response.status_code == 200
     content_response = response.json()
@@ -108,27 +70,6 @@ def test_caf_access_right():
     # to avoid confusion with the amount of times the person want to swipe when entering
     assert content_response["message"] == f"Success {content_response['swipes']}"
     assert content_response["swipes"] == swipes_before - swipes
-
-
-
-# def test_caf_access_not_enough_swipes():
-#     app.dependency_overrides[get_current_active_user] = override_dependency_right
-#     swipes = 21
-#     response_caf_me = client.get(f"/diningservice/caf/me/{swipes}")
-#     assert response_caf_me.status_code == 200
-#     content_response_caf_me = response_caf_me.json()
-#     assert "message" in content_response_caf_me
-    
-#     token = content_response_caf_me["message"]
-#     location = "caf"
-#     response = client.post(f"/diningservice/caf/{token}/{location}")
-#     assert response.status_code == 200
-#     content_response = response.json()
-#     assert content_response["message"] == f"Balance not enough for {swipes} swipes"
-#     assert content_response["success"] == False
-#     # should be 'swipes_left' instead of 'swipes' 
-#     # to avoid confusion with the amount of times the person want to swipe when entering
-#     assert content_response["swipes_left"] == 20
 
 def test_caf_access_not_enough_swipes():
     app.dependency_overrides[get_current_active_user] = override_dependency_right
@@ -150,37 +91,3 @@ def test_caf_access_not_enough_swipes():
     assert "detail" in content_response_caf_me
     detail = content_response_caf_me["detail"]
     assert detail == 'Balance not enough'
-
-
-
-# def test_spelling():
-#     raise ValueError("Spelling Error in main.py and Backend folder: 'DiningService' , not 'diningservice'")
-
-
-
-
-
-# from unittest.mock import patch
-
-# def test_caf_access_right():
-#     app.dependency_overrides[get_current_active_user] = override_dependency_right
-#     swipes = 2
-#     response_caf_me = client.get(f"/diningservice/caf/me/{swipes}")
-#     assert response_caf_me.status_code == 200
-#     content_response_caf_me = response_caf_me.json()
-#     assert "message" in content_response_caf_me
-
-#     token = content_response_caf_me["message"]
-#     location = "caf"
-
-#     # Patching get_user_caf_db within the context where client.post is called
-#     with patch("caf.get_user_caf_db", side_effect=mock_get_user_caf_db) as mock_get_user:
-#         # Now, when client.post is called within this context, it will use the mocked version of get_user_caf_db
-#         response = client.post(f"/diningservice/caf/{token}/{location}")
-
-#     assert response.status_code == 200
-    
-#     # Check if mock_get_user_caf_db was called
-#     print(mock_get_user.call_count)  # Debugging statement to check call count
-#     assert mock_get_user.call_count == 1  # or any other expected call count
-

@@ -1,9 +1,6 @@
 from datetime import datetime, timedelta
 
 from fastapi import HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
-from passlib.context import CryptContext
-from jose import JWTError, jwt
 from decouple import config
 import psycopg2
 

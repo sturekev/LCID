@@ -17,9 +17,6 @@ from main import app, get_current_active_user, authenticate_user
 sys.path.insert(1, '../Backend/Assets')
 from jsonFormat import UserInDB, User
 
-# sys.path.insert(1, '../DATABASE/mockdata')
-# from hash import encodePassword
-
 client = TestClient(app)
 
 def test_hello():

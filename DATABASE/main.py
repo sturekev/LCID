@@ -1,5 +1,4 @@
 import psycopg2
-from psycopg2 import OperationalError
 from db_config import get_db_info
 
 from mockdata.mockdata import *

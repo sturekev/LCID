@@ -2,7 +2,7 @@
 
 from passlib.context import CryptContext
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-def encodePassword (password:str): 
-    return pwd_context.hash(password)
+def encode_password (password:str): 
+    return password_context.hash(password)

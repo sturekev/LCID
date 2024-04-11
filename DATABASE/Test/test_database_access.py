@@ -1,4 +1,3 @@
-import sys
 import pytest
 
 from db_connection import get_db_connection, get_aws_db_connection
@@ -14,19 +13,7 @@ def local_db_connection():
 def aws_db_connection():
     db_connection = get_aws_db_connection()
     yield db_connection
-    db_connection.close()
-
-# async def override_dependency_right():
-#     mock_user_right = {
-#        "username": "tuph01",
-#         "full_name": "Kevin Tu",
-#         "email": "tuph01@luther.edu",
-#         "disabled": False,
-#         "student_id": 529194,
-#         "hashed_password": "$2b$12$pzXAzMq09IhPZjcJ7c.xq.vdJ4dE7307BlJAUBh7G2pzKAd4NfjEm"
-#     }
-#     user_data = UserInDB(**mock_user_right)
-#     return user_data    
+    db_connection.close() 
 
 def test_aws_database_connection_success(aws_db_connection):
     cursor = aws_db_connection.cursor()

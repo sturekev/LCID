@@ -40,6 +40,14 @@
     text-align: center;
 }
 
+.selected {
+    background-color: #1C5275;
+    color: #fff;
+    font-size: 14;
+    border-radius: 5;
+    text-align: center;
+}
+
 .profile {
     height: 660;
     border-radius: 10;
@@ -49,4 +57,10 @@
 
 .qr-code {
     margin: 25;
+}
+
+.barcode {
+    margin-top: 35;
+    font-size: 74;
+    font-family: "Free 3 of 9", "free3of9"; font-weight: 400; 
 }

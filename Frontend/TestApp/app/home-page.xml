@@ -1,5 +1,5 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
-    <ActionBar title="LCID Dashboard" class="action-bar" icon="">
+    <ActionBar title="LCID Dashboard" class="action-bar" tap="navigateToHome" icon="">
         <ActionItem tap="onLogout" android.position="popup" text="Logout" android.systemIcon="ic_menu_logout" />
     </ActionBar>
     
@@ -7,12 +7,11 @@
         <FlexboxLayout class="profile">
             <Image src="~/images/norse-logo.jpg" height="250"></Image> 
             <!-- Will probably need to update this for profile pictures -->
-
-            <Label class="label" text="Username: {{ vuesa01 }}" height="70" backgroundColor="#43b883"/>
-            <Label class="label" text="Dormitory: {{ Farwell }}" height="70" backgroundColor="#1c6b48"/>
-            <Label class="label" text="Meal Swipes: {{ 10 }}" height="70" backgroundColor="#289062"/>
-            <Label class="label" text="Dining Dollars: {{ $123:45 }}" height="70" backgroundColor="#1c6b48"/>
-            <Label class="label" text="Library Items: {{ Library Key }}" height="70" backgroundColor="#289062"/>
+            <Label class="label" text="{{ name }}" height="70" backgroundColor="#5C6BF5"/>
+            <Label class="label" text="{{ sid }}" height="70" backgroundColor=""/>
+            <Label class="label" text="{{ dorm }}" height="70" backgroundColor="#5C6BF5"/>
+            <Label class="label" text="{{ swipes }}" height="70" backgroundColor=""/>
+            <Label class="label" text="{{ dinedlrs }}" height="70" backgroundColor="#5C6BF5"/>
         </FlexboxLayout>
 
         <FlexboxLayout class="horizontal-button-container">

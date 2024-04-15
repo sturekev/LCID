@@ -1,0 +1,17 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
+    <ActionBar title="Retry Login" tap="navigateToLogin" class="action-bar" icon="" />
+
+    <FlexboxLayout class="page">
+        <StackLayout class="form">
+
+            <StackLayout class="p-t-15">
+
+                <Label class="h2 text-center" textWrap="true" text="Contact your domain admin for help."></Label>
+
+                <Button text="Technology Help Desk" tap="{{ forgotPassword }}" class="btn btn-primary"></Button>
+            
+            </StackLayout>
+
+        </StackLayout>
+    </FlexboxLayout>
+</Page>

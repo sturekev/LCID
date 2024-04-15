@@ -1,4 +1,7 @@
 module.exports = {
-    apilogin: "http://10.0.2.2:8000/login/",
-    apiHallAccess: "http://10.0.2.2:8000/HallAccess/getToken/"
+    apilogin: "http://18.215.231.250/login/",
+    apiHallAccess: "http://18.215.231.250/HallAccess/me/",
+    apiDiningAccess: "http://18.215.231.250/dinningservice/caf/me/1",
+    apiLibrayID: "http://18.215.231.250/library/me/",
+    apiDashboardInfo: "http://18.215.231.250/user/profile/"
 };

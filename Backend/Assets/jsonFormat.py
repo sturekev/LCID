@@ -12,14 +12,22 @@ class HallTokenData(BaseModel):
     resident: str
 # For Login 
 class TokenData(BaseModel):
-    username: str | None = None
+    username: str
 
 class User(BaseModel):
     username: str
     email: str | None = None
     full_name: str | None = None
     disabled: bool | None = None
+    student_id : int | None = None
 
+class userProfile(BaseModel):
+    full_name : str
+    student_id : int
+    residence : str
+    role : str
+    swipes : int
+    dining_dolars: float
 
 class UserInDB(User):
     hashed_password: str
@@ -41,3 +49,23 @@ class HallAccessResponse(BaseModel):
 # reponse for Hall Acess verify 
 class HallAcessVerifyResponse(BaseModel):
     message :bool 
+    
+class diningCaf(BaseModel):
+    message : str
+    token_type: str
+    
+class diningCaf_response (BaseModel):
+    swipes: int
+    message: str
+    
+    
+
+# Caf feature
+class CafVerifyResponse(BaseModel):
+    success : bool
+    swipes: int | None = None
+    message : str | None = None
+
+    
+class library_iD (BaseModel):
+    message : int

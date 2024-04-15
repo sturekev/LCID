@@ -1,25 +1,44 @@
-.page{ 
-    align-items: center;
-}
-.form {
-    width: 100%;
-    margin-left: 30;
-    margin-right: 30;
+.action-bar {
+    background-color: #3498db;
+    color: #fff;
 }
 
-.header {
-    font-size:  25;
+.main-container {
+    background-color: #ecf0f1;
+    padding: 5;
+    margin: 10;
+    border-radius: 10;
+    flex-flow: row wrap;
+    font-weight: bold;
     text-align: center;
-    color: blue;
-    font-weight: 500;
-    margin-bottom:  70;
+    display: flex;
 }
 
-.input {
-    font-size: 20;
+.horizontal-button-container {
+    background-color: #fff;
+    padding: 10;
+    border-radius: 5;
+    margin: 10;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    justify-content: space-around;
+    align-items: flex-end;
 }
 
-.btn-primary{
+.horizontal-button {
+    background-color: #3498db;
+    color: #fff;
+    font-size: 14;
+    border-radius: 5;
+    text-align: center;
+}
 
-    /* login button styling*/
+.profile {
+    height: 70%;
+    border-radius: 10;
+    padding: 50;
+    flex-direction: column;
+}
+
+.label {
+    margin: 5;
 }

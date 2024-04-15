@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "canvas": "^2.11.2",
+    "jsbarcode": "^3.11.6"
+  }
+}

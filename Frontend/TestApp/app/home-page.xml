@@ -1,17 +1,23 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
-    <ActionBar title="LCID" icon="" />
+    <ActionBar title="LCID Dashboard" class="action-bar" tap="navigateToHome" icon="">
+        <ActionItem tap="onLogout" android.position="popup" text="Logout" android.systemIcon="ic_menu_logout" />
+    </ActionBar>
+    
+    <FlexboxLayout class="main-container">
+        <FlexboxLayout class="profile">
+            <Image src="~/images/norse-logo.jpg" height="250"></Image> 
+            <!-- Will probably need to update this for profile pictures -->
+            <Label class="label" text="{{ name }}" height="70" backgroundColor="#5C6BF5"/>
+            <Label class="label" text="{{ sid }}" height="70" backgroundColor=""/>
+            <Label class="label" text="{{ dorm }}" height="70" backgroundColor="#5C6BF5"/>
+            <Label class="label" text="{{ swipes }}" height="70" backgroundColor=""/>
+            <Label class="label" text="{{ dinedlrs }}" height="70" backgroundColor="#5C6BF5"/>
+        </FlexboxLayout>
 
-    <FlexboxLayout class="page">
-        <StackLayout class="form">
-            <Label class="header" text="{WIP}"></Label>
-
-        
-  
-            <StackLayout class="p-20">
-                <Button text="LogOut" tap="navigateToMain" class="btn btn-primary"></Button>
-            </StackLayout>
-
-
-        </StackLayout>
+        <FlexboxLayout class="horizontal-button-container">
+            <Button text="Residence" class="horizontal-button" tap="onResidenceHall" />
+            <Button text="Dining" class="horizontal-button" tap="onDiningService"  />
+            <Button text="Library" class="horizontal-button" tap="onLibraryCheckout" />
+        </FlexboxLayout>
     </FlexboxLayout>
 </Page>

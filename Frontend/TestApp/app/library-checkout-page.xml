@@ -1,0 +1,20 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
+    <ActionBar title="LCID Dashboard" tap="navigateToHome" class="action-bar" icon="">
+        <ActionItem tap="onLogout" android.position="popup" text="Logout" android.systemIcon="ic_menu_logout" />
+    </ActionBar>
+
+    <FlexboxLayout class="main-container">
+        <FlexboxLayout class='profile'>
+            <Button text="Generate Barcode" width="300" height="150" class="vertical-button" tap="giveMeBook" />
+            <StackLayout orientation="vertical" class='qr-example'>
+                <Label id="bc" text="" class="barcode"></Label>
+            </StackLayout>   
+        </FlexboxLayout>
+
+        <FlexboxLayout class="horizontal-button-container">
+            <Button text="Residence" width="155" class="horizontal-button" tap="onResidenceHall" />
+            <Button text="Dining" width="150" class="horizontal-button" tap="onDiningService" />
+            <Button text="Library" width="150" class="selected" tap="onLibraryCheckout" />
+        </FlexboxLayout>
+    </FlexboxLayout>
+</Page>

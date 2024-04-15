@@ -2,6 +2,7 @@
 #Fastapi packages
 from datetime import timedelta, datetime
 from typing import Annotated
+
 from fastapi import FastAPI, HTTPException, Body, Depends, status
 from fastapi.security import OAuth2PasswordRequestForm
 import uvicorn
@@ -9,15 +10,20 @@ import uvicorn
 from decouple import config
 
 #jsonFormat where keep all Put methods for imput Json from API
-from Assets.jsonFormat import signinInput, HallTokenRequest, HallTokenVerify
-from Assets.jsonFormat import loginResponse, AppToken, TokenData, User
+from Assets.jsonFormat import HallAccessResponse, HallAcessVerifyResponse
+from Assets.jsonFormat import AppToken, User, userProfile
+from Assets.jsonFormat import diningCaf, diningCaf_response
+from Assets.jsonFormat import library_iD
+
 #Authenticate for signin
-from fastapi.responses import JSONResponse
-from Authenticate.signin import authenticate_user, create_access_token, fake_users_db, get_current_active_user
-from Authenticate.token import verifyUserToken
-from Authenticate.HallAccess import getHallToken, updatHallToken
+from Authenticate.signin import authenticate_user, create_access_token, users_db, get_current_active_user
+#Auth for Hall
+from Authenticate.HallAccess import create_access_Hall_token, verify_Hall_access
+from profileDashboard.dashBoard import get_user_profile
+from DiningService.caf import verify_caf_swipe, create_caf_swipe_token
 
 ACCESS_TOKEN_EXPIRE_MINUTES  = 30
+FEATURE_ACCESS_TOKEN_EXPIRE_MINUTES  = 5
 
 app = FastAPI()
 
@@ -29,7 +35,7 @@ async def root():
 async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()]
 ):
-    user = authenticate_user(fake_users_db(), form_data.username, form_data.password)
+    user = authenticate_user(users_db(), form_data.username, form_data.password)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -43,48 +49,62 @@ async def login_for_access_token(
     return {"access_token": access_token, "token_type": "Bearer"}
 
 # APis give User a hash token to use for access
-@app.post ("/HallAccess/getToken/{request}")
-async def requestHallAccess (request,iputJson: HallTokenRequest):
-    verifyToken, response = verifyUserToken()
-    if verifyToken:
-        if request == "getToken":
-            return getHallToken()
-        elif request == "resetToken":
-            return updatHallToken()
-    else:
-        raise HTTPException(status_code=401, detail=response)
+@app.get("/HallAccess/me/", response_model=HallAccessResponse)
+async def GetHallAcess(
+    current_user: Annotated[User, Depends(get_current_active_user)]
+   
+):
+    
+    access_token_expires = timedelta(minutes=FEATURE_ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_Hall_token(
+        data={"name": current_user.username}, expires_delta=access_token_expires
+        )
+    
+    return {"message":access_token, "token_type": "Bearer"}
+
+@app.post("/HallAccess/{location}/{token}/", response_model=HallAcessVerifyResponse)
+async def verifyHallAccess(location, token):
+    response = verify_Hall_access(token, location)
+    return {"message": response}
+
 
 @app.get("/users/me/", response_model=User)
 async def read_users_me(
     current_user: Annotated[User, Depends(get_current_active_user)]
 ):
     return current_user
-#setUp user token
-#class of token
-#user login and signup
 
 
-# #Apis verify signal or verify qrcode
-# @app.put ("/HallAccess/{request}")
-# def verifyHallAccess (request, inputJson: HallTokenVerify):
-#     if request == "verify":
-#         pass
-#     pass
-
-# #Apis getDinningService user Data
-# @app.put ("/DinningService/request/{request}")
-# def requestDinningService():
-#     pass
-
-# @app.put ("/DinningService/verify/{request}")
-# def verifyDinningService():
-#     pass
-
-# @app.put ("test/{link}")
-# def test(link, inputJson: signinInput):
-#     return {"link": link, "jsonInput": inputJson}
+@app.get("/diningservice/caf/me/{swipes}/", response_model=diningCaf)
+async def getSwipe(
+    swipes, current_user: Annotated[User, Depends(get_current_active_user)]
+):
+    
+    access_token_expires = timedelta(minutes=FEATURE_ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_caf_swipe_token(
+        data={"student_id": current_user.student_id, "swipes": swipes}, expires_delta=access_token_expires
+        )
+    
+    return {"message":access_token, "token_type": "Bearer"}
 
 
-# @app.put ("/HallAccess")
-# def sendHallAccessToken (inputJson):
-#     pass
+@app.post("/diningservice/caf/{token}/{location}/", response_model=diningCaf_response)
+async def verifyCafAccess(token, location):
+    success, swipe, response = verify_caf_swipe(token, location)
+
+    if success:
+        return { "swipes": swipe, "message": response}
+    return { "swipes": swipe, "message": response}
+
+@app.post("/library/me/", response_model = library_iD)
+async def library_student_id (
+    current_user: Annotated[User, Depends(get_current_active_user)]
+):
+    return {"message": current_user.student_id} 
+
+@app.get("/user/profile", response_model = userProfile)
+async def getUserProfile(
+    current_user: Annotated[User, Depends(get_current_active_user)]
+): 
+
+    return get_user_profile( str(current_user.student_id))

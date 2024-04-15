@@ -1,0 +1,60 @@
+.action-bar {
+    background-color: #3498db;
+    color: #fff;
+}
+
+.main-container {
+    background-color: #ecf0f1;
+    padding: 5;
+    margin: 10;
+    border-radius: 10;
+    flex-flow: row wrap;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+}
+
+.horizontal-button-container {
+    background-color: #fff;
+    padding: 10;
+    border-radius: 5;
+    margin: 10;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.vertical-button {
+    background-color: #3498db;
+    color: #fff;
+    font-size: 18;
+    padding: 10;
+    border-radius: 5;
+    text-align: center;
+    margin: 10;
+}
+
+.horizontal-button {
+    background-color: #3498db;
+    color: #fff;
+    font-size: 14;
+    border-radius: 5;
+    text-align: center;
+}
+
+.selected {
+    background-color: #1C5275;
+    color: #fff;
+    font-size: 14;
+    border-radius: 5;
+    text-align: center;
+}
+
+.profile {
+    height: 660;
+    border-radius: 10;
+    padding: 50;
+    flex-direction: column;
+}
+
+.qr-code {
+    margin: 25;
+}

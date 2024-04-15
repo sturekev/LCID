@@ -1,50 +1,71 @@
 from pydantic import BaseModel
 
-# {
-#     'username': 'data',
-#     'passowrd': 'data',
-#     ..
-# }
-class signinInput(BaseModel):
-    username: str
-    password: str
-    # timestamp: str
+#Input request Json 
 
-class loginResponse(BaseModel):
-    message: dict
-class HallTokenRequest (BaseModel):
-    userToken: str
-    timestamp: str
-
+# Hall acess verify
 class HallTokenVerify (BaseModel):
-    userToken: str
-    HashAccessToken: str
+    token: str
+    location: str
     timestamp: str
-
-class UserInfoVerify (BaseModel):
-    userToken: str
-    timestamp: str
-
-
-
-class User (BaseModel):
-    email : str
-    
-class AppToken(BaseModel):
-    access_token: str
-    token_type: str
-
-
+class HallTokenData(BaseModel):
+    name: str
+    resident: str
+# For Login 
 class TokenData(BaseModel):
-    username: str | None = None
-
+    username: str
 
 class User(BaseModel):
     username: str
     email: str | None = None
     full_name: str | None = None
     disabled: bool | None = None
+    student_id : int | None = None
 
+class userProfile(BaseModel):
+    full_name : str
+    student_id : int
+    residence : str
+    role : str
+    swipes : int
+    dining_dolars: float
 
 class UserInDB(User):
     hashed_password: str
+
+#
+# APis Response Configuration 
+#
+
+# response for Login APis  
+class AppToken(BaseModel):
+    access_token: str
+    token_type: str
+
+#response for GetHallAcess
+class HallAccessResponse(BaseModel):
+    message : str
+    token_type: str
+
+# reponse for Hall Acess verify 
+class HallAcessVerifyResponse(BaseModel):
+    message :bool 
+    
+class diningCaf(BaseModel):
+    message : str
+    token_type: str
+    
+class diningCaf_response (BaseModel):
+    swipes: int
+    message: str
+    
+    
+
+# Caf feature
+class CafVerifyResponse(BaseModel):
+    success : bool
+    swipes: int | None = None
+    message : str | None = None
+
+    
+class library_iD (BaseModel):
+    message : int

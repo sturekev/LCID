@@ -6,7 +6,6 @@
     <FlexboxLayout class="main-container">
         <FlexboxLayout class="profile">
             <Image src="~/images/norse-logo.jpg" height="250"></Image> 
-            <!-- Will probably need to update this for profile pictures -->
             <Label class="label" text="{{ name }}" height="70" backgroundColor="#5C6BF5"/>
             <Label class="label" text="{{ sid }}" height="70" backgroundColor=""/>
             <Label class="label" text="{{ dorm }}" height="70" backgroundColor="#5C6BF5"/>

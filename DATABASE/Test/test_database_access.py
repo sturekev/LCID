@@ -24,8 +24,7 @@ def test_user_retrieve_one_success(local_db_connection, aws_db_connection):
     aws_cursor = aws_db_connection.cursor()
 
     expected_result = ('Samuel Vue', 'vuesa01', '528480', 'Farwell')
-
-def test_user_retrieve_one_success(local_db_connection, aws_db_connection):  
+    
     aws_cursor = aws_db_connection.cursor()
     aws_cursor.execute('''SELECT fullname, username, id_number, building_name 
                         FROM account, account_profile, building_info 

@@ -1,0 +1,26 @@
+﻿Native scrips provides a fairly robust tutorial on how to get their software up an running but i did find a few issue along the way that will be outlined along the way. https://docs.nativescript.org/environment-setup.html#windows-android
+This is the link is for setting up android development on a windows sdevice which we will be using for this porjcect senci development will be taking place primarily on windows devices and deelompmet for iOSis not upported on any os outside licenced mac os running on an apple device (apple is very strict about who and how people can use their proprietary software).
+
+
+Note: The tutorial also states that Android Stuido is not sticlty required but we should be using it to greatly streamline the design and testing process of our app front end rather than trying to deploy the app to an android device every time we make an update.
+
+
+With my install I used chocolatey (link to instructions and install for chocolaty here:https://chocolatey.org/install#individual) to install their recommended opachage for Node and JDK. This process may interfere with other applications that also use java so after the install you may need to check and manly chang what verison of java that application uses. 
+
+
+Note: you may need to add your installation of NodeJS to PATH so that the nodejs commands are recognized system wide when executing thoes commands in the terminal. Generlay this should be done by default when installing but you may need to double check that it is added to path if the NodeJS commands are not recognized.
+
+
+When installing Android Studio instal the recommended packages the nativescript tutorial have listed. The 2 major issues that the tutorial does not mention are virtualization and having the proper android api.
+
+
+Android API: you will need to make sure that you have installed and enabled android api 33 (android api 33-ext4 is installed by default and in not supported by native script)
+
+
+Virilization: For the android emulator to run you will need to enable virtulization in your computer bios to allow the emulator to run (each PC has a slightly different way of doing this so you can look it up for your particular machine/motherboard).
+
+
+You will then need to create an android device emulator in Android studio so that NativeScript has a place to run the app. This is done by clicking more actions and selecting Virtual device manager in the dropdown. Once there you can select a device (I chose to emulate a pixel 7), and then click the next button. On the next screen you will choose the OS version that will be emulated, Make sure to choose the os with release name “tiramisu” with the api level 33.
+
+
+Once this is completed you can run the app from the terminal by navigating in the app envirnemt folder and running the command ns run Android

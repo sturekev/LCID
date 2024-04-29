@@ -1,1 +1,1 @@
-# Senior-Project
+# Luther College ID Mobile Application

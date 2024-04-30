@@ -10,7 +10,9 @@
                 <Label text="" id="errorMSG" class="h2 text-center" textWap="true" />
                 <Label class="m-t-10 m-b-10 m-l-15 m-r-15" text="Forgot password?" tap="onForgotPasswordTap"></Label>
                 <Button text="SIGN IN" tap="logIn" class="btn btn-primary"></Button> 
-                <Button text="Continue As Guest" tap="navigateToHome" class="btn btn-primary"></Button> 
+                
+                <Button text="{test} SIGN IN" tap="navigateToHome" class="btn btn-primary"></Button> 
+
             </StackLayout>
 
         </StackLayout>

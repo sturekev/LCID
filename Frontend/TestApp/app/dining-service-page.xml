@@ -6,7 +6,11 @@
     <FlexboxLayout class="main-container">
         <FlexboxLayout class='profile'>
             <Button text="Generate QRCode" width="300" height="150" class="vertical-button" tap="giveMeFood" />
-            <Image src="" id="qr-code"></Image>
+            <StackLayout orientation="vertical" class='spacer'></StackLayout> 
+            <StackLayout orientation="vertical" class='qr-example'>
+                <Image src="" class="qrcode" id="qr-code"></Image>
+            </StackLayout> 
+            <StackLayout orientation="vertical" class='spacer'></StackLayout> 
         </FlexboxLayout>
 
         <FlexboxLayout class="horizontal-button-container">

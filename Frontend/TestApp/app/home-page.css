@@ -28,12 +28,15 @@
     background-color: #3498db;
     color: #fff;
     font-size: 14;
+    padding: 10;
     border-radius: 5;
     text-align: center;
+    margin: 10;
 }
 
 .profile {
-    height: 70%;
+    color: #fff;
+    height: 85%;
     border-radius: 10;
     padding: 50;
     flex-direction: column;

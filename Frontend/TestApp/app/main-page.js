@@ -28,6 +28,7 @@ export function logIn(args){
     "username": page.getViewById('usr').text,
     "password": page.getViewById('pass').text
    };
+   console.log(data)
    var endocedStr = "";
      for (var prop in data) {
        if(endocedStr) {

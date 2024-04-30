@@ -4,15 +4,15 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@nativescript/core": "~8.7.2",
+    "@nativescript/core": "~8.5.0",
     "@nativescript/theme": "~3.0.2",
     "@nativescript/unit-test-runner": "^3.0.4",
     "nativescript-qr-generator": "^3.0.0"
   },
   "devDependencies": {
     "@jsdevtools/coverage-istanbul-loader": "3.0.5",
-    "@nativescript/android": "~8.7.0",
-    "@nativescript/ios": "~8.7.1",
+    "@nativescript/android": "8.5.3",
+    "@nativescript/ios": "8.7.0",
     "@nativescript/preview-cli": "1.0.12",
     "@nativescript/webpack": "~5.0.14",
     "chai": "5.1.0",

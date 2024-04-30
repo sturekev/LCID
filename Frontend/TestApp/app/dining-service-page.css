@@ -20,6 +20,8 @@
     border-radius: 5;
     margin: 10;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    justify-content: space-around;
+    align-items: flex-end;
 }
 
 .vertical-button {
@@ -36,20 +38,24 @@
     background-color: #3498db;
     color: #fff;
     font-size: 14;
+    padding: 10;
     border-radius: 5;
     text-align: center;
+    margin: 10;
 }
 
 .selected {
     background-color: #1C5275;
     color: #fff;
     font-size: 14;
+    padding: 10;
     border-radius: 5;
     text-align: center;
+    margin: 10;
 }
 
 .profile {
-    height: 660;
+    height: 85%;
     border-radius: 10;
     padding: 50;
     flex-direction: column;

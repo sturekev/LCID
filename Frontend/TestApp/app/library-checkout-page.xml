@@ -6,9 +6,11 @@
     <FlexboxLayout class="main-container">
         <FlexboxLayout class='profile'>
             <Button text="Generate Barcode" width="300" height="150" class="vertical-button" tap="giveMeBook" />
+            <StackLayout orientation="vertical" class='spacer'></StackLayout> 
             <StackLayout orientation="vertical" class='qr-example'>
                 <Label id="bc" text="" class="barcode"></Label>
-            </StackLayout>   
+            </StackLayout> 
+            <StackLayout orientation="vertical" class='spacer'></StackLayout>   
         </FlexboxLayout>
 
         <FlexboxLayout class="horizontal-button-container">

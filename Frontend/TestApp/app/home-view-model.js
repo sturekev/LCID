@@ -7,7 +7,11 @@ export function createViewModel() {
     const viewModel = new Observable()
     viewModel.username = () => {  
     }
-    viewModel.set('dorm', 'test')
+    viewModel.set('name', 'Name: John Doe')
+    viewModel.set('sid', 'Student ID: 00123456')
+    viewModel.set('dorm', 'Residence: Campus House')
+    viewModel.set('swipes', 'Meal Swipes: 19')
+    viewModel.set('dinedlrs', 'Dining Dollars: 350')
     Http.request({
       url: getRequests.apiDashboardInfo,
       method: 'GET',
@@ -19,7 +23,7 @@ export function createViewModel() {
         viewModel.set('sid', `Student ID: ${result.student_id}`)
         viewModel.set('dorm', `Residence: ${result.residence}`)
         viewModel.set('swipes', `Meal Swipes: ${result.swipes}`)
-        viewModel.set('dinedlrs', `Dining Dollars: ${result.dining_dolar}`)
+        viewModel.set('dinedlrs', `Dining Dollars: ${result.dining_dolars}`)
       }
       else{
         viewModel.set('debug', ` resToken: ${result}`);

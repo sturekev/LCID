@@ -7,9 +7,9 @@
         <FlexboxLayout class="profile">
             <Image src="~/images/norse-logo.jpg" height="250"></Image> 
             <Label class="label" text="{{ name }}" height="70" backgroundColor="#5C6BF5"/>
-            <Label class="label" text="{{ sid }}" height="70" backgroundColor=""/>
+            <Label class="label" text="{{ sid }}" height="70" backgroundColor="#919bfa"/>
             <Label class="label" text="{{ dorm }}" height="70" backgroundColor="#5C6BF5"/>
-            <Label class="label" text="{{ swipes }}" height="70" backgroundColor=""/>
+            <Label class="label" text="{{ swipes }}" height="70" backgroundColor="#919bfa"/>
             <Label class="label" text="{{ dinedlrs }}" height="70" backgroundColor="#5C6BF5"/>
         </FlexboxLayout>
 
